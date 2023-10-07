@@ -5,6 +5,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import starb.client.ui.LevelMenuScene;
+import starb.client.ui.PuzzleScene;
 
 import java.io.File;
 
@@ -38,7 +39,7 @@ public class StarbClient extends Application {
      */
     @Override
     public void start(Stage primaryStage) throws Exception {
-        primaryStage.setScene( new Scene( new LevelMenuScene() ) );
+        primaryStage.setScene( new Scene( new PuzzleScene() ) );
         primaryStage.setWidth(400);
         primaryStage.setHeight(300);
         primaryStage.setTitle("Star Game X");

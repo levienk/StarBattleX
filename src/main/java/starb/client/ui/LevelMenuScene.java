@@ -8,7 +8,7 @@ import starb.client.StarbClient;
 
 public class LevelMenuScene extends VBox {
 
-    final Color topBarColor = Color.web("#707070");
+    final Color TOP_BAR_COLOR = Color.web("#707070");
 
     public LevelMenuScene() throws Exception {
 
@@ -19,7 +19,7 @@ public class LevelMenuScene extends VBox {
         HBox topBar = new HBox();
         topBar.setPadding(new Insets(10,10,10,10));
         Background topBarBackground = new Background(
-                new BackgroundFill(topBarColor,
+                new BackgroundFill(TOP_BAR_COLOR,
                         CornerRadii.EMPTY, Insets.EMPTY));
         topBar.setBackground(topBarBackground);
 
