@@ -6,9 +6,11 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import starb.client.StarbClient;
 
+import static starb.client.ExpandingPaneGenerator.newXPPane;
+
 public class LevelMenuScene extends VBox {
 
-    final Color topBarColor = Color.web("#707070");
+    final Color templateBarUIColor = Color.web("#707070");
 
     public LevelMenuScene() throws Exception {
 
@@ -16,23 +18,40 @@ public class LevelMenuScene extends VBox {
         this.getStylesheets().add(StarbClient.COMMON_STYLESHEET.
                         toURI().toURL().toString());
 
-        HBox topBar = new HBox();
-        topBar.setPadding(new Insets(10,10,10,10));
-        Background topBarBackground = new Background(
-                new BackgroundFill(topBarColor,
-                        CornerRadii.EMPTY, Insets.EMPTY));
-        topBar.setBackground(topBarBackground);
-
-        Pane fillerPane = new Pane();
-        HBox.setHgrow(fillerPane, Priority.ALWAYS);
+        HBox topBar = templateUIBar();
+        HBox bottomBar = templateUIBar();
 
         Button backButton = new Button("Back");
+        Button goodButton = new Button("Good :D");
 
-        topBar.getChildren().addAll(fillerPane, backButton);
+        Button centerButton = new Button("Centerpiece");
+        centerButton.setMinWidth(200);
 
-        this.getChildren().addAll(topBar);
+        topBar.getChildren().addAll(newXPPane('h'), backButton);
+        bottomBar.getChildren().addAll(goodButton, newXPPane('h'), centerButton);
+
+
+        this.getChildren().addAll(topBar, new LevelSelector(), bottomBar);
 
     }
 
+
+    /**
+     *  Helper method to reduce code duplication by putting common UI elements
+     *  for the UI interface bars.
+     *
+     */
+    public HBox templateUIBar() {
+
+        HBox barObject = new HBox();
+
+        barObject.setPadding(new Insets(10,10,10,10));
+        Background barBG = new Background(
+                new BackgroundFill(templateBarUIColor,
+                        CornerRadii.EMPTY, Insets.EMPTY));
+        barObject.setBackground(barBG);
+
+        return barObject;
+    }
 
 }
