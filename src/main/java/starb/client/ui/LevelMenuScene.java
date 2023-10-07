@@ -10,7 +10,7 @@ import static starb.client.ExpandingPaneGenerator.newXPPane;
 
 public class LevelMenuScene extends VBox {
 
-    final Color templateBarUIColor = Color.web("#707070");
+    final Color TEMPLATE_BAR_COLOR = Color.web("#707070");
 
     public LevelMenuScene() throws Exception {
 
@@ -47,7 +47,7 @@ public class LevelMenuScene extends VBox {
 
         barObject.setPadding(new Insets(10,10,10,10));
         Background barBG = new Background(
-                new BackgroundFill(templateBarUIColor,
+                new BackgroundFill(TEMPLATE_BAR_COLOR,
                         CornerRadii.EMPTY, Insets.EMPTY));
         barObject.setBackground(barBG);
 
