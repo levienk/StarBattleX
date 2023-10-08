@@ -1,11 +1,16 @@
 package starb.client.ui;
 
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import starb.client.StarbClient;
 
 public class PuzzleScene extends VBox {
 
     private PuzzleTopBar topBar;
+    private PuzzleUI puzzle;
+    private PuzzleBottomBar bottomBar;
 
     // The Exception is for the .getSytlesheets() method
     public PuzzleScene() throws Exception{
@@ -14,8 +19,14 @@ public class PuzzleScene extends VBox {
                 toURI().toURL().toString());
 
         topBar = new PuzzleTopBar();
+        puzzle = new PuzzleUI();
 
-        this.getChildren().addAll(topBar);
+        Pane fillerPane = new Pane();
+        VBox.setVgrow(fillerPane, Priority.ALWAYS);
+
+        bottomBar = new PuzzleBottomBar();
+
+        this.getChildren().addAll(topBar, puzzle, fillerPane, bottomBar);
 
 
 
