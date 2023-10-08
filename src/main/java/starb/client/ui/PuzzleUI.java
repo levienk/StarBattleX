@@ -16,8 +16,8 @@ import java.io.File;
  */
 public class PuzzleUI extends StackPane {
 
-    private static final int WIDTH = 500;
-    private static final int HEIGHT = 500;
+    private static final int WIDTH = 430;
+    private static final int HEIGHT = 430;
 
     private static final File STAR_IMAGE_FILE = new File("image/star_gold.png");
     private Image starImage;
