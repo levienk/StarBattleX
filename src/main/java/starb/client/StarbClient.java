@@ -3,8 +3,9 @@ package starb.client;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import starb.client.ui.PuzzleScene;
+import starb.client.ui.LevelMenuScene;
 
 import java.io.File;
 
@@ -22,14 +23,16 @@ public class StarbClient extends Application {
             ("./Assets/Stylesheets/commonStyle.css");
 
     @SuppressWarnings("FieldCanBeLocal")
-    private final int WINDOW_WIDTH = 432;
+    private final int WINDOW_WIDTH = 1200;
 
     @SuppressWarnings("FieldCanBeLocal")
 
-    private final int WINDOW_HEIGHT =600;
+    private final int WINDOW_HEIGHT = 600;
 
     @SuppressWarnings("FieldCanBeLocal")
     private final String WINDOW_TITLE = "Star Game X";
+
+    public static final Color TEMPLATE_BAR_COLOR = Color.web("#707070");
 
     /**
      *
@@ -40,6 +43,13 @@ public class StarbClient extends Application {
 
         launch();
     }
+
+    /** This is very scuffed, apparently I can't just put a 'final' without initializing the damn
+     *  thing. I'm not sure how to fix this, but I'll look into it later.
+     *
+     */
+    static Stage mainStage;
+
 
     /**
      *
@@ -54,21 +64,24 @@ public class StarbClient extends Application {
      */
     @Override
     public void start(Stage primaryStage) throws Exception {
-        primaryStage.setScene( new Scene( new PuzzleScene() ) );
+        primaryStage.setScene( new Scene( new LevelMenuScene() ) );
         primaryStage.setWidth(WINDOW_WIDTH);
         primaryStage.setHeight(WINDOW_HEIGHT);
         primaryStage.setTitle(WINDOW_TITLE);
 
         // Minimum size for PuzzleScene to load properly (don't go smaller than this)
         primaryStage.setMinHeight(600);
-        primaryStage.setMinWidth(432);
+        primaryStage.setMinWidth(450);
 
         primaryStage.getIcons().add(new Image(APPLICATION_ICON.toURI().toURL().toString()));
         primaryStage.show();
+
+        mainStage = primaryStage;
+
     }
 
-    public void switchScene(Scene scene) {
-        Stage stage = (Stage) scene.getWindow();
-        stage.setScene(scene);
+    public static void switchScene(Scene scene) {
+
+        mainStage.setScene(scene);
     }
 }

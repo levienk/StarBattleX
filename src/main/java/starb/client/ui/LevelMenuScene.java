@@ -1,16 +1,15 @@
 package starb.client.ui;
 
-import javafx.geometry.Insets;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import starb.client.StarbClient;
 
 import static starb.client.ExpandingPaneGenerator.newXPPane;
+import static starb.client.UIBarGenerator.newUIBar;
 
 public class LevelMenuScene extends VBox {
-
-    final Color TEMPLATE_BAR_COLOR = Color.web("#707070");
 
     public LevelMenuScene() throws Exception {
 
@@ -18,17 +17,30 @@ public class LevelMenuScene extends VBox {
         this.getStylesheets().add(StarbClient.COMMON_STYLESHEET.
                         toURI().toURL().toString());
 
-        HBox topBar = templateUIBar();
-        HBox bottomBar = templateUIBar();
+        HBox topBar = newUIBar();
+        HBox bottomBar = newUIBar();
+        bottomBar.setSpacing(10);
 
         Button backButton = new Button("Back");
         Button goodButton = new Button("Good :D");
 
-        Button centerButton = new Button("Centerpiece");
-        centerButton.setMinWidth(200);
+        Button neatButton = new Button("Centerpiece");
+        neatButton.setMinWidth(200);
+
+        // TODO delete these later
+        Button switchSceneTestButton = new Button("Switch Scene Test");
+
+        switchSceneTestButton.setOnAction(e -> {
+            try {
+                StarbClient.switchScene(new Scene(new PuzzleScene()));
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+        });
 
         topBar.getChildren().addAll(newXPPane('h'), backButton);
-        bottomBar.getChildren().addAll(goodButton, newXPPane('h'), centerButton);
+        bottomBar.getChildren().addAll(goodButton, switchSceneTestButton, newXPPane('h'),
+                neatButton);
 
 
         this.getChildren().addAll(topBar, new LevelSelector(), bottomBar);
@@ -36,22 +48,5 @@ public class LevelMenuScene extends VBox {
     }
 
 
-    /**
-     *  Helper method to reduce code duplication by putting common UI elements
-     *  for the UI interface bars.
-     *
-     */
-    public HBox templateUIBar() {
-
-        HBox barObject = new HBox();
-
-        barObject.setPadding(new Insets(10,10,10,10));
-        Background barBG = new Background(
-                new BackgroundFill(TEMPLATE_BAR_COLOR,
-                        CornerRadii.EMPTY, Insets.EMPTY));
-        barObject.setBackground(barBG);
-
-        return barObject;
-    }
 
 }

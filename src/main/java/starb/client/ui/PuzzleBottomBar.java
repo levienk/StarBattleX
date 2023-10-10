@@ -4,28 +4,26 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 import java.io.File;
 
-public class PuzzleBottomBar extends HBox{
-    // TODO Related to LevelMenuScene TOP_BAR_COLOR. Which class to take constant from?
-    private static final Color INTERFACE_COLOR = Color.web("#707070");
+import static starb.client.StarbClient.TEMPLATE_BAR_COLOR;
+
+public class PuzzleBottomBar extends HBox {
 
     private static final File STAR_IMAGE_FILE = new File("image/star_white.png");
-    private ImageView starImage;
+    private final ImageView starImage;
 
     private static final File DOT_IMAGE_FILE = new File("image/dot_white.png");
-    private ImageView dotImage;
+    private final ImageView dotImage;
 
     public PuzzleBottomBar() {
         this.setPadding(new Insets(10,10,10,10));
 
-        Background background = new Background(new BackgroundFill(INTERFACE_COLOR,
+        Background background = new Background(new BackgroundFill(TEMPLATE_BAR_COLOR,
                 CornerRadii.EMPTY, Insets.EMPTY));
         this.setBackground(background);
 
