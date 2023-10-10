@@ -43,6 +43,13 @@ public class PuzzleTopBar extends HBox{
             }
         });
 
-        this.getChildren().addAll(levelName, fillerPane, levelMenuButton);
+        //Alert button
+        Button showAlertButton = new Button("Show Alert");
+        showAlertButton.setOnAction (e -> {
+            CustomAlert testAlert = new CustomAlert("Test Alert", "this is a test!");
+            testAlert.showAndWait();
+        });
+
+        this.getChildren().addAll(levelName, fillerPane, showAlertButton, levelMenuButton);
     }
 }
