@@ -1,4 +1,4 @@
-package starb.client;
+package starb.client.ui;
 
 import javafx.geometry.Insets;
 import javafx.scene.layout.Background;

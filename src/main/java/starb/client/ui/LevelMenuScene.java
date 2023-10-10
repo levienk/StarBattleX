@@ -7,7 +7,7 @@ import javafx.scene.layout.VBox;
 import starb.client.StarbClient;
 
 import static starb.client.ExpandingPaneGenerator.newXPPane;
-import static starb.client.UIBarGenerator.newUIBar;
+import static starb.client.ui.UIBarGenerator.newUIBar;
 
 public class LevelMenuScene extends VBox {
 
