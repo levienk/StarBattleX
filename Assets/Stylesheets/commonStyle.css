@@ -32,28 +32,41 @@
     -fx-border-color: #ffffff;
 }
 
-.level-button-unlocked {
+.level-button-completed {
+    -fx-background-color: linear-gradient(to bottom right, #40ff40, #00a000);
+}
+
+.level-button-completed:hover {
+    -fx-background-color: linear-gradient(to bottom right, #80ff80, #00a000);
+}
+
+.level-button-completed:pressed {
+    -fx-background-color: linear-gradient(to bottom right, #00a000, #008000);
+}
+
+.level-button-new {
     -fx-background-color: linear-gradient(to bottom right, #ffa040, #a0a000);
 }
 
-.level-button-unlocked:hover {
+.level-button-new:hover {
     -fx-background-color: linear-gradient(to bottom right, #ffff00, #d0a040);
 }
 
-.level-button-unlocked:pressed {
+.level-button-new:pressed {
     -fx-background-color: linear-gradient(to bottom right, #a09030, #604010);
 }
 
 .level-button-locked {
-    -fx-background-color: linear-gradient(to bottom right, #ff4000, #a02020);
+    -fx-background-color: linear-gradient(to bottom right, #101010, #000000);
+    -fx-text-fill: #404040;
 }
 
 .level-button-locked:hover {
-    -fx-background-color: linear-gradient(to bottom right, #ff8000, #d06040);
+    -fx-background-color: linear-gradient(to bottom right, #151515, #000000);
 }
 
 .level-button-locked:pressed {
-    -fx-background-color: linear-gradient(to bottom right, #a04000, #602010);
+    -fx-background-color: linear-gradient(to bottom right, #040404, #000000);
 }
 
 

@@ -1,26 +1,19 @@
 package starb.client.ui;
 
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.*;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
 import javafx.scene.text.Font;
 
-import static starb.client.StarbClient.TEMPLATE_BAR_COLOR;
 import static starb.client.StarbClient.switchScene;
 
-public class PuzzleTopBar extends HBox{
+public class PuzzleTopBar extends UIBar {
 
     public PuzzleTopBar() {
-        this.setPadding(new Insets(10,10,10,10));
-
-        Background background = new Background(new BackgroundFill(TEMPLATE_BAR_COLOR,
-                CornerRadii.EMPTY, Insets.EMPTY));
-        this.setBackground(background);
-
-        this.setAlignment(Pos.CENTER);
+        super();
 
         Pane fillerPane = new Pane();
         HBox.setHgrow(fillerPane, Priority.ALWAYS);

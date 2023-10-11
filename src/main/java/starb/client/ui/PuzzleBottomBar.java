@@ -1,18 +1,17 @@
 package starb.client.ui;
 
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
 import javafx.scene.text.Font;
 
 import java.io.File;
 
-import static starb.client.StarbClient.TEMPLATE_BAR_COLOR;
-
-public class PuzzleBottomBar extends HBox {
+public class PuzzleBottomBar extends UIBar {
 
     private static final File STAR_IMAGE_FILE = new File("image/star_white.png");
     private final ImageView starImage;
@@ -21,11 +20,8 @@ public class PuzzleBottomBar extends HBox {
     private final ImageView dotImage;
 
     public PuzzleBottomBar() {
-        this.setPadding(new Insets(10,10,10,10));
 
-        Background background = new Background(new BackgroundFill(TEMPLATE_BAR_COLOR,
-                CornerRadii.EMPTY, Insets.EMPTY));
-        this.setBackground(background);
+        super();
 
         this.setAlignment(Pos.CENTER);
 
@@ -57,15 +53,12 @@ public class PuzzleBottomBar extends HBox {
         starButton.setGraphic(starImage);
         starButton.setAlignment(Pos.CENTER);
 
-        Pane separateButtons = new Pane();
-        HBox.setMargin(separateButtons, new Insets(0, 10, 0, 0));
-
         dotImage.setFitHeight(30);
         dotImage.setFitWidth(30);
         Button dotButton = new Button();
         dotButton.setGraphic(dotImage);
         dotButton.setAlignment(Pos.CENTER);
 
-        this.getChildren().addAll(playerRank, fillerPane, starButton, separateButtons, dotButton);
+        this.getChildren().addAll(playerRank, fillerPane, starButton, dotButton);
     }
 }

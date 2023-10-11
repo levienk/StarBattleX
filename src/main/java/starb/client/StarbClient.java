@@ -16,6 +16,20 @@ import java.io.File;
 
 public class StarbClient extends Application {
 
+    /**
+     *  GENERAL GUIDELINES FOR THIS PROJECT:
+     *
+     *  ALl adjustable values must be derived from here.
+     *  All assets should be stored the Assets folder.
+     *  Assets include:
+     *  - Images
+     *  - CSS Stylesheets
+     *  - Fonts
+     *  - Sound Effects
+     *  - Anything that isn't code basically.
+     *
+     *  This can be changed should there need to be.
+     */
     private final static File APPLICATION_ICON = new File
             ("./Assets/Images/StarIcon.png");
 

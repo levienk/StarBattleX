@@ -4,6 +4,10 @@ import javafx.scene.*;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
 import javafx.geometry.*;
+import starb.client.StarbClient;
+
+import java.net.MalformedURLException;
+
 public class CustomAlert extends Stage{
     private Label messageLabel;
     private Button okButton;
@@ -25,6 +29,13 @@ public class CustomAlert extends Stage{
         layout.setAlignment(Pos.CENTER);
 
         Scene scene = new Scene(layout, 300, 150);
+
+        try {
+            scene.getStylesheets().add(StarbClient.COMMON_STYLESHEET.
+                    toURI().toURL().toString());
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
         this.setScene(scene);
     }
 

@@ -4,7 +4,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 
 public class LevelSelector extends StackPane {
 
@@ -34,8 +33,10 @@ public class LevelSelector extends StackPane {
 
             Button levelButton = new Button((i+1) + "");
 
-            if (i < 7) {
-                levelButton.getStyleClass().add("level-button-unlocked");
+            if (i < 3) {
+                levelButton.getStyleClass().add("level-button-completed");
+            } else if (i == 3) {
+                levelButton.getStyleClass().add("level-button-new");
             } else {
                 levelButton.getStyleClass().add("level-button-locked");
             }
@@ -47,11 +48,9 @@ public class LevelSelector extends StackPane {
 
         }
 
-
-
-
-        levelSelectionArea.setBackground(new Background(
-                new BackgroundFill(Color.web("#40a0ffc0"),
+        // Transparent dark background
+        levelSelectionArea.setBackground(new Background(new BackgroundFill(
+                javafx.scene.paint.Color.rgb(0,0,0,0.1),
                 CornerRadii.EMPTY, Insets.EMPTY)));
 
         VBox.setVgrow(this, Priority.ALWAYS);

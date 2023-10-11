@@ -7,7 +7,6 @@ import javafx.scene.layout.VBox;
 import starb.client.StarbClient;
 
 import static starb.client.ExpandingPaneGenerator.newXPPane;
-import static starb.client.ui.UIBarGenerator.newUIBar;
 
 public class LevelMenuScene extends VBox {
 
@@ -17,8 +16,8 @@ public class LevelMenuScene extends VBox {
         this.getStylesheets().add(StarbClient.COMMON_STYLESHEET.
                         toURI().toURL().toString());
 
-        HBox topBar = newUIBar();
-        HBox bottomBar = newUIBar();
+        HBox topBar = new UIBar();
+        HBox bottomBar = new UIBar();
         bottomBar.setSpacing(10);
 
         Button backButton = new Button("Back");

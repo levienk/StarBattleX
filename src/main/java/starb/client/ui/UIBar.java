@@ -1,33 +1,30 @@
 package starb.client.ui;
 
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
-import org.jetbrains.annotations.NotNull;
 
 import static starb.client.StarbClient.TEMPLATE_BAR_COLOR;
 
 /**
  *  UI Bar template generator for easy use.
  */
-public class UIBarGenerator {
+public class UIBar extends HBox {
 
     /**
-     * Generates a new UI Bar with the default color.
-     * @return a new UI Bar.
+     * Generates a new UI Bar template with preconfigured properties.
      */
-    public static @NotNull HBox newUIBar() {
-
-        HBox barObject = new HBox();
-
-        barObject.setPadding(new Insets(10,10,10,10));
+    public UIBar() {
+        this.setPadding(new Insets(10,10,10,10));
         Background barBG = new Background(
                 new BackgroundFill(TEMPLATE_BAR_COLOR,
                         CornerRadii.EMPTY, Insets.EMPTY));
-        barObject.setBackground(barBG);
-
-        return barObject;
+        this.setBackground(barBG);
+        this.setSpacing(10);
+        this.setAlignment(Pos.CENTER);
     }
+
 }
