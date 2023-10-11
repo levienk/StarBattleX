@@ -50,7 +50,6 @@ public class StarbClient extends Application {
      */
     static Stage mainStage;
 
-
     /**
      *
      *  Initialize the GUI and its assets.
@@ -64,6 +63,7 @@ public class StarbClient extends Application {
      */
     @Override
     public void start(Stage primaryStage) throws Exception {
+
         primaryStage.setScene( new Scene( new LevelMenuScene() ) );
         primaryStage.setWidth(WINDOW_WIDTH);
         primaryStage.setHeight(WINDOW_HEIGHT);
@@ -71,7 +71,8 @@ public class StarbClient extends Application {
 
         // Minimum size for PuzzleScene to load properly (don't go smaller than this)
         primaryStage.setMinHeight(600);
-        primaryStage.setMinWidth(450);
+        //primaryStage.setMinWidth(450);
+        primaryStage.setMinWidth(600);
 
         primaryStage.getIcons().add(new Image(APPLICATION_ICON.toURI().toURL().toString()));
         primaryStage.show();

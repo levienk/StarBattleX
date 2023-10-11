@@ -28,6 +28,37 @@
 }
 
 
+.level-button {
+    -fx-border-color: #ffffff;
+}
+
+.level-button-unlocked {
+    -fx-background-color: linear-gradient(to bottom right, #ffa040, #a0a000);
+}
+
+.level-button-unlocked:hover {
+    -fx-background-color: linear-gradient(to bottom right, #ffff00, #d0a040);
+}
+
+.level-button-unlocked:pressed {
+    -fx-background-color: linear-gradient(to bottom right, #a09030, #604010);
+}
+
+.level-button-locked {
+    -fx-background-color: linear-gradient(to bottom right, #ff4000, #a02020);
+}
+
+.level-button-locked:hover {
+    -fx-background-color: linear-gradient(to bottom right, #ff8000, #d06040);
+}
+
+.level-button-locked:pressed {
+    -fx-background-color: linear-gradient(to bottom right, #a04000, #602010);
+}
+
+
+
+
 
 
 .root {

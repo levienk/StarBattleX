@@ -19,22 +19,40 @@ public class LevelSelector extends StackPane {
         StackPane.setAlignment(nextPageButton, Pos.CENTER_RIGHT);
 
         GridPane levelSelectionArea = new GridPane();
-        levelSelectionArea.setBorder(new Border(new BorderStroke(Color.BLACK,
-                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 
-        // Decrease the width of the levelSelectionArea by a bit
-        levelSelectionArea.setMaxWidth(1000);
-
-        // ._.
+        levelSelectionArea.setPrefWidth(400);
 
         GridPane.setRowSpan(levelSelectionArea, 5);
         GridPane.setColumnSpan(levelSelectionArea, 5);
+        levelSelectionArea.setHgap(10);
+        levelSelectionArea.setVgap(10);
+
+
+        levelSelectionArea.setAlignment(Pos.CENTER);
+
+        for (int i = 0; i < 25; i++) {
+
+            Button levelButton = new Button((i+1) + "");
+
+            if (i < 7) {
+                levelButton.getStyleClass().add("level-button-unlocked");
+            } else {
+                levelButton.getStyleClass().add("level-button-locked");
+            }
+
+            levelButton.setPrefHeight(70);
+            levelButton.setPrefWidth(70);
+
+            levelSelectionArea.add(levelButton, i % 5, i / 5);
+
+        }
+
+
+
 
         levelSelectionArea.setBackground(new Background(
                 new BackgroundFill(Color.web("#40a0ffc0"),
                 CornerRadii.EMPTY, Insets.EMPTY)));
-        levelSelectionArea.setGridLinesVisible(true);
-
 
         VBox.setVgrow(this, Priority.ALWAYS);
 
