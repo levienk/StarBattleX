@@ -1,10 +1,10 @@
-package starb.client.ui;
+package starb.client.ui.components;
 import javafx.stage.*;
 import javafx.scene.*;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
 import javafx.geometry.*;
-import starb.client.StarbClient;
+import starb.client.ui.StarbClient;
 
 import java.net.MalformedURLException;
 

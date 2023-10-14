@@ -1,4 +1,4 @@
-package starb.client;
+package starb.client.ui.components;
 
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;

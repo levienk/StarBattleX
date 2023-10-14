@@ -1,10 +1,9 @@
-package starb.client.ui;
+package starb.client.ui.scenes;
 
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import starb.client.StarbClient;
+import starb.client.ui.StarbClient;
 
 public class PuzzleScene extends VBox {
 

@@ -1,4 +1,4 @@
-package starb.client.ui;
+package starb.client.ui.components;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -7,7 +7,7 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 
-import static starb.client.StarbClient.TEMPLATE_BAR_COLOR;
+import static starb.client.ui.StarbClient.TEMPLATE_BAR_COLOR;
 
 /**
  *  UI Bar template generator for easy use.

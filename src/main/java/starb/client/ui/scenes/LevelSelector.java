@@ -1,4 +1,4 @@
-package starb.client.ui;
+package starb.client.ui.scenes;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

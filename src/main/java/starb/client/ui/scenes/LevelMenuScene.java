@@ -1,12 +1,13 @@
-package starb.client.ui;
+package starb.client.ui.scenes;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import starb.client.StarbClient;
+import starb.client.ui.StarbClient;
+import starb.client.ui.components.UIBar;
 
-import static starb.client.ExpandingPaneGenerator.newXPPane;
+import static starb.client.ui.components.ExpandingPaneGenerator.newXPPane;
 
 public class LevelMenuScene extends VBox {
 

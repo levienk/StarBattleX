@@ -1,4 +1,4 @@
-package starb.client.ui;
+package starb.client.ui.scenes;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -8,6 +8,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.text.Font;
+import starb.client.ui.components.UIBar;
 
 import java.io.File;
 

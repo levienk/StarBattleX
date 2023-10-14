@@ -1,4 +1,4 @@
-package starb.client.ui;
+package starb.client.ui.scenes;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -7,8 +7,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.text.Font;
+import starb.client.ui.components.CustomAlert;
+import starb.client.ui.components.UIBar;
 
-import static starb.client.StarbClient.switchScene;
+import static starb.client.ui.StarbClient.switchScene;
 
 public class PuzzleTopBar extends UIBar {
 
