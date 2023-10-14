@@ -1,4 +1,4 @@
-package starb.client.ui;
+package starb.client.ui.scenes;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -6,6 +6,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.text.Font;
+import starb.client.ui.components.CustomAlert;
+import starb.client.ui.components.ExpandingPaneGenerator;
+import starb.client.ui.components.Title;
+import starb.client.ui.components.UIBar;
 
 import static starb.client.SceneSwitcher.setScene;
 
@@ -14,16 +18,11 @@ public class PuzzleTopBar extends UIBar {
     public PuzzleTopBar() {
         super();
 
-        Pane fillerPane = new Pane();
-        HBox.setHgrow(fillerPane, Priority.ALWAYS);
-
         // Label for the current level the user is on.
-        // TODO Could not get to work with stylesheet.
         // TODO Implement the puzzle name.
-        Label levelName = new Label("Level 1");
-        levelName.setFont(new Font("Arial", 20));
-        levelName.setStyle("-fx-font-weight: bold");
-        levelName.setStyle("-fx-text-fill: #ffffff");
+        Label levelName = new Title("Level 1");
+
+        Pane fillerPane = ExpandingPaneGenerator.newXPPane('h');
 
         // Level Menu Button
         Button levelMenuButton = new Button("Level Menu");

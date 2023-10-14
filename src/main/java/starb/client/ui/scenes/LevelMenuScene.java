@@ -1,13 +1,14 @@
-package starb.client.ui;
+package starb.client.ui.scenes;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
 import starb.client.EventListener;
-import starb.client.StarbClient;
+import starb.client.ui.StarbClient;
+import starb.client.ui.components.UIBar;
 
-import static starb.client.ExpandingPaneGenerator.newXPPane;
+import static starb.client.ui.components.ExpandingPaneGenerator.newXPPane;
 import static starb.client.SceneSwitcher.*;
 
 public class LevelMenuScene extends VBox implements EventListener {

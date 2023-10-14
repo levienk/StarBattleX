@@ -1,10 +1,10 @@
-package starb.client.ui;
+package starb.client.ui.scenes;
 
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import starb.client.StarbClient;
+import starb.client.ui.StarbClient;
+import starb.client.ui.components.ExpandingPaneGenerator;
 
 public class PuzzleScene extends VBox {
 
@@ -21,8 +21,7 @@ public class PuzzleScene extends VBox {
         topBar = new PuzzleTopBar();
         puzzle = new PuzzleUI();
 
-        Pane fillerPane = new Pane();
-        VBox.setVgrow(fillerPane, Priority.ALWAYS);
+        Pane fillerPane = ExpandingPaneGenerator.newXPPane('v');
 
         bottomBar = new PuzzleBottomBar();
 

@@ -1,11 +1,11 @@
-package starb.client;
+package starb.client.ui;
 
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import starb.client.ui.LevelMenuScene;
+import starb.client.ui.scenes.LevelMenuScene;
 
 import java.io.File;
 import java.util.ArrayList;
