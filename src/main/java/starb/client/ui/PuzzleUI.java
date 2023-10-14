@@ -19,9 +19,9 @@ public class PuzzleUI extends StackPane {
     private static final int WIDTH = 430;
     private static final int HEIGHT = 430;
 
-    private static final File STAR_IMAGE_FILE = new File("image/star_gold.png");
+    private static final File STAR_IMAGE_FILE = new File("Assets/Images/star_gold.png");
     private Image starImage;
-    private static final File SPOT_IMAGE_FILE = new File("image/spot_the_cow.png");
+    private static final File SPOT_IMAGE_FILE = new File("Assets/Images/spot_the_cow.png");
     private Image spotImage;
 
     private Canvas canvas;

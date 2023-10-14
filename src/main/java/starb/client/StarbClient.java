@@ -1,13 +1,18 @@
 package starb.client;
 
 import javafx.application.Application;
-import javafx.scene.Scene;
+import javafx.application.Platform;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import starb.client.ui.LevelMenuScene;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
+import static starb.client.SceneSwitcher.setScene;
+import static starb.client.SceneSwitcher.setStage;
 
 /**
  * Creates a single window as an example of a Java GUI with a component
@@ -18,7 +23,7 @@ public class StarbClient extends Application {
 
     /**
      *  GENERAL GUIDELINES FOR THIS PROJECT:
-     *
+     * <p>
      *  ALl adjustable values must be derived from here.
      *  All assets should be stored the Assets folder.
      *  Assets include:
@@ -27,7 +32,7 @@ public class StarbClient extends Application {
      *  - Fonts
      *  - Sound Effects
      *  - Anything that isn't code basically.
-     *
+     * <p>
      *  This can be changed should there need to be.
      */
     private final static File APPLICATION_ICON = new File
@@ -48,6 +53,8 @@ public class StarbClient extends Application {
 
     public static final Color TEMPLATE_BAR_COLOR = Color.web("#707070");
 
+    private static List<EventListener> eventListeners;
+
     /**
      *
      * @param args the command line arguments
@@ -57,12 +64,6 @@ public class StarbClient extends Application {
 
         launch();
     }
-
-    /** This is very scuffed, apparently I can't just put a 'final' without initializing the damn
-     *  thing. I'm not sure how to fix this, but I'll look into it later.
-     *
-     */
-    static Stage mainStage;
 
     /**
      *
@@ -78,25 +79,52 @@ public class StarbClient extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        primaryStage.setScene( new Scene( new LevelMenuScene() ) );
+        eventListeners = new ArrayList<>();
+        setStage(primaryStage);
+
+        setScene(LevelMenuScene.class);
         primaryStage.setWidth(WINDOW_WIDTH);
         primaryStage.setHeight(WINDOW_HEIGHT);
         primaryStage.setTitle(WINDOW_TITLE);
 
         // Minimum size for PuzzleScene to load properly (don't go smaller than this)
         primaryStage.setMinHeight(600);
-        //primaryStage.setMinWidth(450);
         primaryStage.setMinWidth(600);
 
         primaryStage.getIcons().add(new Image(APPLICATION_ICON.toURI().toURL().toString()));
         primaryStage.show();
 
-        mainStage = primaryStage;
+        //TODO delete this later.
+        /*
+         *  This is a test to see if the event system works.
+         *  The code creates a new thread which runs separately from the application.
+         *  It will wait for some time before calling the runLater method which
+         *  is necessary if we want to dynamically update the GUI.
+         *
+         *  To update the GUI, we need to call the publishEvent method which will
+         *  call the onEvent method of all the event listeners.
+         *
+         *  The event listeners will then do whatever they need to do.
+         */
+        Thread t = new Thread(() -> {
+            try {
+                Thread.sleep(3000);
+                Platform.runLater(() -> publishEvent("setLevelsUnlocked", 17));
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        });
 
+        t.start();
     }
 
-    public static void switchScene(Scene scene) {
+    public static void addEventListener(EventListener listener) {
+        eventListeners.add(listener);
+    }
 
-        mainStage.setScene(scene);
+    public void publishEvent(String event, Object... args) {
+        for(EventListener listener : eventListeners) {
+            listener.onEvent(event, args);
+        }
     }
 }

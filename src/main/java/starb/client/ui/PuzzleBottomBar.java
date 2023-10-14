@@ -13,10 +13,10 @@ import java.io.File;
 
 public class PuzzleBottomBar extends UIBar {
 
-    private static final File STAR_IMAGE_FILE = new File("image/star_white.png");
+    private static final File STAR_IMAGE_FILE = new File("Assets/Images/star_white.png");
     private final ImageView starImage;
 
-    private static final File DOT_IMAGE_FILE = new File("image/dot_white.png");
+    private static final File DOT_IMAGE_FILE = new File("Assets/Images/dot_white.png");
     private final ImageView dotImage;
 
     public PuzzleBottomBar() {

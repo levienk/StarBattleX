@@ -1,6 +1,5 @@
 package starb.client.ui;
 
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
@@ -8,7 +7,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.text.Font;
 
-import static starb.client.StarbClient.switchScene;
+import static starb.client.SceneSwitcher.setScene;
 
 public class PuzzleTopBar extends UIBar {
 
@@ -30,7 +29,7 @@ public class PuzzleTopBar extends UIBar {
         Button levelMenuButton = new Button("Level Menu");
         levelMenuButton.setOnAction(e -> {
             try {
-                switchScene(new Scene(new LevelMenuScene()));
+                setScene(LevelMenuScene.class);
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }
