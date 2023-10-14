@@ -5,6 +5,7 @@ import javafx.application.Platform;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import starb.client.EventListener;
 import starb.client.ui.scenes.LevelMenuScene;
 
 import java.io.File;
