@@ -15,12 +15,11 @@ import static starb.client.SceneSwitcher.setScene;
 
 public class PuzzleTopBar extends UIBar {
 
-    public PuzzleTopBar() {
+    public PuzzleTopBar(String levelName) {
         super();
 
         // Label for the current level the user is on.
-        // TODO Implement the puzzle name.
-        Label levelName = new Title("Level 1");
+        Label levelNameLabel = new Title(levelName);
 
         Pane fillerPane = ExpandingPaneGenerator.newXPPane('h');
 
@@ -35,12 +34,13 @@ public class PuzzleTopBar extends UIBar {
         });
 
         //Alert button
+        //TODO - Remove this
         Button showAlertButton = new Button("Show Alert");
         showAlertButton.setOnAction (e -> {
             CustomAlert testAlert = new CustomAlert("Test Alert", "this is a test!");
             testAlert.showAndWait();
         });
 
-        this.getChildren().addAll(levelName, fillerPane, showAlertButton, levelMenuButton);
+        this.getChildren().addAll(levelNameLabel, fillerPane, showAlertButton, levelMenuButton);
     }
 }

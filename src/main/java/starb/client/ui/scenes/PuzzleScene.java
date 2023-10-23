@@ -18,7 +18,7 @@ public class PuzzleScene extends VBox {
         this.getStylesheets().add(StarbClient.COMMON_STYLESHEET.
                 toURI().toURL().toString());
 
-        topBar = new PuzzleTopBar();
+        topBar = new PuzzleTopBar("Replace with name from Board");
         puzzle = new PuzzleUI();
 
         Pane fillerPane = ExpandingPaneGenerator.newXPPane('v');
