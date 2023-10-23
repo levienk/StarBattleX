@@ -1,8 +1,7 @@
 package starb.client.ui.scenes;
 
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -45,20 +44,36 @@ public class PuzzleBottomBar extends UIBar {
 
         Pane fillerPane = ExpandingPaneGenerator.newXPPane('h');
 
+        // Group buttons so only one can be selected at a time
+        ToggleGroup buttonGroup = new ToggleGroup();
+
         // Create star button
         starImage.setFitHeight(30);
         starImage.setFitWidth(30);
-        Button starButton = new Button();
+        RadioButton starButton = new RadioButton();
+        starButton.getStyleClass().remove("radio-button");
+        starButton.getStyleClass().add("toggle-button");
         starButton.setGraphic(starImage);
         starButton.setAlignment(Pos.CENTER);
+        starButton.setSelected(true);
+        starButton.setToggleGroup(buttonGroup);
 
         // Create dot button
         dotImage.setFitHeight(30);
         dotImage.setFitWidth(30);
-        Button dotButton = new Button();
+        RadioButton dotButton = new RadioButton();
+        dotButton.getStyleClass().remove("radio-button");
+        dotButton.getStyleClass().add("toggle-button");
         dotButton.setGraphic(dotImage);
         dotButton.setAlignment(Pos.CENTER);
+        dotButton.setToggleGroup(buttonGroup);
 
-        this.getChildren().addAll(playerRank, fillerPane, starButton, dotButton);
+        // Create remove button
+        RadioButton removeButton = new RadioButton("Remove");
+        removeButton.getStyleClass().remove("radio-button");
+        removeButton.getStyleClass().add("toggle-button");
+        removeButton.setToggleGroup(buttonGroup);
+
+        this.getChildren().addAll(playerRank, fillerPane, starButton, dotButton, removeButton);
     }
 }
