@@ -32,8 +32,14 @@ public class PuzzleUI extends StackPane {
     private int cols = 10;
     private Point2D gridUpperLeft = new Point2D(15,15);
 
+    private GraphicsContext g;
+
+    private String selectionType;
+
     public PuzzleUI() {
         canvas = new Canvas(WIDTH, HEIGHT);
+
+        selectionType = "star";
 
         // Load the image files
         try {
@@ -52,7 +58,7 @@ public class PuzzleUI extends StackPane {
     }
 
     public void draw() {
-        GraphicsContext g = canvas.getGraphicsContext2D();
+        g = canvas.getGraphicsContext2D();
         g.setFill(Color.BLACK);
 
         // Example grid
@@ -107,5 +113,9 @@ public class PuzzleUI extends StackPane {
 
     private void mouseClicked(MouseEvent e) {
         System.out.printf("Click: (%d, %d)%n", (int)e.getX(), (int)e.getY());
+    }
+
+    public void setSelectionType(String selectionType) {
+        this.selectionType = selectionType;
     }
 }

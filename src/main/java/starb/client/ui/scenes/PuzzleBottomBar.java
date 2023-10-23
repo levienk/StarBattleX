@@ -16,7 +16,7 @@ public class PuzzleBottomBar extends UIBar {
 
     private static final File DOT_IMAGE_FILE = new File("Assets/Images/dot_white.png");
 
-    public PuzzleBottomBar() {
+    public PuzzleBottomBar(PuzzleUI ui) {
 
         super();
 
@@ -54,6 +54,7 @@ public class PuzzleBottomBar extends UIBar {
         starButton.setAlignment(Pos.CENTER);
         starButton.setSelected(true);
         starButton.setToggleGroup(buttonGroup);
+        starButton.setOnAction( e -> {ui.setSelectionType("star");});
 
         // Create dot button
         dotImage.setFitHeight(30);
@@ -64,12 +65,14 @@ public class PuzzleBottomBar extends UIBar {
         dotButton.setGraphic(dotImage);
         dotButton.setAlignment(Pos.CENTER);
         dotButton.setToggleGroup(buttonGroup);
+        dotButton.setOnAction( e -> {ui.setSelectionType("dot");});
 
         // Create remove button
         RadioButton removeButton = new RadioButton("Remove");
         removeButton.getStyleClass().remove("radio-button");
         removeButton.getStyleClass().add("toggle-button");
         removeButton.setToggleGroup(buttonGroup);
+        removeButton.setOnAction( e -> {ui.setSelectionType("");});
 
         this.getChildren().addAll(playerRank, fillerPane, starButton, dotButton, removeButton);
     }
