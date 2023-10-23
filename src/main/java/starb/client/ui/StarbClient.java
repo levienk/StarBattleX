@@ -6,7 +6,7 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import starb.client.EventListener;
-import starb.client.ui.scenes.LevelMenuScene;
+import starb.client.ui.scenes.PuzzleScene;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -83,7 +83,7 @@ public class StarbClient extends Application {
         eventListeners = new ArrayList<>();
         setStage(primaryStage);
 
-        setScene(LevelMenuScene.class);
+        setScene(PuzzleScene.class);
         primaryStage.setWidth(WINDOW_WIDTH);
         primaryStage.setHeight(WINDOW_HEIGHT);
         primaryStage.setTitle(WINDOW_TITLE);
