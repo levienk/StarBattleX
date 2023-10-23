@@ -12,7 +12,7 @@ import java.util.Scanner;
 
 public class JSONReader {
     // The puzzle board loaded from the JSON
-    private Board board;
+//    private Board board;
     // The JSON file with the puzzle data
     private File file;
     // Scanner to read from the file
@@ -41,8 +41,8 @@ public class JSONReader {
         return null;
     }
 
-    private Board getBoard(){
-        // return the Board object
-        return this.board;
-    }
+//    private Board getBoard(){
+//        // return the Board object
+//        return this.board;
+//    }
 }
