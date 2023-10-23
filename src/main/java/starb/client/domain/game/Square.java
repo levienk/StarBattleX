@@ -1,4 +1,4 @@
-package starb.client.domain;
+package starb.client.domain.game;
 
 public class Square {
     private String state = "";
