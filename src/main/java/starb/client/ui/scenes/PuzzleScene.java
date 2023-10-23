@@ -23,7 +23,7 @@ public class PuzzleScene extends VBox {
 
         Pane fillerPane = ExpandingPaneGenerator.newXPPane('v');
 
-        bottomBar = new PuzzleBottomBar();
+        bottomBar = new PuzzleBottomBar(puzzle);
 
         this.getChildren().addAll(topBar, puzzle, fillerPane, bottomBar);
 
