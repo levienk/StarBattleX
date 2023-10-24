@@ -7,6 +7,7 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import starb.client.EventListener;
+import starb.client.domain.json.JSONReader;
 import starb.client.ui.scenes.PuzzleScene;
 
 import java.io.File;
@@ -87,7 +88,9 @@ public class StarbClient extends Application {
         // TODO - is first loaded using SceneSwitcher
         setStage(primaryStage);
 
-        PuzzleScene puzzleScene = new PuzzleScene("Temporary Rank");
+        // TODO - Replace temp.txt with a real file eventually, and delete from project
+        JSONReader reader = new JSONReader("temp.txt");
+        PuzzleScene puzzleScene = new PuzzleScene(reader.getBoard(), "Temporary Rank");
         Scene primaryScene = new Scene(puzzleScene);
 
         //setScene(primaryStage)

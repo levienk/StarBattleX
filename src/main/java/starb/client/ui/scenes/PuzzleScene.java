@@ -3,6 +3,7 @@ package starb.client.ui.scenes;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import starb.client.domain.game.Board;
 import starb.client.ui.StarbClient;
 import starb.client.ui.components.ExpandingPaneGenerator;
 
@@ -13,16 +14,13 @@ public class PuzzleScene extends VBox {
     private PuzzleBottomBar bottomBar;
 
     // The Exception is for the .getSytlesheets() method
-    // TODO - Add Board as a parameter
-    public PuzzleScene(String playerRank) throws Exception{
+    public PuzzleScene(Board board, String playerRank) throws Exception{
         // Set the Style
         this.getStylesheets().add(StarbClient.COMMON_STYLESHEET.
                 toURI().toURL().toString());
 
-        // TODO - Replace with board name
-        topBar = new PuzzleTopBar("Replace with name from Board");
-        // TODO - Add Board as a parameter
-        puzzle = new PuzzleUI();
+        topBar = new PuzzleTopBar(board.getPuzzleName());
+        puzzle = new PuzzleUI(board);
 
         Pane fillerPane = ExpandingPaneGenerator.newXPPane('v');
 
