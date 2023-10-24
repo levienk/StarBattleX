@@ -68,7 +68,7 @@ public class PuzzleUI extends StackPane {
         g = canvas.getGraphicsContext2D();
         g.setFill(Color.BLACK);
 
-        // Example grid
+        // Draw the grid
         g.setLineWidth(1.0);
         g.beginPath();
         for( int i = 0; i < rows + 1; i++ ) {
@@ -89,6 +89,7 @@ public class PuzzleUI extends StackPane {
         }
         g.stroke();
 
+        // TODO - Draw the board sections
         // Draw a thicker line, left side of cells in column
         g.setLineWidth(5.0);
         int column = 1, startCellY = 1, endCellY = 3;
@@ -100,6 +101,13 @@ public class PuzzleUI extends StackPane {
     }
 
     private void draw( int col, int row) {
+        // Update the board square
+        if (selectionType.equals("") || selectionType.equals("star") ||
+                selectionType.equals("dot")) {
+            // TODO - Uncomment when sections are complete in board
+            //board.updateSquare(new Point2D(col, row), selectionType);
+        }
+
         // Draw based on selectionType
         // In the future, possibly add a scale factor for the size
         switch (selectionType) {
@@ -114,6 +122,10 @@ public class PuzzleUI extends StackPane {
                         gridUpperLeft.getY() + (row - 1) * cellSize + 3,
                         cellSize - 6, cellSize - 6
                 );
+                // TODO - implement invalid stars
+                if (board.isComplete()) {
+                    completionWindow();
+                }
             }
             case "dot" -> {
                 // Empty the square in case there is a star
@@ -175,5 +187,10 @@ public class PuzzleUI extends StackPane {
 
     protected void setSelectionType(String selectionType) {
         this.selectionType = selectionType;
+    }
+
+    private void completionWindow() {
+        // TODO - implement the completionWindow method
+        System.out.println("You win!");
     }
 }
