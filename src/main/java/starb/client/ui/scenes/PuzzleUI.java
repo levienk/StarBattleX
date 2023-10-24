@@ -23,6 +23,8 @@ public class PuzzleUI extends StackPane {
 
     private static final File STAR_IMAGE_FILE = new File("Assets/Images/star_black.png");
     private Image starImage;
+    private static final File INVALID_STAR_IMAGE_FILE = new File("Assets/Images/star_red.png");
+    private Image invalidStarImage;
     private static final File DOT_IMAGE_FILE = new File("Assets/Images/dot_black.png");
     private Image dotImage;
 
@@ -52,6 +54,7 @@ public class PuzzleUI extends StackPane {
         // Load the image files
         try {
             starImage = new Image(STAR_IMAGE_FILE.toURI().toURL().toString());
+            invalidStarImage = new Image(INVALID_STAR_IMAGE_FILE.toURI().toURL().toString());
             dotImage = new Image(DOT_IMAGE_FILE.toURI().toURL().toString());
         } catch(Exception e) {
             String message = "Unable to load image: " + STAR_IMAGE_FILE;
@@ -103,7 +106,7 @@ public class PuzzleUI extends StackPane {
         }
     }
 
-    private void draw( int col, int row) {
+    private void draw(int col, int row) {
         // Update the board square
         if (selectionType.equals("") || selectionType.equals("star") ||
                 selectionType.equals("dot")) {
@@ -111,41 +114,46 @@ public class PuzzleUI extends StackPane {
             //board.updateSquare(new Point2D(col, row), selectionType);
         }
 
+        // Scale the image and position the image in the center of the square
+        double scale = 0.85 * cellSize;
+        double positioning = (cellSize - scale) / 2;
+        double dotScale = 0.55 * cellSize;
+        double dotPositioning = (cellSize - dotScale) / 2;
+
+        // Empty whatever is in the square
+        g.clearRect(gridUpperLeft.getX() + (col - 1) * cellSize + positioning,
+                gridUpperLeft.getY() + (row - 1) * cellSize + positioning,
+                scale, scale
+        );
+
         // Draw based on selectionType
-        // In the future, possibly add a scale factor for the size
         switch (selectionType) {
             case "star" -> {
-                // Empty the square in case there is a dot
-                g.clearRect(gridUpperLeft.getX() + (col - 1) * cellSize + 3,
-                        gridUpperLeft.getY() + (row - 1) * cellSize + 3,
-                        cellSize - 6, cellSize - 6
-                );
                 g.drawImage(starImage,
-                        gridUpperLeft.getX() + (col - 1) * cellSize + 3,
-                        gridUpperLeft.getY() + (row - 1) * cellSize + 3,
-                        cellSize - 6, cellSize - 6
+                        gridUpperLeft.getX() + (col - 1) * cellSize + positioning,
+                        gridUpperLeft.getY() + (row - 1) * cellSize + positioning,
+                        scale, scale
                 );
-                // TODO - implement invalid stars
+                // Draw the invalid stars to the board
+                for (Point2D point : board.getInvalidStars()) {
+                    g.drawImage(invalidStarImage,
+                            gridUpperLeft.getX() + (point.getX() - 1) * cellSize + positioning,
+                            gridUpperLeft.getY() + (point.getY() - 1) * cellSize + positioning,
+                            scale, scale
+                    );
+                }
+                // TODO - Redraw the valid stars to the board
                 if (board.isComplete()) {
                     completionWindow();
                 }
             }
             case "dot" -> {
-                // Empty the square in case there is a star
-                g.clearRect(gridUpperLeft.getX() + (col - 1) * cellSize + 3,
-                        gridUpperLeft.getY() + (row - 1) * cellSize + 3,
-                        cellSize - 6, cellSize - 6
-                );
                 g.drawImage(dotImage,
-                        gridUpperLeft.getX() + (col - 1) * cellSize + 5,
-                        gridUpperLeft.getY() + (row - 1) * cellSize + 5,
-                        cellSize - 10, cellSize - 10
+                        gridUpperLeft.getX() + (col - 1) * cellSize + dotPositioning,
+                        gridUpperLeft.getY() + (row - 1) * cellSize + dotPositioning,
+                        dotScale, dotScale
                 );
             }
-            case "" -> g.clearRect(gridUpperLeft.getX() + (col - 1) * cellSize + 3,
-                    gridUpperLeft.getY() + (row - 1) * cellSize + 3,
-                    cellSize - 6, cellSize - 6
-            );
         }
     }
 

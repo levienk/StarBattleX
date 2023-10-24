@@ -72,6 +72,7 @@ public class PuzzleBottomBar extends UIBar {
         removeButton.getStyleClass().add("toggle-button");
         removeButton.setToggleGroup(buttonGroup);
         removeButton.setOnAction( e -> {ui.setSelectionType("");});
+        removeButton.setMinWidth(102); // This may need adjusting based on font
 
         this.getChildren().addAll(playerRankLabel, fillerPane, starButton, dotButton, removeButton);
     }
