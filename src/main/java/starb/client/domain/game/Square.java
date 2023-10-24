@@ -7,4 +7,8 @@ public class Square {
     protected void setState(String state){
         this.state = state;
     }
+    public String getState() { return state;}
+    public boolean isStarValid() {
+        return isStarValid;
+    }
 }
