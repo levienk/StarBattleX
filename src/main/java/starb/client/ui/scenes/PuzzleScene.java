@@ -21,6 +21,7 @@ public class PuzzleScene extends VBox {
 
         // TODO - Replace with board name
         topBar = new PuzzleTopBar("Replace with name from Board");
+        // TODO - Add Board as a parameter
         puzzle = new PuzzleUI();
 
         Pane fillerPane = ExpandingPaneGenerator.newXPPane('v');
