@@ -98,36 +98,36 @@ public class PuzzleUI extends StackPane {
         g.strokeLine(x1, y1, x2, y2);
     }
 
-    private void draw( int posX, int posY) {
+    private void draw( int col, int row) {
         // Draw based on selectionType
         // In the future, possibly add a scale factor for the size
         switch (selectionType) {
             case "star" -> {
                 // Empty the square in case there is a dot
-                g.clearRect(gridUpperLeft.getX() + (posX - 1) * cellSize + 3,
-                        gridUpperLeft.getY() + (posY - 1) * cellSize + 3,
+                g.clearRect(gridUpperLeft.getX() + (col - 1) * cellSize + 3,
+                        gridUpperLeft.getY() + (row - 1) * cellSize + 3,
                         cellSize - 6, cellSize - 6
                 );
                 g.drawImage(starImage,
-                        gridUpperLeft.getX() + (posX - 1) * cellSize + 3,
-                        gridUpperLeft.getY() + (posY - 1) * cellSize + 3,
+                        gridUpperLeft.getX() + (col - 1) * cellSize + 3,
+                        gridUpperLeft.getY() + (row - 1) * cellSize + 3,
                         cellSize - 6, cellSize - 6
                 );
             }
             case "dot" -> {
                 // Empty the square in case there is a star
-                g.clearRect(gridUpperLeft.getX() + (posX - 1) * cellSize + 3,
-                        gridUpperLeft.getY() + (posY - 1) * cellSize + 3,
+                g.clearRect(gridUpperLeft.getX() + (col - 1) * cellSize + 3,
+                        gridUpperLeft.getY() + (row - 1) * cellSize + 3,
                         cellSize - 6, cellSize - 6
                 );
                 g.drawImage(dotImage,
-                        gridUpperLeft.getX() + (posX - 1) * cellSize + 5,
-                        gridUpperLeft.getY() + (posY - 1) * cellSize + 5,
+                        gridUpperLeft.getX() + (col - 1) * cellSize + 5,
+                        gridUpperLeft.getY() + (row - 1) * cellSize + 5,
                         cellSize - 10, cellSize - 10
                 );
             }
-            case "" -> g.clearRect(gridUpperLeft.getX() + (posX - 1) * cellSize + 3,
-                    gridUpperLeft.getY() + (posY - 1) * cellSize + 3,
+            case "" -> g.clearRect(gridUpperLeft.getX() + (col - 1) * cellSize + 3,
+                    gridUpperLeft.getY() + (row - 1) * cellSize + 3,
                     cellSize - 6, cellSize - 6
             );
         }
