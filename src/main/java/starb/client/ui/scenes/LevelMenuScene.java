@@ -4,11 +4,12 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
+import starb.client.domain.json.JSONReader;
 import starb.client.ui.StarbClient;
 import starb.client.ui.components.UIBar;
 
+import static starb.client.SceneSwitcher.setScene;
 import static starb.client.ui.components.ExpandingPaneGenerator.newXPPane;
-import static starb.client.SceneSwitcher.*;
 
 public class LevelMenuScene extends VBox {
 
@@ -36,7 +37,9 @@ public class LevelMenuScene extends VBox {
 
         switchSceneTestButton.setOnAction(e -> {
             try {
-                setScene(PuzzleScene.class);
+                JSONReader reader = new JSONReader("temp.txt");
+
+                setScene(PuzzleScene.class,  reader.getBoard(), "Temporary Rank");
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }
@@ -121,17 +124,4 @@ public class LevelMenuScene extends VBox {
 
     }
 
-    // TODO - You may want to remove this?
-    public void onEvent(String event, Object... args) {
-
-        if (event.equals("setLevelsUnlocked")) {
-            // TODO
-            if (args[0] instanceof Integer) {
-                int levelsUnlocked = (int) args[0];
-                System.out.println("Levels unlocked: " + levelsUnlocked);
-                levelSelector.setLevelsUnlocked(levelsUnlocked);
-            }
-        }
-
-    }
 }

@@ -1,17 +1,12 @@
 package starb.client.ui;
 
 import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import starb.client.domain.json.JSONReader;
-import starb.client.ui.scenes.PuzzleScene;
+import starb.client.ui.scenes.LevelMenuScene;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 import static starb.client.SceneSwitcher.setScene;
 import static starb.client.SceneSwitcher.setStage;
@@ -84,12 +79,11 @@ public class StarbClient extends Application {
         setStage(primaryStage);
 
         // TODO - Replace temp.txt with a real file eventually, and delete from project
-        JSONReader reader = new JSONReader("temp.txt");
-        PuzzleScene puzzleScene = new PuzzleScene(reader.getBoard(), "Temporary Rank");
-        Scene primaryScene = new Scene(puzzleScene);
+        // JSONReader reader = new JSONReader("temp.txt");
+        // PuzzleScene puzzleScene = new PuzzleScene(reader.getBoard(), "Temporary Rank");
+        // Scene primaryScene = new Scene(puzzleScene);
 
-        //setScene(primaryStage)
-        primaryStage.setScene(primaryScene);
+        setScene(LevelMenuScene.class);
         primaryStage.setWidth(WINDOW_WIDTH);
         primaryStage.setHeight(WINDOW_HEIGHT);
         primaryStage.setTitle(WINDOW_TITLE);
@@ -101,28 +95,6 @@ public class StarbClient extends Application {
         primaryStage.getIcons().add(new Image(APPLICATION_ICON.toURI().toURL().toString()));
         primaryStage.show();
 
-        //TODO delete this later.
-        /*
-         *  This is a test to see if the event system works.
-         *  The code creates a new thread which runs separately from the application.
-         *  It will wait for some time before calling the runLater method which
-         *  is necessary if we want to dynamically update the GUI.
-         *
-         *  To update the GUI, we need to call the publishEvent method which will
-         *  call the onEvent method of all the event listeners.
-         *
-         *  The event listeners will then do whatever they need to do.
-         */
-        Thread t = new Thread(() -> {
-            try {
-                Thread.sleep(3000);
-                // Platform.runLater(() -> publishEvent("setLevelsUnlocked", 17));
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        });
-
-        t.start();
     }
 
 }
