@@ -23,6 +23,8 @@ public class PuzzleUI extends StackPane {
 
     private static final File STAR_IMAGE_FILE = new File("Assets/Images/star_black.png");
     private Image starImage;
+    private static final File INVALID_STAR_IMAGE_FILE = new File("Assets/Images/star_red.png");
+    private Image invalidStarImage;
     private static final File DOT_IMAGE_FILE = new File("Assets/Images/dot_black.png");
     private Image dotImage;
 
@@ -52,6 +54,7 @@ public class PuzzleUI extends StackPane {
         // Load the image files
         try {
             starImage = new Image(STAR_IMAGE_FILE.toURI().toURL().toString());
+            invalidStarImage = new Image(INVALID_STAR_IMAGE_FILE.toURI().toURL().toString());
             dotImage = new Image(DOT_IMAGE_FILE.toURI().toURL().toString());
         } catch(Exception e) {
             String message = "Unable to load image: " + STAR_IMAGE_FILE;
@@ -125,7 +128,15 @@ public class PuzzleUI extends StackPane {
                         gridUpperLeft.getY() + (row - 1) * cellSize + 3,
                         cellSize - 6, cellSize - 6
                 );
-                // TODO - implement invalid stars
+                // Draw the invalid stars to the board
+                for (Point2D point : board.getInvalidStars()) {
+                    g.drawImage(invalidStarImage,
+                            gridUpperLeft.getX() + (point.getX() - 1) * cellSize + 3,
+                            gridUpperLeft.getY() + (point.getY() - 1) * cellSize + 3,
+                            cellSize - 6, cellSize - 6
+                    );
+                }
+                // TODO - Redraw the valid stars to the board
                 if (board.isComplete()) {
                     completionWindow();
                 }
