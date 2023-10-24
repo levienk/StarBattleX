@@ -7,6 +7,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import starb.client.domain.game.Board;
 
 import java.io.File;
 
@@ -35,17 +36,17 @@ public class PuzzleUI extends StackPane {
     private Point2D gridUpperLeft = new Point2D(15,15);
 
     private GraphicsContext g;
-
     private String selectionType;
+    private Board board;
 
-    public PuzzleUI() {
+    public PuzzleUI(Board newBoard) {
         canvas = new Canvas(WIDTH, HEIGHT);
 
         selectionType = "star";
+        board = newBoard;
 
-        // TODO - Get from board
-        rows = 10;
-        cols = 10;
+        rows = board.getRows();
+        cols = board.getColumns();
 
         // Load the image files
         try {

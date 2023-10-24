@@ -4,22 +4,18 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
-import starb.client.EventListener;
 import starb.client.ui.StarbClient;
 import starb.client.ui.components.UIBar;
 
 import static starb.client.ui.components.ExpandingPaneGenerator.newXPPane;
 import static starb.client.SceneSwitcher.*;
 
-public class LevelMenuScene extends VBox implements EventListener {
+public class LevelMenuScene extends VBox {
 
     private final LevelSelector levelSelector;
     public LevelMenuScene() throws Exception {
 
         levelSelector = new LevelSelector();
-
-        // Register this class as an event listener
-        StarbClient.addEventListener(this);
 
         // Set the Style
         this.getStylesheets().add(StarbClient.COMMON_STYLESHEET.
@@ -125,8 +121,7 @@ public class LevelMenuScene extends VBox implements EventListener {
 
     }
 
-
-    @Override
+    // TODO - You may want to remove this?
     public void onEvent(String event, Object... args) {
 
         if (event.equals("setLevelsUnlocked")) {

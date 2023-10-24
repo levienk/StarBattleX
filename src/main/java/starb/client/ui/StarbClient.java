@@ -6,7 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import starb.client.EventListener;
+import starb.client.domain.json.JSONReader;
 import starb.client.ui.scenes.PuzzleScene;
 
 import java.io.File;
@@ -55,8 +55,6 @@ public class StarbClient extends Application {
 
     public static final Color TEMPLATE_BAR_COLOR = Color.web("#707070");
 
-    private static List<EventListener> eventListeners;
-
     /**
      *
      * @param args the command line arguments
@@ -81,13 +79,13 @@ public class StarbClient extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        eventListeners = new ArrayList<>();
-
         // TODO - Randy, we need a way to initialize the parameters for when PuzzleScene
         // TODO - is first loaded using SceneSwitcher
         setStage(primaryStage);
 
-        PuzzleScene puzzleScene = new PuzzleScene("Temporary Rank");
+        // TODO - Replace temp.txt with a real file eventually, and delete from project
+        JSONReader reader = new JSONReader("temp.txt");
+        PuzzleScene puzzleScene = new PuzzleScene(reader.getBoard(), "Temporary Rank");
         Scene primaryScene = new Scene(puzzleScene);
 
         //setScene(primaryStage)
@@ -118,7 +116,7 @@ public class StarbClient extends Application {
         Thread t = new Thread(() -> {
             try {
                 Thread.sleep(3000);
-                Platform.runLater(() -> publishEvent("setLevelsUnlocked", 17));
+                // Platform.runLater(() -> publishEvent("setLevelsUnlocked", 17));
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -127,13 +125,4 @@ public class StarbClient extends Application {
         t.start();
     }
 
-    public static void addEventListener(EventListener listener) {
-        eventListeners.add(listener);
-    }
-
-    public void publishEvent(String event, Object... args) {
-        for(EventListener listener : eventListeners) {
-            listener.onEvent(event, args);
-        }
-    }
 }

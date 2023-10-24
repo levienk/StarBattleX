@@ -16,6 +16,7 @@ public class JSONReader {
     // Scanner to read from the file
     private Scanner scnr;
     // EventListener to push data to the UI
+    // TODO - Remove this. We will just create an instance of JSONReader in the UI.
     private EventListener eventListener;
     // Identifier for which puzzle is loaded
     private String puzzleName;
