@@ -63,7 +63,7 @@ public class PuzzleUI extends StackPane {
         drawBoard();
     }
 
-    public void drawBoard() {
+    private void drawBoard() {
         g = canvas.getGraphicsContext2D();
         g.setFill(Color.BLACK);
 
@@ -172,7 +172,7 @@ public class PuzzleUI extends StackPane {
         }
     }
 
-    public void setSelectionType(String selectionType) {
+    protected void setSelectionType(String selectionType) {
         this.selectionType = selectionType;
     }
 }
