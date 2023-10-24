@@ -13,17 +13,20 @@ public class PuzzleScene extends VBox {
     private PuzzleBottomBar bottomBar;
 
     // The Exception is for the .getSytlesheets() method
-    public PuzzleScene() throws Exception{
+    // TODO - Add Board as a parameter
+    public PuzzleScene(String playerRank) throws Exception{
         // Set the Style
         this.getStylesheets().add(StarbClient.COMMON_STYLESHEET.
                 toURI().toURL().toString());
 
-        topBar = new PuzzleTopBar();
+        // TODO - Replace with board name
+        topBar = new PuzzleTopBar("Replace with name from Board");
+        // TODO - Add Board as a parameter
         puzzle = new PuzzleUI();
 
         Pane fillerPane = ExpandingPaneGenerator.newXPPane('v');
 
-        bottomBar = new PuzzleBottomBar();
+        bottomBar = new PuzzleBottomBar(puzzle, playerRank);
 
         this.getChildren().addAll(topBar, puzzle, fillerPane, bottomBar);
 

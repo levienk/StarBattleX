@@ -26,6 +26,30 @@
     -fx-background-color: linear-gradient(to bottom right, #3090a0, #104060);
 }
 
+/* Toggle button stylesheet used in PuzzleBottomBar */
+.toggle-button {
+    -fx-background-color: linear-gradient(to bottom right, #404040, #000000);
+
+
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 20px;
+    -fx-font-family: "Comic Sans MS";
+    -fx-font-weight: bold;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-border-color: #ffffff;
+    -fx-border-width: 2px;
+    /*-fx-padding: 10px;*/
+
+}
+
+.toggle-button:hover {
+    -fx-background-color: linear-gradient(to bottom right, #40a0ff, #2080a0);
+}
+
+.toggle-button:selected {
+    -fx-background-color: linear-gradient(to bottom right, #3090a0, #104060);
+}
 
 .level-button {
     -fx-border-color: #ffffff;

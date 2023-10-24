@@ -19,26 +19,38 @@ public class PuzzleUI extends StackPane {
     private static final int WIDTH = 430;
     private static final int HEIGHT = 430;
 
-    private static final File STAR_IMAGE_FILE = new File("Assets/Images/star_gold.png");
+    private static final File STAR_IMAGE_FILE = new File("Assets/Images/star_black.png");
     private Image starImage;
-    private static final File SPOT_IMAGE_FILE = new File("Assets/Images/spot_the_cow.png");
-    private Image spotImage;
+    private static final File DOT_IMAGE_FILE = new File("Assets/Images/dot_black.png");
+    private Image dotImage;
 
     private Canvas canvas;
 
     // Grid dimensions and location
-    private double cellSize = 40.0;
-    private int rows = 10;
-    private int cols = 10;
+    // Must pass in an int only
+    private double cellSize = 40;
+    private int rows;
+    private int cols;
+    // Must pass in an int only
     private Point2D gridUpperLeft = new Point2D(15,15);
+
+    private GraphicsContext g;
+
+    private String selectionType;
 
     public PuzzleUI() {
         canvas = new Canvas(WIDTH, HEIGHT);
 
+        selectionType = "star";
+
+        // TODO - Get from board
+        rows = 10;
+        cols = 10;
+
         // Load the image files
         try {
             starImage = new Image(STAR_IMAGE_FILE.toURI().toURL().toString());
-            spotImage = new Image(SPOT_IMAGE_FILE.toURI().toURL().toString());
+            dotImage = new Image(DOT_IMAGE_FILE.toURI().toURL().toString());
         } catch(Exception e) {
             String message = "Unable to load image: " + STAR_IMAGE_FILE;
             System.err.println(message);
@@ -47,12 +59,12 @@ public class PuzzleUI extends StackPane {
         }
 
         this.getChildren().add(canvas);
-        canvas.setOnMouseClicked( e -> mouseClicked(e));
-        draw();
+        canvas.setOnMouseClicked( e -> selectSquare(e));
+        drawBoard();
     }
 
-    public void draw() {
-        GraphicsContext g = canvas.getGraphicsContext2D();
+    private void drawBoard() {
+        g = canvas.getGraphicsContext2D();
         g.setFill(Color.BLACK);
 
         // Example grid
@@ -84,28 +96,83 @@ public class PuzzleUI extends StackPane {
         double x2 = x1;
         double y2 = (endCellY + 1) * cellSize + gridUpperLeft.getY();
         g.strokeLine(x1, y1, x2, y2);
-
-        // Draw stars in a few cells of the grid
-        drawStar( 3, 4, g );
-        drawStar( 1, 1, g );
-        drawStar( 0, 2, g );
-
-        // TODO delete this later, for now use as temporary example
-//        float scale = 0.4f;
-//        g.drawImage( spotImage, gridUpperLeft.getX() + cellSize * cols + 5,
-//                gridUpperLeft.getY(),
-//                spotImage.getWidth() * scale, spotImage.getHeight() * scale);
     }
 
-    private void drawStar( int row, int col, GraphicsContext g ) {
-        g.drawImage(starImage,
-                gridUpperLeft.getX() + row * cellSize,
-                gridUpperLeft.getY() + col * cellSize,
-                cellSize, cellSize
+    private void draw( int col, int row) {
+        // Draw based on selectionType
+        // In the future, possibly add a scale factor for the size
+        switch (selectionType) {
+            case "star" -> {
+                // Empty the square in case there is a dot
+                g.clearRect(gridUpperLeft.getX() + (col - 1) * cellSize + 3,
+                        gridUpperLeft.getY() + (row - 1) * cellSize + 3,
+                        cellSize - 6, cellSize - 6
                 );
+                g.drawImage(starImage,
+                        gridUpperLeft.getX() + (col - 1) * cellSize + 3,
+                        gridUpperLeft.getY() + (row - 1) * cellSize + 3,
+                        cellSize - 6, cellSize - 6
+                );
+            }
+            case "dot" -> {
+                // Empty the square in case there is a star
+                g.clearRect(gridUpperLeft.getX() + (col - 1) * cellSize + 3,
+                        gridUpperLeft.getY() + (row - 1) * cellSize + 3,
+                        cellSize - 6, cellSize - 6
+                );
+                g.drawImage(dotImage,
+                        gridUpperLeft.getX() + (col - 1) * cellSize + 5,
+                        gridUpperLeft.getY() + (row - 1) * cellSize + 5,
+                        cellSize - 10, cellSize - 10
+                );
+            }
+            case "" -> g.clearRect(gridUpperLeft.getX() + (col - 1) * cellSize + 3,
+                    gridUpperLeft.getY() + (row - 1) * cellSize + 3,
+                    cellSize - 6, cellSize - 6
+            );
+        }
     }
 
-    private void mouseClicked(MouseEvent e) {
-        System.out.printf("Click: (%d, %d)%n", (int)e.getX(), (int)e.getY());
+    private void selectSquare(MouseEvent e) {
+        int posX = (int) e.getX();
+        int posY = (int) e.getY();
+
+        Point2D location = pixelsToBoardGrid(posX, posY);
+
+        if (location != null) {
+            draw((int) location.getX(), (int) location.getY());
+        }
+
+    }
+
+    private Point2D pixelsToBoardGrid(int posX, int posY) {
+        posX -= (int) gridUpperLeft.getX();
+        posY -= (int) gridUpperLeft.getY();
+
+        // Only calculate if inside the grid bounds
+        if (posX > 0 && posX < cols * cellSize &&
+                posY > 0 && posY < rows * cellSize) {
+
+            // Get the location of the upper left corner of the square
+//            posX = ( posX / (int) cellSize ) * (int) cellSize;
+//            posY = ( posY / (int) cellSize ) * (int) cellSize;
+
+            // Change to board location
+            posX = posX / (int) cellSize + 1;
+            posY = posY / (int) cellSize + 1;
+
+            // Test
+            // System.out.printf("Click: (%d, %d)%n", posX, posY);
+            return new Point2D(posX, posY);
+
+        } else {
+            // Test
+            // System.out.println("out of bounds");
+            return null;
+        }
+    }
+
+    protected void setSelectionType(String selectionType) {
+        this.selectionType = selectionType;
     }
 }
