@@ -48,7 +48,7 @@ public class JSONReader {
         return null;
     }
 
-    private Board getBoard(){
+    public Board getBoard(){
         // return the Board object
         return this.board;
     }
