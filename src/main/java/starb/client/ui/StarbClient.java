@@ -2,6 +2,7 @@ package starb.client.ui;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -81,9 +82,16 @@ public class StarbClient extends Application {
     public void start(Stage primaryStage) throws Exception {
 
         eventListeners = new ArrayList<>();
+
+        // TODO - Randy, we need a way to initialize the parameters for when PuzzleScene
+        // TODO - is first loaded using SceneSwitcher
         setStage(primaryStage);
 
-        setScene(PuzzleScene.class);
+        PuzzleScene puzzleScene = new PuzzleScene("Temporary Rank");
+        Scene primaryScene = new Scene(puzzleScene);
+
+        //setScene(primaryStage)
+        primaryStage.setScene(primaryScene);
         primaryStage.setWidth(WINDOW_WIDTH);
         primaryStage.setHeight(WINDOW_HEIGHT);
         primaryStage.setTitle(WINDOW_TITLE);

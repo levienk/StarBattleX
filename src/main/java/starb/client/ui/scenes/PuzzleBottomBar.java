@@ -16,7 +16,7 @@ public class PuzzleBottomBar extends UIBar {
 
     private static final File DOT_IMAGE_FILE = new File("Assets/Images/dot_white.png");
 
-    public PuzzleBottomBar(PuzzleUI ui) {
+    public PuzzleBottomBar(PuzzleUI ui, String playerRank) {
 
         super();
 
@@ -36,8 +36,7 @@ public class PuzzleBottomBar extends UIBar {
         }
 
         // Label for the current player rank.
-        // TODO Implement rank system.
-        Label playerRank = new Title("Rank: Beginner");
+        Label playerRankLabel = new Title("Rank: " + playerRank);
 
         Pane fillerPane = ExpandingPaneGenerator.newXPPane('h');
 
@@ -74,6 +73,6 @@ public class PuzzleBottomBar extends UIBar {
         removeButton.setToggleGroup(buttonGroup);
         removeButton.setOnAction( e -> {ui.setSelectionType("");});
 
-        this.getChildren().addAll(playerRank, fillerPane, starButton, dotButton, removeButton);
+        this.getChildren().addAll(playerRankLabel, fillerPane, starButton, dotButton, removeButton);
     }
 }
