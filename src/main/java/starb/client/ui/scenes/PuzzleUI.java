@@ -7,6 +7,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
 import starb.client.domain.game.Board;
 
 import java.io.File;
@@ -68,7 +69,7 @@ public class PuzzleUI extends StackPane {
         g = canvas.getGraphicsContext2D();
         g.setFill(Color.BLACK);
 
-        // Example grid
+        // Draw the grid
         g.setLineWidth(1.0);
         g.beginPath();
         for( int i = 0; i < rows + 1; i++ ) {
@@ -89,17 +90,27 @@ public class PuzzleUI extends StackPane {
         }
         g.stroke();
 
-        // Draw a thicker line, left side of cells in column
+        // Draw the section lines of the board
         g.setLineWidth(5.0);
-        int column = 1, startCellY = 1, endCellY = 3;
-        double x1 = column * cellSize + gridUpperLeft.getX();
-        double y1 = startCellY * cellSize + gridUpperLeft.getY();
-        double x2 = x1;
-        double y2 = (endCellY + 1) * cellSize + gridUpperLeft.getY();
-        g.strokeLine(x1, y1, x2, y2);
+        for (Line line : board.getSectionBoundaries()) {
+            g.strokeLine(( (int) line.getStartX() - 1 ) * cellSize + gridUpperLeft.getX(),
+                    ( (int) line.getStartY() - 1 ) * cellSize + gridUpperLeft.getY(),
+                    ( (int) line.getEndX() - 1 ) * cellSize + gridUpperLeft.getX(),
+                    ( (int) line.getEndY() - 1 ) * cellSize + gridUpperLeft.getY());
+            // Test
+//            System.out.printf("Start: (%d, %d)%n", (int) line.getStartX(), (int) line.getStartY());
+//            System.out.printf("Start: (%d, %d)%n%n", (int) line.getEndX(), (int) line.getEndY());
+        }
     }
 
     private void draw( int col, int row) {
+        // Update the board square
+        if (selectionType.equals("") || selectionType.equals("star") ||
+                selectionType.equals("dot")) {
+            // TODO - Uncomment when sections are complete in board
+            //board.updateSquare(new Point2D(col, row), selectionType);
+        }
+
         // Draw based on selectionType
         // In the future, possibly add a scale factor for the size
         switch (selectionType) {
@@ -114,6 +125,10 @@ public class PuzzleUI extends StackPane {
                         gridUpperLeft.getY() + (row - 1) * cellSize + 3,
                         cellSize - 6, cellSize - 6
                 );
+                // TODO - implement invalid stars
+                if (board.isComplete()) {
+                    completionWindow();
+                }
             }
             case "dot" -> {
                 // Empty the square in case there is a star
@@ -175,5 +190,10 @@ public class PuzzleUI extends StackPane {
 
     protected void setSelectionType(String selectionType) {
         this.selectionType = selectionType;
+    }
+
+    private void completionWindow() {
+        // TODO - implement the completionWindow method
+        System.out.println("You win!");
     }
 }

@@ -24,12 +24,7 @@ public class JSONReader {
     public JSONReader(String fileName) throws FileNotFoundException {
         // Temporary initialization of the Board
         // Please do not remove until implemented
-        List<HashMap<Point2D, Square>> sections = new ArrayList<>();
-        HashMap<Point2D, Square> section = new HashMap<>();
-        section.put(new Point2D(2,3), new Square());
-        sections.add(section);
-        // The Board expects sections to be filled, so this will cause problems
-        board = new Board(10, 10, sections, "Temporary Board");
+        board = new Board(10, 10, getTemporarySections(), "Temporary Board");
 
         // JSON file with a puzzle
         this.file = new File(fileName);
@@ -52,5 +47,21 @@ public class JSONReader {
     public Board getBoard(){
         // return the Board object
         return this.board;
+    }
+
+    // The Board expects sections to cover the entire board
+    // TODO - remove this after temporary file and this class is implemented
+    private List<HashMap<Point2D, Square>> getTemporarySections() {
+        List<HashMap<Point2D, Square>> tempSections = new ArrayList<>();
+
+        // Adds 10 vertical sections to the board
+        for (int i = 1; i <= 10; i++) {
+            HashMap<Point2D, Square> section = new HashMap<>();
+            for (int j = 1; j <= 10; j++) {
+                section.put(new Point2D(i, j), new Square());
+            }
+            tempSections.add(section);
+        }
+        return tempSections;
     }
 }
