@@ -7,6 +7,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
 import starb.client.domain.game.Board;
 
 import java.io.File;
@@ -89,15 +90,17 @@ public class PuzzleUI extends StackPane {
         }
         g.stroke();
 
-        // TODO - Draw the board sections
-        // Draw a thicker line, left side of cells in column
+        // Draw the section lines of the board
         g.setLineWidth(5.0);
-        int column = 1, startCellY = 1, endCellY = 3;
-        double x1 = column * cellSize + gridUpperLeft.getX();
-        double y1 = startCellY * cellSize + gridUpperLeft.getY();
-        double x2 = x1;
-        double y2 = (endCellY + 1) * cellSize + gridUpperLeft.getY();
-        g.strokeLine(x1, y1, x2, y2);
+        for (Line line : board.getSectionBoundaries()) {
+            g.strokeLine(( (int) line.getStartX() - 1 ) * cellSize + gridUpperLeft.getX(),
+                    ( (int) line.getStartY() - 1 ) * cellSize + gridUpperLeft.getY(),
+                    ( (int) line.getEndX() - 1 ) * cellSize + gridUpperLeft.getX(),
+                    ( (int) line.getEndY() - 1 ) * cellSize + gridUpperLeft.getY());
+            // Test
+//            System.out.printf("Start: (%d, %d)%n", (int) line.getStartX(), (int) line.getStartY());
+//            System.out.printf("Start: (%d, %d)%n%n", (int) line.getEndX(), (int) line.getEndY());
+        }
     }
 
     private void draw( int col, int row) {
