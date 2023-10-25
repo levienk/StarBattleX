@@ -11,11 +11,14 @@ import starb.client.ui.components.ExpandingPaneGenerator;
 import starb.client.ui.components.Title;
 import starb.client.ui.components.UIBar;
 
+import java.io.File;
+import java.net.MalformedURLException;
+
 import static starb.client.SceneSwitcher.setScene;
 
 public class PuzzleTopBar extends UIBar {
 
-    public PuzzleTopBar(String levelName) {
+    public PuzzleTopBar(PuzzleUI ui, String levelName) throws MalformedURLException {
         super();
 
         // Label for the current level the user is on.
@@ -23,7 +26,15 @@ public class PuzzleTopBar extends UIBar {
 
         Pane fillerPane = ExpandingPaneGenerator.newXPPane('h');
 
-        // Level Menu Button
+        // Clear Board button
+        Button clearBoardButton = new Button("Clear Board");
+        clearBoardButton.getStylesheets().add(new File("Assets/Stylesheets/clearBoardButtonStyle.css").
+                toURI().toURL().toString());
+        clearBoardButton.setOnAction(e -> {
+            ui.clear();
+        });
+
+        // Level Menu button
         Button levelMenuButton = new Button("Level Menu");
         levelMenuButton.setOnAction(e -> {
             try {
@@ -34,13 +45,13 @@ public class PuzzleTopBar extends UIBar {
         });
 
         //Alert button
-        //TODO - Remove this
+        //TODO - Remove this once completionWindow() in PuzzleUI is implemented.
         Button showAlertButton = new Button("Show Alert");
         showAlertButton.setOnAction (e -> {
             CustomAlert testAlert = new CustomAlert("Test Alert", "this is a test!");
             testAlert.showAndWait();
         });
 
-        this.getChildren().addAll(levelNameLabel, fillerPane, showAlertButton, levelMenuButton);
+        this.getChildren().addAll(levelNameLabel, fillerPane, showAlertButton, clearBoardButton, levelMenuButton);
     }
 }
