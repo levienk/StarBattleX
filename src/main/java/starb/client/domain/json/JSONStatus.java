@@ -10,11 +10,11 @@ public class JSONStatus {
     private List<String> inaccessible;
     private List<EventListener> eventListeners;
 
-    public JSONStatus(ArrayList<String> completed, String nextPuzzle, ArrayList<String> inaccessible) {
+    public JSONStatus() {
         // Each of the Strings are JSON File names
-        this.completed = completed;
-        this.nextPuzzle = nextPuzzle;
-        this.inaccessible = inaccessible;
+        //this.completed = server's data for completed;
+        //this.nextPuzzle = server's data for nextPuzzle;
+        //this.inaccessible = server's data for inaccessible;
     }
 
     public void updateNextPuzzle(){
@@ -33,4 +33,24 @@ public class JSONStatus {
     public List<String> getCompleted(){return completed;}
 
     public String getNextPuzzle(){return this.nextPuzzle;}
+
+    public String getPlayerRank() {
+        String playerRank = "beginner";
+        if (this.completed.size() == 0) {
+            playerRank = "beginner";
+        }
+        else if (completed.size() < 5) {
+            playerRank = "novice";
+        }
+        else if (completed.size() < 10) {
+            playerRank = "intermediate";
+        }
+        else if (completed.size() < 15) {
+            playerRank = "expert";
+        }
+        else if (completed.size() < 20) {
+            playerRank = "master";
+        }
+        return playerRank;
+    }
 }
