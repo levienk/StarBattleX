@@ -149,7 +149,7 @@ public class PuzzleUI extends StackPane {
                 // TODO - Uncomment once board.getValidStars() is implemented
                 // Draw the valid stars to the board
 //                for (Point2D point : board.getValidStars()) {
-//                    g.drawImage(invalidStarImage,
+//                    g.drawImage(starImage,
 //                            gridUpperLeft.getX() + (point.getX() - 1) * cellSize + positioning,
 //                            gridUpperLeft.getY() + (point.getY() - 1) * cellSize + positioning,
 //                            starScale, starScale
