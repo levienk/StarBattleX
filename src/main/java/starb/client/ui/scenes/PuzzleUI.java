@@ -115,7 +115,7 @@ public class PuzzleUI extends StackPane {
         // Update the board square
         if (selectionType.equals("") || selectionType.equals("star") ||
                 selectionType.equals("dot")) {
-            // TODO - Uncomment when board.updateSquare is fully implemented
+            // TODO - Uncomment when board.updateSquare() is functioning
             //board.updateSquare(new Point2D(col, row), selectionType);
         }
 
@@ -132,7 +132,7 @@ public class PuzzleUI extends StackPane {
         // Draw based on selectionType
         switch (selectionType) {
             case "star" -> {
-                // TODO - Remove this after board.getValidStars() is implemented
+                // TODO - Remove this after board.updateSquare() functioning
                 g.drawImage(starImage,
                         gridUpperLeft.getX() + (col - 1) * cellSize + positioning,
                         gridUpperLeft.getY() + (row - 1) * cellSize + positioning,
@@ -146,15 +146,14 @@ public class PuzzleUI extends StackPane {
                             starScale, starScale
                     );
                 }
-                // TODO - Uncomment once board.getValidStars() is implemented
                 // Draw the valid stars to the board
-//                for (Point2D point : board.getValidStars()) {
-//                    g.drawImage(starImage,
-//                            gridUpperLeft.getX() + (point.getX() - 1) * cellSize + positioning,
-//                            gridUpperLeft.getY() + (point.getY() - 1) * cellSize + positioning,
-//                            starScale, starScale
-//                    );
-//                }
+                for (Point2D point : board.getValidStars()) {
+                    g.drawImage(starImage,
+                            gridUpperLeft.getX() + (point.getX() - 1) * cellSize + positioning,
+                            gridUpperLeft.getY() + (point.getY() - 1) * cellSize + positioning,
+                            starScale, starScale
+                    );
+                }
                 if (board.isComplete()) {
                     completionWindow();
                 }
