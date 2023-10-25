@@ -15,9 +15,6 @@ public class JSONReader {
     private File file;
     // Scanner to read from the file
     private Scanner scnr;
-    // EventListener to push data to the UI
-    // TODO - Remove this. We will just create an instance of JSONReader in the UI.
-    private EventListener eventListener;
     // Identifier for which puzzle is loaded
     private String puzzleName;
 
@@ -32,7 +29,6 @@ public class JSONReader {
         this.scnr = new Scanner(this.file);
         // Create a board Object based on the JSON
         // Assign the Board with a puzzleName in its constructor
-        // EventListener may be redundant.
     }
 
     private List<Map<Point2D, Square>> getSections(){ // Called by the constructor
