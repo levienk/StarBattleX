@@ -77,6 +77,7 @@ public class StarbClient extends Application {
 
         setStage(primaryStage);
 
+        // TODO - Open PuzzleScene by default
         setScene(LevelMenuScene.class);
         primaryStage.setWidth(WINDOW_WIDTH);
         primaryStage.setHeight(WINDOW_HEIGHT);
