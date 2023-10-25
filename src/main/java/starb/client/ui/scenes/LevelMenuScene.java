@@ -32,12 +32,12 @@ public class LevelMenuScene extends VBox {
         Button neatButton = new Button("Centerpiece");
         neatButton.setMinWidth(200);
 
-        // TODO delete these later
+        // TODO delete these later. Temporary file.
         Button switchSceneTestButton = new Button("Switch Scene Test");
 
         switchSceneTestButton.setOnAction(e -> {
             try {
-                JSONReader reader = new JSONReader("temp.txt");
+                JSONReader reader = new JSONReader("Assets/Puzzles/temp.txt");
 
                 setScene(PuzzleScene.class,  reader.getBoard(), "Temporary Rank");
             } catch (Exception ex) {
@@ -81,7 +81,7 @@ public class LevelMenuScene extends VBox {
             levelSelectionArea.setAlignment(Pos.CENTER);
 
             // Reset this later.
-            setLevelsUnlocked(3);
+            setLevelsUnlocked(3, 1);
 
             // Transparent dark background
             levelSelectionArea.setBackground(new Background(new BackgroundFill(
@@ -94,20 +94,25 @@ public class LevelMenuScene extends VBox {
 
         }
 
-        private void setLevelsUnlocked(int levelsUnlocked) {
+        private void setLevelsUnlocked(int levelsUnlocked, int levelPage) {
 
-            if (levelsUnlocked < 0 || levelsUnlocked > 25) {
-                throw new IllegalArgumentException("Levels unlocked must be between 0 and 25");
+            if (!(levelsUnlocked >= 0)) {
+                throw new IllegalArgumentException("Levels unlocked must be between at least 0.");
             }
 
+            if (!(levelPage >= 1)) {
+                throw new IllegalArgumentException("Level page must be at least 1.");
+            }
 
+            int levelCounter;
             for (int i = 0; i < 25; i++) {
+                levelCounter = (levelPage - 1) * 25 + i;
 
-                Button levelButton = new Button((i+1) + "");
+                Button levelButton = new Button((levelCounter+1) + "");
 
-                if (i < levelsUnlocked) {
+                if (levelCounter < levelsUnlocked) {
                     levelButton.getStyleClass().add("level-button-completed");
-                } else if (i == levelsUnlocked) {
+                } else if (levelCounter == levelsUnlocked) {
                     levelButton.getStyleClass().add("level-button-new");
                 } else {
                     levelButton.getStyleClass().add("level-button-locked");
@@ -116,7 +121,7 @@ public class LevelMenuScene extends VBox {
                 levelButton.setPrefHeight(70);
                 levelButton.setPrefWidth(70);
 
-                levelSelectionArea.add(levelButton, i % 5, i / 5);
+                levelSelectionArea.add(levelButton, (i % 5), (i / 5));
 
             }
         }

@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import starb.client.domain.json.JSONPuzzleGenerator;
 import starb.client.ui.scenes.LevelMenuScene;
 
 import java.io.File;
@@ -74,14 +75,7 @@ public class StarbClient extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        // TODO - Randy, we need a way to initialize the parameters for when PuzzleScene
-        // TODO - is first loaded using SceneSwitcher
         setStage(primaryStage);
-
-        // TODO - Replace temp.txt with a real file eventually, and delete from project
-        // JSONReader reader = new JSONReader("temp.txt");
-        // PuzzleScene puzzleScene = new PuzzleScene(reader.getBoard(), "Temporary Rank");
-        // Scene primaryScene = new Scene(puzzleScene);
 
         setScene(LevelMenuScene.class);
         primaryStage.setWidth(WINDOW_WIDTH);
@@ -94,6 +88,10 @@ public class StarbClient extends Application {
 
         primaryStage.getIcons().add(new Image(APPLICATION_ICON.toURI().toURL().toString()));
         primaryStage.show();
+
+        // TODO: Temporary code for generating JSON-formmated
+        // Puzzles, IT IS SCUFFED, DO NOT USE
+        //new JSONPuzzleGenerator(62, new int[]{10, 10});
 
     }
 
