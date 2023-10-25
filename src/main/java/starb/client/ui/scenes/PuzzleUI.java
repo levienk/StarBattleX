@@ -37,6 +37,8 @@ public class PuzzleUI extends StackPane {
     private int cols;
     // Must pass in an int only
     private Point2D gridUpperLeft = new Point2D(15,15);
+    private double starScale;
+    private double dotScale;
 
     private GraphicsContext g;
     private String selectionType;
@@ -50,6 +52,9 @@ public class PuzzleUI extends StackPane {
 
         rows = board.getRows();
         cols = board.getColumns();
+
+        starScale = 0.85 * cellSize;
+        dotScale = 0.55 * cellSize;
 
         // Load the image files
         try {
@@ -110,20 +115,18 @@ public class PuzzleUI extends StackPane {
         // Update the board square
         if (selectionType.equals("") || selectionType.equals("star") ||
                 selectionType.equals("dot")) {
-            // TODO - Uncomment when sections are complete in board
+            // TODO - Uncomment when board.updateSquare is fully implemented
             //board.updateSquare(new Point2D(col, row), selectionType);
         }
 
         // Scale the image and position the image in the center of the square
-        double scale = 0.85 * cellSize;
-        double positioning = (cellSize - scale) / 2;
-        double dotScale = 0.55 * cellSize;
+        double positioning = (cellSize - starScale) / 2;
         double dotPositioning = (cellSize - dotScale) / 2;
 
         // Empty whatever is in the square
         g.clearRect(gridUpperLeft.getX() + (col - 1) * cellSize + positioning,
                 gridUpperLeft.getY() + (row - 1) * cellSize + positioning,
-                scale, scale
+                starScale, starScale
         );
 
         // Draw based on selectionType
@@ -132,17 +135,25 @@ public class PuzzleUI extends StackPane {
                 g.drawImage(starImage,
                         gridUpperLeft.getX() + (col - 1) * cellSize + positioning,
                         gridUpperLeft.getY() + (row - 1) * cellSize + positioning,
-                        scale, scale
+                        starScale, starScale
                 );
                 // Draw the invalid stars to the board
                 for (Point2D point : board.getInvalidStars()) {
                     g.drawImage(invalidStarImage,
                             gridUpperLeft.getX() + (point.getX() - 1) * cellSize + positioning,
                             gridUpperLeft.getY() + (point.getY() - 1) * cellSize + positioning,
-                            scale, scale
+                            starScale, starScale
                     );
                 }
-                // TODO - Redraw the valid stars to the board
+                // TODO - Uncomment once board.getValidStars() is implemented
+                // Draw the valid stars to the board
+//                for (Point2D point : board.getValidStars()) {
+//                    g.drawImage(invalidStarImage,
+//                            gridUpperLeft.getX() + (point.getX() - 1) * cellSize + positioning,
+//                            gridUpperLeft.getY() + (point.getY() - 1) * cellSize + positioning,
+//                            starScale, starScale
+//                    );
+//                }
                 if (board.isComplete()) {
                     completionWindow();
                 }
@@ -177,10 +188,6 @@ public class PuzzleUI extends StackPane {
         if (posX > 0 && posX < cols * cellSize &&
                 posY > 0 && posY < rows * cellSize) {
 
-            // Get the location of the upper left corner of the square
-//            posX = ( posX / (int) cellSize ) * (int) cellSize;
-//            posY = ( posY / (int) cellSize ) * (int) cellSize;
-
             // Change to board location
             posX = posX / (int) cellSize + 1;
             posY = posY / (int) cellSize + 1;
@@ -203,5 +210,20 @@ public class PuzzleUI extends StackPane {
     private void completionWindow() {
         // TODO - implement the completionWindow method
         System.out.println("You win!");
+    }
+    protected void clear() {
+        // Get the positioning
+        double positioning = (cellSize - starScale) / 2;
+
+        for (int i = 0; i < cols; i++) {
+            for (int j = 0; j < rows; j++) {
+                g.clearRect(gridUpperLeft.getX() + (i) * cellSize + positioning,
+                        gridUpperLeft.getY() + (j) * cellSize + positioning,
+                        starScale, starScale
+                );
+            }
+        }
+        // TODO - Uncomment once board.clear() has been implemented.
+        // board.clear()
     }
 }
