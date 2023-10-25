@@ -19,8 +19,8 @@ public class PuzzleScene extends VBox {
         this.getStylesheets().add(StarbClient.COMMON_STYLESHEET.
                 toURI().toURL().toString());
 
-        topBar = new PuzzleTopBar(board.getPuzzleName());
         puzzle = new PuzzleUI(board);
+        topBar = new PuzzleTopBar(puzzle, board.getPuzzleName());
 
         Pane fillerPane = ExpandingPaneGenerator.newXPPane('v');
 
