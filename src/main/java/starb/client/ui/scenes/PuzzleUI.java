@@ -132,6 +132,7 @@ public class PuzzleUI extends StackPane {
         // Draw based on selectionType
         switch (selectionType) {
             case "star" -> {
+                // TODO - Remove this after board.getValidStars() is implemented
                 g.drawImage(starImage,
                         gridUpperLeft.getX() + (col - 1) * cellSize + positioning,
                         gridUpperLeft.getY() + (row - 1) * cellSize + positioning,
