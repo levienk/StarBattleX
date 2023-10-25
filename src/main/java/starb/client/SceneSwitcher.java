@@ -6,6 +6,7 @@ import javafx.stage.Stage;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,22 +29,6 @@ public class SceneSwitcher {
         }
 
         if (!scenes.containsKey(scene)) {
-
-            boolean foundMatchingConstructor = false;
-
-            for (Constructor<?> cons : scene.getDeclaredConstructors()) {
-
-                if (cons.getParameterTypes() == params) {
-                    foundMatchingConstructor = true;
-                    break;
-                }
-            }
-
-            if (!foundMatchingConstructor) {
-                throw new NoSuchMethodException("No constructor found for " + scene.getName() +
-                        " with the given parameters.");
-            }
-
             Scene initScene =
                     new Scene((Parent) scene.getDeclaredConstructors()[0].newInstance(params));
             scenes.put(scene, initScene);
