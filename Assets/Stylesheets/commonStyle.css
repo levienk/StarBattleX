@@ -52,7 +52,8 @@
 }
 
 .toggle-button:selected {
-    -fx-background-color: linear-gradient(to bottom right, #ff4040, #a00000);
+    -fx-background-color: linear-gradient(to bottom right, #20C759FF, #0A8831FF);
+    /* -fx-background-color: linear-gradient(to bottom right, #ff4040, #a00000); */
 }
 
 .level-button {
