@@ -4,14 +4,20 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import starb.client.domain.json.JSONReader;
 import starb.client.ui.components.UIBar;
 
+import java.io.File;
+
+import static starb.client.ui.scenes.SceneSwitcher.setNewScene;
 import static starb.client.ui.scenes.SceneSwitcher.setScene;
 import static starb.client.ui.components.ExpandingPaneGenerator.newXPPane;
 
 public class LevelMenuScene extends VBox {
+
+    private static final File SETTINGS_ICON_FILE = new File("Assets/Images/settingsGearIcon.png");
 
     private final LevelSelector levelSelector;
 
@@ -49,26 +55,16 @@ public class LevelMenuScene extends VBox {
         });
         backButton.setDisable(true);
 
-        Button neatButton = new Button("Centerpiece");
-        neatButton.setMinWidth(200);
+        Button settingsButton = new Button();
+        ImageView settingsIcon = new ImageView(SETTINGS_ICON_FILE.toURI().toURL().toString());
+        settingsIcon.setFitHeight(30);
+        settingsIcon.setFitWidth(30);
+        settingsButton.setGraphic(settingsIcon);
 
-        // TODO delete these later. Temporary file.
-        Button switchSceneTestButton = new Button("Switch Scene Test");
-
-        switchSceneTestButton.setOnAction(e -> {
-            try {
-                JSONReader reader = new JSONReader("Assets/Puzzles/temp.txt");
-
-                backButton.setDisable(false);
-                setScene(PuzzleScene.class,  reader.getBoard(), "Temporary Rank");
-            } catch (Exception ex) {
-                throw new RuntimeException(ex);
-            }
-        });
 
         topBar.getChildren().addAll(newXPPane('h'), backButton);
-        bottomBar.getChildren().addAll(switchSceneTestButton, newXPPane('h'),
-                neatButton);
+        bottomBar.getChildren().addAll(newXPPane('h'),
+                settingsButton);
 
 
         this.getChildren().addAll(topBar, levelSelector, levelPageNumberContainer, bottomBar);
@@ -131,15 +127,11 @@ public class LevelMenuScene extends VBox {
 
             Button prevPageButton = new Button("<");
             StackPane.setAlignment(prevPageButton, Pos.CENTER_LEFT);
-            prevPageButton.setOnAction(e -> {
-                changePageNumber(levelPage - 1);
-            });
+            prevPageButton.setOnAction(e -> changePageNumber(levelPage - 1));
 
             Button nextPageButton = new Button(">");
             StackPane.setAlignment(nextPageButton, Pos.CENTER_RIGHT);
-            nextPageButton.setOnAction(e -> {
-                changePageNumber(levelPage + 1);
-            });
+            nextPageButton.setOnAction(e -> changePageNumber(levelPage + 1));
 
             levelSelectionArea = new GridPane();
 
@@ -181,12 +173,24 @@ public class LevelMenuScene extends VBox {
                 levelCounter = (levelPage - 1) * 25 + i;
 
                 Button levelButton = new Button((levelCounter+1) + "");
+                int finalLevelCounter = levelCounter;
+                levelButton.setOnAction(e -> {
+                   try {
+                       setNewScene(PuzzleScene.class,
+                       // TODO: Replace this with something more useful.
+                   new JSONReader(
+                       "temp.txt").getBoard(), "cutesy level " + (finalLevelCounter + 1));
+                   } catch (Exception ex) {
+                       throw new RuntimeException(ex);
+                   }
+                });
 
                 if (levelCounter < newLevelsUnlocked) {
                     levelButton.getStyleClass().add("level-button-completed");
                 } else if (levelCounter == newLevelsUnlocked) {
                     levelButton.getStyleClass().add("level-button-new");
                 } else {
+                    levelButton.setOnAction(e -> {});
                     levelButton.getStyleClass().add("level-button-locked");
                 }
 

@@ -111,6 +111,30 @@ public class SceneSwitcher {
 
     }
 
+    /**
+     *  Acts identically to setScene, however, if that scene already exists, replace it with a
+     *  new one.
+     *
+     * @param scene The scene to set to.
+     * @param params The parameters to pass to the constructor of the scene.
+     * @throws NoSuchMethodException If there is no constructor that matches the given parameters.
+     * @throws InvocationTargetException If the constructor throws an exception.
+     * @throws InstantiationException If the constructor throws an exception.
+     * @throws IllegalAccessException If the constructor throws an exception.
+     */
+    public static void setNewScene(Class<? extends Parent> scene, Object... params) throws
+            NoSuchMethodException, InvocationTargetException, InstantiationException,
+            IllegalAccessException {
+
+        if (!scenes.containsKey(scene)) {
+            setScene(scene, params);
+        } else {
+            scenes.remove(scene);
+            setScene(scene, params);
+        }
+
+    }
+
     public static void setStage(Stage stage) {
         SceneSwitcher.stage = stage;
     }
