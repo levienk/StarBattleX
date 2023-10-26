@@ -66,7 +66,8 @@ public class Board {
             if(invalidStars.contains(point)) {
                 invalidStars.remove(point);
             }
-            checkInvalidStars();
+            //todo: affected stars are not being updated properly after star is removed, once the method below works, uncomment
+            //checkInvalidStars();
         }
     }
     private boolean checkSquare(Point2D point) {
