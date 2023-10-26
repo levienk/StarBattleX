@@ -81,11 +81,19 @@ public class Board {
     }
     private boolean checkRow(int row) {
         int starCount = 0;
+        List<Point2D> possibleInvalidStars = new ArrayList<>();
         for (int i = 1; i <= COLUMNS; i++ ) {
             if(squares.get(new Point2D(i, row)).getState().equals("star")) {
                 starCount++;
+                possibleInvalidStars.add(new Point2D(i, row));
             }
             if (starCount == 2) {
+                for (Point2D point : possibleInvalidStars) {
+                    if (!invalidStars.contains(point)) {
+                        invalidStars.add(point);
+                        validStars.remove(point);
+                    }
+                }
                 return false;
             }
         }
@@ -93,11 +101,19 @@ public class Board {
     }
     private boolean checkColumn(int column) {
         int starCount = 0;
+        List<Point2D> possibleInvalidStars = new ArrayList<>();
         for(int i = 1; i <= ROWS; i++) {
             if(squares.get(new Point2D(column, i)).getState().equals("star")) {
                 starCount++;
+                possibleInvalidStars.add(new Point2D(column, i));
             }
             if(starCount == 2) {
+                for (Point2D point : possibleInvalidStars) {
+                    if (!invalidStars.contains(point)) {
+                        invalidStars.add(point);
+                        validStars.remove(point);
+                    }
+                }
                 return false;
             }
         }
