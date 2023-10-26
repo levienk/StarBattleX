@@ -44,7 +44,6 @@ public class LevelMenuScene extends VBox {
         HBox bottomBar = new UIBar();
         bottomBar.setSpacing(10);
 
-        // backButton should switch to PuzzleScene only if it already exists.
         Button backButton = new Button("Back");
         backButton.setOnAction(e -> {
             try {
