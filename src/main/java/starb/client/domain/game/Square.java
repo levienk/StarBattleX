@@ -13,7 +13,4 @@ public class Square {
         this.state = state;
     }
     public String getState() { return state;}
-    public boolean isStarValid() {
-        return isStarValid;
-    }
 }

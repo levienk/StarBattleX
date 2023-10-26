@@ -3,10 +3,7 @@ package starb.client.domain.game;
 import javafx.geometry.Point2D;
 import javafx.scene.shape.Line;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Map;
+import java.util.*;
 
 
 public class Board {
@@ -16,8 +13,8 @@ public class Board {
     private final int ROWS;
     private final int COLUMNS;
 
-    private List<Point2D> invalidStars;
-    private List<Point2D> validStars;
+    private HashSet<Point2D> invalidStars;
+    private HashSet<Point2D> validStars;
     private final String PUZZLENAME;
     public Board(int rows, int columns, List<HashMap<Point2D, Square>> sections, String puzzleName) {
         ROWS = rows;
@@ -34,10 +31,10 @@ public class Board {
         this.PUZZLENAME = puzzleName;
 
         // Initialize invalidStars list
-        this.invalidStars = new ArrayList<>();
+        this.invalidStars = new HashSet<>();
 
         // Initialize validStars list
-        this.validStars = new ArrayList<>();
+        this.validStars = new HashSet<>();
 
 
     }
@@ -84,7 +81,7 @@ public class Board {
     }
     private boolean checkRow(int row) {
         int starCount = 0;
-        for (int i = 0; i < COLUMNS; i++ ) {
+        for (int i = 1; i <= COLUMNS; i++ ) {
             if(squares.get(new Point2D(i, row)).getState().equals("star")) {
                 starCount++;
             }
@@ -96,7 +93,7 @@ public class Board {
     }
     private boolean checkColumn(int column) {
         int starCount = 0;
-        for(int i = 0; i < ROWS; i++) {
+        for(int i = 1; i <= ROWS; i++) {
             if(squares.get(new Point2D(column, i)).getState().equals("star")) {
                 starCount++;
             }
@@ -126,7 +123,6 @@ public class Board {
         }
         return null;
     }
-    //working
     private boolean checkArea(Point2D point) {
         for(int i = -1; i <= 1; i++) {
             for(int j = -1; j <= 1; j++) {
@@ -135,7 +131,7 @@ public class Board {
                 int newX = (int)point.getX() + i;
                 int newY = (int)point.getY() + j;
 
-                if(newX >= 0 && newX < COLUMNS && newY >= 0 && newY < ROWS) {
+                if(newX >= 1 && newX <= COLUMNS && newY >= 1 && newY <= ROWS) {
                     if (squares.get(new Point2D(newX, newY)).getState().equals("star")) {
                         return false;
                     }
@@ -198,7 +194,15 @@ public class Board {
         }
         return boundaryLines;
     }
-
+    public void clearBoard() {
+        for(int i = 1; i <= ROWS; i++) {
+            for(int j = 1; j <= COLUMNS; j++) {
+                squares.get(new Point2D(i, j)).setState("");
+                validStars.clear();
+                invalidStars.clear();
+            }
+        }
+    }
     public String getPuzzleName() {
         return PUZZLENAME;
     }
@@ -209,9 +213,9 @@ public class Board {
         return COLUMNS;
     }
     public List<HashMap<Point2D, Square>> getSections() { return sections;}
-    public List<Point2D> getValidStars() { return validStars;}
+    public HashSet<Point2D> getValidStars() { return validStars;}
     public HashMap<Point2D, Square> getSquares() { return squares;}
-    public List<Point2D> getInvalidStars() {
+    public HashSet<Point2D> getInvalidStars() {
         return invalidStars;
     }
 

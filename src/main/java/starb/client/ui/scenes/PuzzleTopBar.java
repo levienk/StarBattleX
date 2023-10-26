@@ -2,10 +2,7 @@ package starb.client.ui.scenes;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
-import javafx.scene.text.Font;
 import starb.client.ui.components.CustomAlert;
 import starb.client.ui.components.ExpandingPaneGenerator;
 import starb.client.ui.components.Title;
@@ -14,7 +11,7 @@ import starb.client.ui.components.UIBar;
 import java.io.File;
 import java.net.MalformedURLException;
 
-import static starb.client.SceneSwitcher.setScene;
+import static starb.client.ui.scenes.SceneSwitcher.setScene;
 
 public class PuzzleTopBar extends UIBar {
 

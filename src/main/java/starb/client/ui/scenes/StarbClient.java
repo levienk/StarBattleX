@@ -1,16 +1,15 @@
-package starb.client.ui;
+package starb.client.ui.scenes;
 
 import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import starb.client.domain.json.JSONPuzzleGenerator;
 import starb.client.ui.scenes.LevelMenuScene;
 
 import java.io.File;
 
-import static starb.client.SceneSwitcher.setScene;
-import static starb.client.SceneSwitcher.setStage;
+import static starb.client.ui.scenes.SceneSwitcher.setScene;
+import static starb.client.ui.scenes.SceneSwitcher.setStage;
 
 /**
  * Creates a single window as an example of a Java GUI with a component
