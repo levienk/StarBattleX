@@ -29,7 +29,7 @@ javafx {
 }
 
 tasks.named('run') {
-	mainClassName = 'starb.client.ui.StarbClient'
+	mainClassName = 'starb.client.ui.scenes.StarbClient'
 }
 
 springBoot {

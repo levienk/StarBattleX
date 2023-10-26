@@ -13,9 +13,19 @@ import static starb.client.ui.components.ExpandingPaneGenerator.newXPPane;
 public class LevelMenuScene extends VBox {
 
     private final LevelSelector levelSelector;
+
+    private final LevelPageNumber levelPageNumber;
+
+    private int LevelPage;
+
+    private int levelsUnlocked;
+
+
+
     public LevelMenuScene() throws Exception {
 
         levelSelector = new LevelSelector();
+        levelPageNumber = new LevelPageNumber();
 
         // Set the Style
         this.getStylesheets().add(StarbClient.COMMON_STYLESHEET.
@@ -54,7 +64,15 @@ public class LevelMenuScene extends VBox {
 
     }
 
-    private static class LevelSelector extends StackPane {
+    private class LevelPageNumber extends HBox {
+
+        public LevelPageNumber() {
+
+        }
+
+    }
+
+    private class LevelSelector extends StackPane {
 
         GridPane levelSelectionArea;
 
