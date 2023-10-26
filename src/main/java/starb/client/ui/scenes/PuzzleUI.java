@@ -134,11 +134,11 @@ public class PuzzleUI extends StackPane {
         switch (selectionType) {
             case "star" -> {
                 // TODO - Remove this after board.updateSquare() functioning
-                g.drawImage(starImage,
-                        gridUpperLeft.getX() + (col - 1) * cellSize + positioning,
-                        gridUpperLeft.getY() + (row - 1) * cellSize + positioning,
-                        starScale, starScale
-                );
+//                g.drawImage(starImage,
+//                        gridUpperLeft.getX() + (col - 1) * cellSize + positioning,
+//                        gridUpperLeft.getY() + (row - 1) * cellSize + positioning,
+//                        starScale, starScale
+//                );
 
                 // Draw the invalid stars to the board
                 for (Point2D point : board.getInvalidStars()) {
@@ -232,7 +232,6 @@ public class PuzzleUI extends StackPane {
                 );
             }
         }
-        // TODO - Uncomment once board.clear() has been implemented.
         board.clearBoard();
     }
 }
