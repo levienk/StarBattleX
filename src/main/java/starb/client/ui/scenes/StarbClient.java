@@ -4,11 +4,11 @@ import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import starb.client.domain.json.JSONReader;
 
 import java.io.File;
 
-import static starb.client.ui.scenes.SceneSwitcher.setScene;
-import static starb.client.ui.scenes.SceneSwitcher.setStage;
+import static starb.client.ui.scenes.SceneSwitcher.*;
 
 /**
  * Creates a single window as an example of a Java GUI with a component
@@ -76,7 +76,10 @@ public class StarbClient extends Application {
         setStage(primaryStage);
 
         // TODO - Open PuzzleScene by default
-        setScene(LevelMenuScene.class);
+        //setScene(LevelMenuScene.class);
+        setNewScene(PuzzleScene.class, new JSONReader(
+                "temp.txt").getBoard(), "Temporary Rank");
+
         primaryStage.setWidth(WINDOW_WIDTH);
         primaryStage.setHeight(WINDOW_HEIGHT);
         primaryStage.setTitle(WINDOW_TITLE);

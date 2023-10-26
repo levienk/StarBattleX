@@ -126,6 +126,10 @@ public class SceneSwitcher {
             NoSuchMethodException, InvocationTargetException, InstantiationException,
             IllegalAccessException {
 
+        if (scenes == null) {
+            scenes = new HashMap<>();
+        }
+
         if (!scenes.containsKey(scene)) {
             setScene(scene, params);
         } else {
