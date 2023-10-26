@@ -39,7 +39,7 @@ public class Board {
 
     }
     public void updateSquare(Point2D point, String state) {
-        if(state.equals("star") && checkSquare(point)) {
+        if(state.equals("star") && checkSquare(point) && !(squares.get(point).getState().equals("star"))) {
             squares.get(point).setState("star");
             if(invalidStars.contains(point)) {
                 invalidStars.remove(point);
@@ -56,6 +56,7 @@ public class Board {
                 invalidStars.remove(point);
             }
         } else if (state.equals("")) {
+
             validStars.remove(point);
             squares.get(point).setState("");
             //remove from both lists
@@ -65,10 +66,12 @@ public class Board {
             if(invalidStars.contains(point)) {
                 invalidStars.remove(point);
             }
+            checkInvalidStars();
         }
     }
     private boolean checkSquare(Point2D point) {
         if (checkArea(point) && checkSection(point) && checkColumn((int) point.getX()) && checkRow((int) point.getY())) {
+            System.out.println("real!");
             return true;
         }
         else {
@@ -81,9 +84,10 @@ public class Board {
     }
     private boolean checkRow(int row) {
         int starCount = 0;
+        boolean starIsInvalid = false;
         List<Point2D> possibleInvalidStars = new ArrayList<>();
         for (int i = 1; i <= COLUMNS; i++ ) {
-            if(squares.get(new Point2D(i, row)).getState().equals("star")) {
+            if(squares.get(new Point2D(i, row)).getState().equals("star") || invalidStars.contains(new Point2D(i, row))) {
                 starCount++;
                 possibleInvalidStars.add(new Point2D(i, row));
             }
@@ -92,18 +96,20 @@ public class Board {
                     if (!invalidStars.contains(point)) {
                         invalidStars.add(point);
                         validStars.remove(point);
+                        squares.get(point).setState("");
                     }
                 }
-                return false;
+                starIsInvalid = true;
             }
         }
-        return true;
+        return !starIsInvalid;
     }
     private boolean checkColumn(int column) {
         int starCount = 0;
+        boolean starIsInvalid = false;
         List<Point2D> possibleInvalidStars = new ArrayList<>();
         for(int i = 1; i <= ROWS; i++) {
-            if(squares.get(new Point2D(column, i)).getState().equals("star")) {
+            if(squares.get(new Point2D(column, i)).getState().equals("star") || invalidStars.contains(new Point2D(column, i))) {
                 starCount++;
                 possibleInvalidStars.add(new Point2D(column, i));
             }
@@ -112,24 +118,36 @@ public class Board {
                     if (!invalidStars.contains(point)) {
                         invalidStars.add(point);
                         validStars.remove(point);
+                        squares.get(point).setState("");
                     }
                 }
-                return false;
+                starIsInvalid = true;
             }
         }
-        return true;
+        return !starIsInvalid;
+
     }
     private boolean checkSection(Point2D point) {
         int starCount = 0;
+        boolean starIsInvalid = false;
+        List<Point2D> possibleInvalidStars = new ArrayList<>();
         for (Map.Entry<Point2D, Square> entry: findSection(point).entrySet()) {
-            if (entry.getValue().getState().equals("star")) {
+            if (entry.getValue().getState().equals("star") || invalidStars.contains(entry.getKey())) {
                 starCount++;
+                possibleInvalidStars.add(entry.getKey());
             }
             if(starCount == 2) {
-                return false;
+                for (Point2D point2d : possibleInvalidStars) {
+                    if (!invalidStars.contains(point2d)) {
+                        invalidStars.add(point2d);
+                        validStars.remove(point2d);
+                        squares.get(point2d).setState("");
+                    }
+                }
+                starIsInvalid = true;
             }
         }
-        return true;
+        return !starIsInvalid;
     }
     private HashMap<Point2D, Square> findSection(Point2D point) {
         for (HashMap<Point2D, Square> section : sections) {
@@ -140,6 +158,7 @@ public class Board {
         return null;
     }
     private boolean checkArea(Point2D point) {
+        boolean starIsInvalid = false;
         for(int i = -1; i <= 1; i++) {
             for(int j = -1; j <= 1; j++) {
                 if(i == 0 && j == 0) continue;
@@ -148,13 +167,27 @@ public class Board {
                 int newY = (int)point.getY() + j;
 
                 if(newX >= 1 && newX <= COLUMNS && newY >= 1 && newY <= ROWS) {
-                    if (squares.get(new Point2D(newX, newY)).getState().equals("star")) {
-                        return false;
+                    if (squares.get(new Point2D(newX, newY)).getState().equals("star") || invalidStars.contains(new Point2D(newX, newY))) {
+                        if (!invalidStars.contains(new Point2D(newX, newY))) {
+                            invalidStars.add(new Point2D(newX, newY));
+                            validStars.remove(new Point2D(newX, newY));
+                            squares.get(new Point2D(newX, newY)).setState("");
+                        }
+                        starIsInvalid = true;
                     }
                 }
             }
         }
-        return true;
+        return !starIsInvalid;
+    }
+    private void checkInvalidStars() {
+        for(Point2D point : invalidStars) {
+            if(checkSquare(point)) {
+                invalidStars.remove(point);
+                validStars.add(point);
+                squares.get(point).setState("star");
+            }
+        }
     }
 
     public boolean isComplete() {
