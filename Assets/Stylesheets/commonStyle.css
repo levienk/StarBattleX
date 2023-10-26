@@ -2,7 +2,6 @@
     Button uses a gradient that goes from top left to bottom. Should look somewhat decent.
 */
 
-
 .button {
     -fx-background-color: linear-gradient(to bottom right, #404040, #000000);
 
@@ -95,6 +94,20 @@
 
 .level-button-locked:pressed {
     -fx-background-color: linear-gradient(to bottom right, #040404, #000000);
+}
+
+/* White border, dark blue gradient, white text */
+.general-label {
+
+    -fx-background-color: linear-gradient(to bottom right, #000040, #000000);
+    -fx-text-fill: linear-gradient(to bottom right, #eaeaea, #a0a0a0);
+    -fx-font-size: 20px;
+    -fx-font-family: "Comic Sans MS";
+    -fx-font-weight: bold;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-border-color: #ffffff;
+    -fx-border-width: 2px;
 }
 
 

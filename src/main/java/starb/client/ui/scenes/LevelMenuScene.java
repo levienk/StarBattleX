@@ -3,6 +3,7 @@ package starb.client.ui.scenes;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import starb.client.domain.json.JSONReader;
 import starb.client.ui.components.UIBar;
@@ -14,9 +15,11 @@ public class LevelMenuScene extends VBox {
 
     private final LevelSelector levelSelector;
 
-    private final LevelPageNumber levelPageNumber;
+    private final LevelPageNumberContainer levelPageNumberContainer;
 
-    private int LevelPage;
+    private final int MAX_PAGES = 4;
+
+    private int levelPage;
 
     private int levelsUnlocked;
 
@@ -25,7 +28,7 @@ public class LevelMenuScene extends VBox {
     public LevelMenuScene() throws Exception {
 
         levelSelector = new LevelSelector();
-        levelPageNumber = new LevelPageNumber();
+        levelPageNumberContainer = new LevelPageNumberContainer();
 
         // Set the Style
         this.getStylesheets().add(StarbClient.COMMON_STYLESHEET.
@@ -60,13 +63,51 @@ public class LevelMenuScene extends VBox {
                 neatButton);
 
 
-        this.getChildren().addAll(topBar, levelSelector, bottomBar);
+        this.getChildren().addAll(topBar, levelSelector, levelPageNumberContainer, bottomBar);
 
     }
 
-    private class LevelPageNumber extends HBox {
+    private void changePageNumber(int pg) {
 
-        public LevelPageNumber() {
+            if (!(pg >= 1 && pg <= MAX_PAGES)) {
+                return;
+            }
+
+            levelPage = pg;
+            levelSelector.setLevelsUnlocked(levelsUnlocked, levelPage);
+            levelPageNumberContainer.updateLabel(levelPage);
+    }
+
+    private int getPageNumber() {
+
+        return levelPage;
+
+    }
+
+    private class LevelPageNumberContainer extends HBox {
+
+        Label levelPageNumberLabel;
+
+        public LevelPageNumberContainer() {
+
+            levelPage = 1;
+            levelPageNumberLabel = new Label();
+            updateLabel(levelPage);
+
+            levelPageNumberLabel.setPadding(new Insets(10,10,10,10));
+            levelPageNumberLabel.setMinWidth(100);
+            levelPageNumberLabel.getStyleClass().add("general-label");
+            levelPageNumberLabel.setAlignment(Pos.CENTER);
+
+            this.setAlignment(Pos.CENTER);
+            this.setPadding(new Insets(0,10,10,10));
+            this.getChildren().add(levelPageNumberLabel);
+
+        }
+
+        public void updateLabel(int pg) {
+
+            levelPageNumberLabel.setText(pg + " | " + MAX_PAGES);
 
         }
 
@@ -82,9 +123,15 @@ public class LevelMenuScene extends VBox {
 
             Button prevPageButton = new Button("<");
             StackPane.setAlignment(prevPageButton, Pos.CENTER_LEFT);
+            prevPageButton.setOnAction(e -> {
+                changePageNumber(levelPage - 1);
+            });
 
             Button nextPageButton = new Button(">");
             StackPane.setAlignment(nextPageButton, Pos.CENTER_RIGHT);
+            nextPageButton.setOnAction(e -> {
+                changePageNumber(levelPage + 1);
+            });
 
             levelSelectionArea = new GridPane();
 
@@ -94,12 +141,9 @@ public class LevelMenuScene extends VBox {
             GridPane.setColumnSpan(levelSelectionArea, 5);
             levelSelectionArea.setHgap(10);
             levelSelectionArea.setVgap(10);
-
+            setLevelsUnlocked(getPageNumber(), 1);
 
             levelSelectionArea.setAlignment(Pos.CENTER);
-
-            // Reset this later.
-            setLevelsUnlocked(3, 1);
 
             // Transparent dark background
             levelSelectionArea.setBackground(new Background(new BackgroundFill(
@@ -112,9 +156,9 @@ public class LevelMenuScene extends VBox {
 
         }
 
-        private void setLevelsUnlocked(int levelsUnlocked, int levelPage) {
+        private void setLevelsUnlocked(int newLevelsUnlocked, int levelPage) {
 
-            if (!(levelsUnlocked >= 0)) {
+            if (!(newLevelsUnlocked >= 0)) {
                 throw new IllegalArgumentException("Levels unlocked must be between at least 0.");
             }
 
@@ -122,15 +166,17 @@ public class LevelMenuScene extends VBox {
                 throw new IllegalArgumentException("Level page must be at least 1.");
             }
 
+            levelsUnlocked = newLevelsUnlocked;
+
             int levelCounter;
             for (int i = 0; i < 25; i++) {
                 levelCounter = (levelPage - 1) * 25 + i;
 
                 Button levelButton = new Button((levelCounter+1) + "");
 
-                if (levelCounter < levelsUnlocked) {
+                if (levelCounter < newLevelsUnlocked) {
                     levelButton.getStyleClass().add("level-button-completed");
-                } else if (levelCounter == levelsUnlocked) {
+                } else if (levelCounter == newLevelsUnlocked) {
                     levelButton.getStyleClass().add("level-button-new");
                 } else {
                     levelButton.getStyleClass().add("level-button-locked");

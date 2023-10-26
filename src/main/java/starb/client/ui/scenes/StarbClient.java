@@ -43,7 +43,7 @@ public class StarbClient extends Application {
 
     @SuppressWarnings("FieldCanBeLocal")
 
-    private final int WINDOW_HEIGHT = 600;
+    private final int WINDOW_HEIGHT = 650;
 
     @SuppressWarnings("FieldCanBeLocal")
     private final String WINDOW_TITLE = "Star Game X";
@@ -83,8 +83,8 @@ public class StarbClient extends Application {
         primaryStage.setTitle(WINDOW_TITLE);
 
         // Minimum size for PuzzleScene to load properly (don't go smaller than this)
-        primaryStage.setMinHeight(600);
-        primaryStage.setMinWidth(600);
+        primaryStage.setMinHeight(650);
+        primaryStage.setMinWidth(650);
 
         primaryStage.getIcons().add(new Image(APPLICATION_ICON.toURI().toURL().toString()));
         primaryStage.show();
