@@ -22,7 +22,10 @@ public class CustomAlert extends Stage{
         cancelButton = new Button("Cancel");
 
         okButton.setOnAction(e -> this.close());
-        okButton.setOnAction(e -> this.close());
+        cancelButton.setOnAction(e -> this.close());
+
+        this.setMinWidth(300);
+        this.setMinHeight(200);
 
         VBox layout = new VBox(10);
         layout.getChildren().addAll(messageLabel, okButton, cancelButton);

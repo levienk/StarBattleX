@@ -9,6 +9,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import starb.client.domain.game.Board;
+import starb.client.ui.components.CustomAlert;
 
 import java.io.File;
 
@@ -209,7 +210,14 @@ public class PuzzleUI extends StackPane {
     }
 
     private void completionWindow() {
-        // TODO - implement the completionWindow method
+        CustomAlert alert = new CustomAlert("Congratulations!", "You have completed the level!");
+        alert.initOwner(this.getScene().getWindow()); // Set the owner of the alert
+        alert.getOkButton().setText("Next Level");
+        alert.getOkButton().setOnAction(e -> {
+            //next Level Logic
+            alert.close();
+        });
+        alert.showAndWait();
         System.out.println("You win!");
     }
     protected void clear() {
