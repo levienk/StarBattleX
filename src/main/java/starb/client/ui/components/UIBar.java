@@ -7,7 +7,7 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 
-import static starb.client.ui.StarbClient.TEMPLATE_BAR_COLOR;
+import static starb.client.ui.scenes.StarbClient.TEMPLATE_BAR_COLOR;
 
 /**
  *  UI Bar template generator for easy use.

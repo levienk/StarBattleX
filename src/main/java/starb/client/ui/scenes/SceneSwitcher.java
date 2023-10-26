@@ -1,4 +1,4 @@
-package starb.client;
+package starb.client.ui.scenes;
 
 import javafx.scene.Parent;
 import javafx.scene.Scene;

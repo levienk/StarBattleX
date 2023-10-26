@@ -5,10 +5,9 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
 import starb.client.domain.json.JSONReader;
-import starb.client.ui.StarbClient;
 import starb.client.ui.components.UIBar;
 
-import static starb.client.SceneSwitcher.setScene;
+import static starb.client.ui.scenes.SceneSwitcher.setScene;
 import static starb.client.ui.components.ExpandingPaneGenerator.newXPPane;
 
 public class LevelMenuScene extends VBox {
