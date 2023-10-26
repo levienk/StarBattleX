@@ -28,6 +28,12 @@ public class JSONReader {
         // Reads from file
         this.scnr = new Scanner(this.file);
         // Create a board Object based on the JSON
+        /**
+         *  Read from a JSON to turn several HashMap<Point2D, Square> objects
+         *  into a List
+         *  Each line of the JSON will be a Point2D, Square pair.
+         */
+        String puzzleName = scnr.nextLine();
         // Assign the Board with a puzzleName in its constructor
     }
 
