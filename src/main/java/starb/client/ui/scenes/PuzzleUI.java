@@ -116,7 +116,7 @@ public class PuzzleUI extends StackPane {
         if (selectionType.equals("") || selectionType.equals("star") ||
                 selectionType.equals("dot")) {
             // TODO - Uncomment when board.updateSquare() is functioning
-            //board.updateSquare(new Point2D(col, row), selectionType);
+            board.updateSquare(new Point2D(col, row), selectionType);
         }
 
         // Scale the image and position the image in the center of the square
@@ -138,6 +138,7 @@ public class PuzzleUI extends StackPane {
                         gridUpperLeft.getY() + (row - 1) * cellSize + positioning,
                         starScale, starScale
                 );
+
                 // Draw the invalid stars to the board
                 for (Point2D point : board.getInvalidStars()) {
                     g.drawImage(invalidStarImage,
@@ -224,6 +225,6 @@ public class PuzzleUI extends StackPane {
             }
         }
         // TODO - Uncomment once board.clear() has been implemented.
-        // board.clear()
+        board.clearBoard();
     }
 }
