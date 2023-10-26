@@ -53,7 +53,6 @@ public class LevelMenuScene extends VBox {
                 throw new RuntimeException(ex);
             }
         });
-        backButton.setDisable(true);
 
         Button settingsButton = new Button();
         ImageView settingsIcon = new ImageView(SETTINGS_ICON_FILE.toURI().toURL().toString());
