@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class BoardTest {
+    //Todo: update tests to fit new row and column starting indexes
     @Test
     public void testBoardInitialization() {
         Board myBoard = initalizeBoard();
