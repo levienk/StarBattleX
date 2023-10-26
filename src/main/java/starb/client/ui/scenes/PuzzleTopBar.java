@@ -41,14 +41,6 @@ public class PuzzleTopBar extends UIBar {
             }
         });
 
-        //Alert button
-        //TODO - Remove this once completionWindow() in PuzzleUI is implemented.
-        Button showAlertButton = new Button("Show Alert");
-        showAlertButton.setOnAction (e -> {
-            CustomAlert testAlert = new CustomAlert("Test Alert", "this is a test!");
-            testAlert.showAndWait();
-        });
-
-        this.getChildren().addAll(levelNameLabel, fillerPane, showAlertButton, clearBoardButton, levelMenuButton);
+        this.getChildren().addAll(levelNameLabel, fillerPane, clearBoardButton, levelMenuButton);
     }
 }
