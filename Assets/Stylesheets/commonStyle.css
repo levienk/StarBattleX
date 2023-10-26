@@ -25,6 +25,11 @@
     -fx-background-color: linear-gradient(to bottom right, #3090a0, #104060);
 }
 
+.button:disabled {
+    -fx-background-color: linear-gradient(to bottom right, #404040, #000000);
+    -fx-text-fill: #808080;
+}
+
 /* Toggle button stylesheet used in PuzzleBottomBar */
 .toggle-button {
     -fx-background-color: linear-gradient(to bottom right, #404040, #000000);

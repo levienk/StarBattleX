@@ -38,9 +38,16 @@ public class LevelMenuScene extends VBox {
         HBox bottomBar = new UIBar();
         bottomBar.setSpacing(10);
 
-        // TODO - backButton should switch to PuzzleScene
+        // backButton should switch to PuzzleScene only if it already exists.
         Button backButton = new Button("Back");
-        Button goodButton = new Button("Good :D");
+        backButton.setOnAction(e -> {
+            try {
+                setScene(PuzzleScene.class);
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+        backButton.setDisable(true);
 
         Button neatButton = new Button("Centerpiece");
         neatButton.setMinWidth(200);
@@ -52,6 +59,7 @@ public class LevelMenuScene extends VBox {
             try {
                 JSONReader reader = new JSONReader("Assets/Puzzles/temp.txt");
 
+                backButton.setDisable(false);
                 setScene(PuzzleScene.class,  reader.getBoard(), "Temporary Rank");
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
@@ -59,7 +67,7 @@ public class LevelMenuScene extends VBox {
         });
 
         topBar.getChildren().addAll(newXPPane('h'), backButton);
-        bottomBar.getChildren().addAll(goodButton, switchSceneTestButton, newXPPane('h'),
+        bottomBar.getChildren().addAll(switchSceneTestButton, newXPPane('h'),
                 neatButton);
 
 
