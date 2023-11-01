@@ -8,7 +8,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
-import starb.client.domain.game.Board;
+import starb.domain.game.Board;
 import starb.client.ui.components.CustomAlert;
 
 import java.io.File;

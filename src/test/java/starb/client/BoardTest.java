@@ -2,14 +2,13 @@ package starb.client;
 
 import javafx.geometry.Point2D;
 import org.junit.jupiter.api.Test;
-import starb.client.domain.game.Board;
-import starb.client.domain.game.Square;
+import starb.domain.game.Board;
+import starb.domain.game.Square;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

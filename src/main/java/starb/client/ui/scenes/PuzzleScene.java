@@ -2,7 +2,7 @@ package starb.client.ui.scenes;
 
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import starb.client.domain.game.Board;
+import starb.domain.game.Board;
 import starb.client.ui.components.ExpandingPaneGenerator;
 
 public class PuzzleScene extends VBox {

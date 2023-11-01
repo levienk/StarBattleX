@@ -4,7 +4,7 @@ import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import starb.client.domain.json.JSONReader;
+import starb.domain.json.JSONReader;
 
 import java.io.File;
 

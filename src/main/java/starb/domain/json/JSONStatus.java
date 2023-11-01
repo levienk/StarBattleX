@@ -1,4 +1,4 @@
-package starb.client.domain.json;
+package starb.domain.json;
 
 import java.util.ArrayList;
 import java.util.EventListener;

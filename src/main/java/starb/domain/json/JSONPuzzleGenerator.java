@@ -1,14 +1,11 @@
-package starb.client.domain.json;
+package starb.domain.json;
 
 import org.jetbrains.annotations.NotNull;
-import java.io.FileOutputStream;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.TreeMap;
 import java.util.TreeSet;

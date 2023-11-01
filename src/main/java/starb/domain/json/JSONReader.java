@@ -1,8 +1,8 @@
-package starb.client.domain.json;
+package starb.domain.json;
 
 import javafx.geometry.Point2D;
-import starb.client.domain.game.Board;
-import starb.client.domain.game.Square;
+import starb.domain.game.Board;
+import starb.domain.game.Square;
 
 import java.io.File;
 import java.io.FileNotFoundException;

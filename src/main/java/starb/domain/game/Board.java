@@ -1,4 +1,4 @@
-package starb.client.domain.game;
+package starb.domain.game;
 
 import javafx.geometry.Point2D;
 import javafx.scene.shape.Line;

@@ -6,7 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import starb.client.domain.json.JSONReader;
+import starb.domain.json.JSONReader;
 import starb.client.ui.components.UIBar;
 
 import java.io.File;
