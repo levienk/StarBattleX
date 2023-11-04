@@ -1,0 +1,238 @@
+openapi: 3.0.0
+info:
+  title: StarBattle 
+  description: Lorem ipsum
+  version: 1.0.11
+servers:
+  - url: http://localhost:8888/starb
+paths:
+  /user:
+    get:
+      tags:
+        - user
+      summary: StarBattle User
+      description: ''
+      operationId: ''
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              example:
+                [
+                  {
+                    "id": "64272f3d16b2df1faf837ec9",
+                    "completed": [ "1", "2" ],
+                    "nextPuzzle": "3",
+                    "notAccessible": [ "4", "5"]
+                  },
+                  {
+                    "id": "64272f3d16b2df1fa31321313",
+                    "completed": [ "1", "2", "3", "4", "5", "6"],
+                    "nextPuzzle": "7",
+                    "notAccessible": [ "8", "9"]
+                  },
+                  ...
+                ]
+    post:
+      tags:
+        - user
+      summary: Create a user item
+      description: ''
+      operationId: ''
+      responses:
+        '201':
+          description: Successful response
+          content:
+            application/json:
+              examples:
+                created:
+                  value:
+                    {
+                      "id": "64272f3d16b2df1faf837ec9",
+                      "completed": [ ],
+                      "nextPuzzle": "1",
+                      "notAccessible": [ " 2" , "3", ...],
+                    }
+  /user/{id}:
+    get:
+      tags:
+        - user
+      summary: Get a user item
+      parameters:
+        - name: id
+          in: path
+          description: ID of the user item
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response with the contents of the new resource.
+          content:
+            application/json:
+              example:
+                {
+                  "id": "64272f3d16b2df1fa31321313",
+                  "completed": [ "1", "2", "3", "4", "5", "6"],
+                  "nextPuzzle": "7",
+                  "notAccessible": [ "8", "9"]
+                }
+        '404':
+          description: The ID is not found.
+    put:
+      tags:
+        - user
+      summary: Replace a user item
+      parameters:
+        - name: id
+          in: path
+          description: ID of the user item to replace
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        description: The user item content.
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              {
+                "id": "64272f3d16b2df1fa31321313",
+                "completed": [ "1", "2", "3", "4", "5", "6"],
+                "nextPuzzle": "7",
+                "notAccessible": [ "8", "9"]
+              }
+      responses:
+        '200':
+          description: Successful response with content of updated object.
+          content:
+            application/json:
+              examples:
+                updated:
+                  value:
+                    {
+                      "id": "64272f3d16b2df1fa31321313",
+                      "completed": [ "1", "2", "3", "4", "5", "6"],
+                      "nextPuzzle": "7",
+                      "notAccessible": [ "8", "9"]
+                    }
+        '404':
+          description: The ID is not found.
+    delete:
+      tags:
+        - user
+      summary: Delete a user item
+      parameters:
+        - name: id
+          in: path
+          description: ID of the user item to delete
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Object was deleted.
+        '404':
+          description: The ID is not found.
+  /board: 
+    post: 
+      tags: 
+        - board
+      summary: Create a board item
+      requestBody: 
+        required: true
+        description: The board item content
+        content: 
+          application/json: 
+            schema: 
+              type: object
+            example: 
+              id: "1"
+              squares: { "{x: 4, y: 4}": { "state": "none", "isStarValid": true } }
+              sections: [ [ "{x: 4, y: 4}": {"state": "none", "isStarValid": true } ] ]
+              ROWS: 10
+              COLUMNS: 10
+              invalidStars: [ { "x": 4, "y": 4 } ]
+              validStars: [ { "x": 3, "y": 3 } ]
+              solution: [ { "x": 2, "y": 1 } ]
+      responses: 
+        '201':
+          description: Successful response
+          content: 
+            application/json:
+              example: 
+                value:
+                  id: "1"
+                  squares:
+                    '{"x": 4, "y": 4}': { "state": "none", "isStarValid": true }
+                  sections:
+                    - - '{"x": 4, "y": 4}': {"state": "none", "isStarValid": true}
+                  ROWS: 10
+                  COLUMNS: 10
+                  invalidStars:
+                    - { "x": 4, "y": 4 }
+                  validStars:
+                    - { "x": 3, "y": 3 }
+                  solution: 
+                    - { "x": 2, "y": 1 }
+  /board/{id}:
+    get:
+      tags:
+        - board
+      summary: Get a board item
+      parameters:
+        - name: id
+          in: path
+          description: ID of the board item
+          required: true
+          schema: 
+            type: string
+      responses: 
+        '200':
+          description: Successful response with the contents of the new resource.
+          content:
+            application/json:
+              example: 
+                value:
+                  id: "1"
+                  squares:
+                    '{"x": 4, "y": 4}': { "state": "none", "isStarValid": true }
+                  sections:
+                    - - '{"x": 4, "y": 4}': {"state": "none", "isStarValid": true}
+                  ROWS: 10
+                  COLUMNS: 10
+                  invalidStars:
+                    - { "x": 4, "y": 4 }
+                  validStars:
+                    - { "x": 3, "y": 3 }
+                  solution: 
+                    - { "x": 2, "y": 1 }
+    delete: 
+      tags: 
+        - board
+      summary: update a field of a board item
+      parameters:
+        - name: id
+          in: path
+          description: ID of the board item
+          required: true
+          schema: 
+            type: string
+      responses: 
+        "204":
+          description: Object was deleted.
+        "404":
+          description: The id is not found.
+        
+      
+      
+                
+                  
+          
+  
+        
+    
+ 
