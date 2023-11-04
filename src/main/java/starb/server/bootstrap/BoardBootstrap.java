@@ -56,7 +56,7 @@ public class BoardBootstrap {
                 for (List<Cell> region : puzz[i].getRegions()) {
                     HashMap<Point, Square> section = new HashMap<>();
                     for (Cell cell : region) {
-                        section.put(new Point(cell.getCol(), cell.getRow()),
+                        section.put(new Point(cell.getCol() + 1, cell.getRow() + 1),
                                 new Square());
                     }
                     sections.add(section);
@@ -65,14 +65,14 @@ public class BoardBootstrap {
                 // Load the solution for each Board object
                 HashSet<Point> solution = new HashSet<>();
                 for (Cell cell : puzz[i].getSolution()) {
-                    solution.add(new Point(cell.getCol(), cell.getRow()));
+                    solution.add(new Point(cell.getCol() + 1, cell.getRow() + 1));
                 }
 
                 boards[i] = new Board(puzz[i].getGridSize(),
                         puzz[i].getGridSize(), sections, solution, puzz[i].getLevel());
             }
             ObjectMapper boardMapper = new ObjectMapper();
-            boardMapper.writeValue(new File("Assets/Boards/board.json"), boards);
+            boardMapper.writeValue(new File("Assets/Boards/boards.json"), boards);
             System.out.println("File Created");
 //            repo.saveAll(List.of(puzz));
         } catch(IOException e) {
