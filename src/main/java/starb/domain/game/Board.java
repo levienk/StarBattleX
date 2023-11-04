@@ -20,6 +20,8 @@ public class Board {
     private HashSet<Point> invalidStars;
     private HashSet<Point> validStars;
 
+    private HashSet<Point> solution;
+
     public Board(int rows, int columns, List<HashMap<Point, Square>> sections, int id) {
         this.id = id;
 
@@ -271,5 +273,6 @@ public class Board {
     public HashSet<Point> getInvalidStars() {
         return invalidStars;
     }
+    public HashSet<Point> getSolution() { return solution; }
 
 }
