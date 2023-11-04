@@ -4,10 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import starb.server.repo.boardRepository;
 
 @RestController
 @RequestMapping(path="board")
-public class boardController {
+public class BoardController {
 
     @Autowired
     private boardRepository repo;
@@ -19,7 +20,8 @@ public class boardController {
     }
 
     // Obtain a specific board
-    @GetMapping(path={id})
+    @RequestMapping("{id}")
+    @GetMapping
     public String getBoard() {
         return "...";
     }
