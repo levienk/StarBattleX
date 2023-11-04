@@ -1,16 +1,15 @@
 package starb.domain.json;
 
-import java.util.ArrayList;
 import java.util.EventListener;
 import java.util.List;
 
-public class JSONStatus {
+public class User {
     private List<String> completed;
     private String nextPuzzle;
     private List<String> inaccessible;
     private List<EventListener> eventListeners;
 
-    public JSONStatus() {
+    public User() {
         // Each of the Strings are JSON File names
         //this.completed = server's data for completed;
         //this.nextPuzzle = server's data for nextPuzzle;
