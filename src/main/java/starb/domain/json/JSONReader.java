@@ -22,7 +22,8 @@ public class JSONReader {
     public JSONReader(String fileName) throws FileNotFoundException {
         // Temporary initialization of the Board
         // Please do not remove until implemented
-        board = new Board(10, 10, getTemporarySections(), 1);
+        HashSet<Point> solution = new HashSet<>();
+        board = new Board(10, 10, getTemporarySections(), solution, 1);
 
         // JSON file with a puzzle
         //this.file = new File(fileName);
