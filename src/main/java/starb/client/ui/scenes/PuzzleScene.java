@@ -18,7 +18,7 @@ public class PuzzleScene extends VBox {
                 toURI().toURL().toString());
 
         puzzle = new PuzzleUI(board);
-        topBar = new PuzzleTopBar(puzzle, board.getPuzzleName());
+        topBar = new PuzzleTopBar(puzzle, board.getID());
 
         Pane fillerPane = ExpandingPaneGenerator.newXPPane('v');
 

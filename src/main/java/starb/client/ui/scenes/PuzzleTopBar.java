@@ -15,11 +15,11 @@ import static starb.client.ui.scenes.SceneSwitcher.setScene;
 
 public class PuzzleTopBar extends UIBar {
 
-    public PuzzleTopBar(PuzzleUI ui, String levelName) throws MalformedURLException {
+    public PuzzleTopBar(PuzzleUI ui, int levelNumber) throws MalformedURLException {
         super();
 
         // Label for the current level the user is on.
-        Label levelNameLabel = new Title(levelName);
+        Label levelNameLabel = new Title("Level " + levelNumber);
 
         Pane fillerPane = ExpandingPaneGenerator.newXPPane('h');
 

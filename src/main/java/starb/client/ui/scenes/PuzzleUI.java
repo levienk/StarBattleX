@@ -1,6 +1,6 @@
 package starb.client.ui.scenes;
 
-import javafx.geometry.Point2D;
+import java.awt.Point;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -37,7 +37,7 @@ public class PuzzleUI extends StackPane {
     private int rows;
     private int cols;
     // Must pass in an int only
-    private Point2D gridUpperLeft = new Point2D(15,15);
+    private Point gridUpperLeft = new Point(15,15);
     private double starScale;
     private double dotScale;
 
@@ -117,7 +117,7 @@ public class PuzzleUI extends StackPane {
         if (selectionType.equals("") || selectionType.equals("star") ||
                 selectionType.equals("dot")) {
             // TODO - Uncomment when board.updateSquare() is functioning
-            board.updateSquare(new Point2D(col, row), selectionType);
+            board.updateSquare(new Point(col, row), selectionType);
         }
 
         // Scale the image and position the image in the center of the square
@@ -141,7 +141,7 @@ public class PuzzleUI extends StackPane {
 //                );
 
                 // Draw the invalid stars to the board
-                for (Point2D point : board.getInvalidStars()) {
+                for (Point point : board.getInvalidStars()) {
                     g.drawImage(invalidStarImage,
                             gridUpperLeft.getX() + (point.getX() - 1) * cellSize + positioning,
                             gridUpperLeft.getY() + (point.getY() - 1) * cellSize + positioning,
@@ -149,7 +149,7 @@ public class PuzzleUI extends StackPane {
                     );
                 }
                 // Draw the valid stars to the board
-                for (Point2D point : board.getValidStars()) {
+                for (Point point : board.getValidStars()) {
                     g.drawImage(starImage,
                             gridUpperLeft.getX() + (point.getX() - 1) * cellSize + positioning,
                             gridUpperLeft.getY() + (point.getY() - 1) * cellSize + positioning,
@@ -174,7 +174,7 @@ public class PuzzleUI extends StackPane {
         int posX = (int) e.getX();
         int posY = (int) e.getY();
 
-        Point2D location = pixelsToBoardGrid(posX, posY);
+        Point location = pixelsToBoardGrid(posX, posY);
 
         if (location != null) {
             draw((int) location.getX(), (int) location.getY());
@@ -182,7 +182,7 @@ public class PuzzleUI extends StackPane {
 
     }
 
-    private Point2D pixelsToBoardGrid(int posX, int posY) {
+    private Point pixelsToBoardGrid(int posX, int posY) {
         posX -= (int) gridUpperLeft.getX();
         posY -= (int) gridUpperLeft.getY();
 
@@ -196,7 +196,7 @@ public class PuzzleUI extends StackPane {
 
             // Test
             // System.out.printf("Click: (%d, %d)%n", posX, posY);
-            return new Point2D(posX, posY);
+            return new Point(posX, posY);
 
         } else {
             // Test
