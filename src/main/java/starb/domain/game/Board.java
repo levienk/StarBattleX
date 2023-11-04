@@ -211,7 +211,7 @@ public class Board {
         }
         return true;
     }
-    public List<Line> getSectionBoundaries() {
+    public List<Line> fetchSectionBoundaries() {
         ArrayList<Line> allSectionLines = new ArrayList<>();
         for(HashMap<Point, Square> section : sections) {
             allSectionLines.addAll(getSectionBoundary(section));
