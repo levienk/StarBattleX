@@ -20,7 +20,10 @@ public class Board {
     private HashSet<Point> invalidStars;
     private HashSet<Point> validStars;
 
-    public Board(int rows, int columns, List<HashMap<Point, Square>> sections, int id) {
+    private HashSet<Point> solution;
+
+    public Board(int rows, int columns, List<HashMap<Point, Square>> sections,
+                 HashSet<Point> solution, int id) {
         this.id = id;
 
         ROWS = rows;
@@ -39,6 +42,8 @@ public class Board {
         // Initialize validStars list
         this.validStars = new HashSet<>();
 
+        // Initialize solution list
+        this.solution = solution;
 
     }
     public void updateSquare(Point point, String state) {
@@ -271,5 +276,6 @@ public class Board {
     public HashSet<Point> getInvalidStars() {
         return invalidStars;
     }
+    public HashSet<Point> getSolution() { return solution; }
 
 }
