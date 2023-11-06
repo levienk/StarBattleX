@@ -9,8 +9,11 @@ import starb.server.repo.UserRepository;
 @RestController
 @RequestMapping("users")
 public class UserController {
-    @Autowired
-    private UserRepository users;
+    private final UserRepository users;
+
+    public UserController(UserRepository users) {
+        this.users = users;
+    }
 
     @PostMapping
     public User postUser(){
