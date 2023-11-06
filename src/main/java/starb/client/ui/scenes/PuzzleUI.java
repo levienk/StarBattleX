@@ -101,7 +101,7 @@ public class PuzzleUI extends StackPane {
 
         // Draw the section lines of the board
         g.setLineWidth(5.0);
-        for (Line line : board.getSectionBoundaries()) {
+        for (Line line : board.fetchSectionBoundaries()) {
             g.strokeLine(( (int) line.getStartX() - 1 ) * cellSize + gridUpperLeft.getX(),
                     ( (int) line.getStartY() - 1 ) * cellSize + gridUpperLeft.getY(),
                     ( (int) line.getEndX() - 1 ) * cellSize + gridUpperLeft.getX(),

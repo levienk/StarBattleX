@@ -1,6 +1,9 @@
 package starb.domain.game;
 
 import java.awt.Point;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import javafx.scene.shape.Line;
 import org.springframework.data.annotation.Id;
 
@@ -22,8 +25,12 @@ public class Board {
 
     private HashSet<Point> solution;
 
-    public Board(int rows, int columns, List<HashMap<Point, Square>> sections,
-                 HashSet<Point> solution, int id) {
+    @JsonCreator
+    public Board(@JsonProperty("rows") int rows,
+                 @JsonProperty("columns") int columns,
+                 @JsonProperty("sections") List<HashMap<Point, Square>> sections,
+                 @JsonProperty("solution") HashSet<Point> solution,
+                 @JsonProperty("id") int id) {
         this.id = id;
 
         ROWS = rows;
@@ -46,6 +53,7 @@ public class Board {
         this.solution = solution;
 
     }
+
     public void updateSquare(Point point, String state) {
         if(state.equals("star") && checkSquare(point) && !(squares.get(point).getState().equals("star"))) {
             squares.get(point).setState("star");
@@ -78,6 +86,7 @@ public class Board {
             //checkInvalidStars();
         }
     }
+
     private boolean checkSquare(Point point) {
         if (checkArea(point) && checkSection(point) && checkColumn((int) point.getX()) && checkRow((int) point.getY())) {
             System.out.println("real!");
@@ -91,6 +100,7 @@ public class Board {
             return false;
         }
     }
+
     private boolean checkRow(int row) {
         int starCount = 0;
         boolean starIsInvalid = false;
@@ -113,6 +123,7 @@ public class Board {
         }
         return !starIsInvalid;
     }
+
     private boolean checkColumn(int column) {
         int starCount = 0;
         boolean starIsInvalid = false;
@@ -136,6 +147,7 @@ public class Board {
         return !starIsInvalid;
 
     }
+
     private boolean checkSection(Point point) {
         int starCount = 0;
         boolean starIsInvalid = false;
@@ -158,6 +170,7 @@ public class Board {
         }
         return !starIsInvalid;
     }
+
     private HashMap<Point, Square> findSection(Point point) {
         for (HashMap<Point, Square> section : sections) {
             if (section.containsKey(point)) {
@@ -166,6 +179,7 @@ public class Board {
         }
         return null;
     }
+
     private boolean checkArea(Point point) {
         boolean starIsInvalid = false;
         for(int i = -1; i <= 1; i++) {
@@ -189,6 +203,7 @@ public class Board {
         }
         return !starIsInvalid;
     }
+
     private void checkInvalidStars() {
         for(Point point : invalidStars) {
             if(checkSquare(point)) {
@@ -211,7 +226,8 @@ public class Board {
         }
         return true;
     }
-    public List<Line> getSectionBoundaries() {
+
+    public List<Line> fetchSectionBoundaries() {
         ArrayList<Line> allSectionLines = new ArrayList<>();
         for(HashMap<Point, Square> section : sections) {
             allSectionLines.addAll(getSectionBoundary(section));
@@ -252,6 +268,7 @@ public class Board {
         }
         return boundaryLines;
     }
+
     public void clearBoard() {
         for(int i = 1; i <= ROWS; i++) {
             for(int j = 1; j <= COLUMNS; j++) {
@@ -261,6 +278,7 @@ public class Board {
             }
         }
     }
+
     public int getID() {
         return id;
     }
