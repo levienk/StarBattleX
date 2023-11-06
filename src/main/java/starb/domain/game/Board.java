@@ -8,10 +8,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import javafx.scene.shape.Line;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.*;
 
-
+@Document("boards")
 public class Board {
     @Id
     private final int id;
