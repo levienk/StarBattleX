@@ -1,19 +1,50 @@
 package starb.domain.json;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.ArrayList;
 import java.util.EventListener;
 import java.util.List;
 
+@Document("users")
 public class User {
+    @Id
+    private String id;
     private List<String> completed;
     private String nextPuzzle;
     private List<String> inaccessible;
-    private List<EventListener> eventListeners;
 
-    public User() {
-        // Each of the Strings are JSON File names
-        //this.completed = server's data for completed;
-        //this.nextPuzzle = server's data for nextPuzzle;
-        //this.inaccessible = server's data for inaccessible;
+    /**
+     * Constructor for building a user from the server's data
+     * @param id
+     * @param completed
+     * @param nextPuzzle
+     * @param inaccessible
+     */
+    @JsonCreator
+    public User(@JsonProperty("id") String id,
+                @JsonProperty("completed") List<String> completed,
+                @JsonProperty("nextPuzzle") String nextPuzzle,
+                @JsonProperty("inaccessible") List<String> inaccessible
+                ) {
+        this.id = null;
+        this.completed = completed;
+        this.nextPuzzle = nextPuzzle;
+        this.inaccessible = inaccessible;
+    }
+
+    /**
+     * Constructor for a new User being added to the database
+     */
+    @JsonCreator
+    public User(){
+        this.id = null;
+        this.completed = new ArrayList<String>();
+        this.nextPuzzle = ""; // Id of the first puzzle
+        this.inaccessible = new ArrayList<String>(); // All other puzzles
     }
 
     public void updateNextPuzzle(){
@@ -28,6 +59,8 @@ public class User {
             this.nextPuzzle = ""; // Update the next puzzle String to show that no more files exist
         }
     }
+
+    public String getId() {return this.id;}
 
     public List<String> getCompleted(){return completed;}
 
