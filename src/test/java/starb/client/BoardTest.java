@@ -142,7 +142,7 @@ public class BoardTest {
     @Test
     public void testSectionBoundaryRetrieval() {
         Board board = initalizeBoard();
-        assertNotNull(board.fetchSectionBoundaries());
+        assertNotNull(board.getSectionBoundaries());
     }
     private Board initalizeBoard() {
         List<HashMap<Point, Square>> sections = new ArrayList();
