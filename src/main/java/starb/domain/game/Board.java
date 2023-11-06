@@ -3,24 +3,30 @@ package starb.domain.game;
 import java.awt.Point;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import javafx.scene.shape.Line;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.*;
 
-
+@Document("boards")
 public class Board {
     @Id
     private final int id;
 
     //point is upper left corner of the square
+    @JsonIgnore
     private HashMap<Point, Square> squares;
     private List<HashMap<Point, Square>> sections;
     private final int ROWS;
     private final int COLUMNS;
 
+    @JsonIgnore
     private HashSet<Point> invalidStars;
+    @JsonIgnore
     private HashSet<Point> validStars;
 
     private HashSet<Point> solution;
@@ -214,6 +220,7 @@ public class Board {
         }
     }
 
+    @JsonIgnore
     public boolean isComplete() {
         if(validStars.size() != 20) {
             return false;
@@ -227,7 +234,8 @@ public class Board {
         return true;
     }
 
-    public List<Line> fetchSectionBoundaries() {
+    @JsonIgnore
+    public List<Line> getSectionBoundaries() {
         ArrayList<Line> allSectionLines = new ArrayList<>();
         for(HashMap<Point, Square> section : sections) {
             allSectionLines.addAll(getSectionBoundary(section));
@@ -289,8 +297,11 @@ public class Board {
         return COLUMNS;
     }
     public List<HashMap<Point, Square>> getSections() { return sections;}
+    @JsonIgnore
     public HashSet<Point> getValidStars() { return validStars;}
+    @JsonIgnore
     public HashMap<Point, Square> getSquares() { return squares;}
+    @JsonIgnore
     public HashSet<Point> getInvalidStars() {
         return invalidStars;
     }
