@@ -28,15 +28,15 @@ public class Board {
     @JsonIgnore
     private HashSet<Point> validStars;
 
-    private HashSet<Point> solution;
+    private List<Point> solution;
 
-    private int numStars;
+    private final int numStars;
 
     @JsonCreator
     public Board(@JsonProperty("rows") int rows,
                  @JsonProperty("columns") int columns,
                  @JsonProperty("sections") List<List<Point>> sections,
-                 @JsonProperty("solution") HashSet<Point> solution,
+                 @JsonProperty("solution") List<Point> solution,
                  @JsonProperty("numStars") int numStars,
                  @JsonProperty("id") int id) {
         this.id = id;
@@ -311,7 +311,7 @@ public class Board {
     public HashSet<Point> getInvalidStars() {
         return invalidStars;
     }
-    public HashSet<Point> getSolution() { return solution; }
+    public List<Point> getSolution() { return solution; }
     public int getNumStars() { return numStars; }
 
 }

@@ -59,7 +59,7 @@ public class BoardBootstrap {
                 }
 
                 // Load the solution for each Board object
-                HashSet<Point> solution = new HashSet<>();
+                List<Point> solution = new ArrayList<>();
                 for (Cell cell : puzz[i].getSolution()) {
                     solution.add(new Point(cell.getCol() + 1, cell.getRow() + 1));
                 }
