@@ -9,30 +9,29 @@ import starb.server.repo.UserRepository;
 @RestController
 @RequestMapping("users")
 public class UserController {
-    @Autowired
-    private UserRepository users;
+    private final UserRepository users;
+
+    public UserController(UserRepository users) {
+        this.users = users;
+    }
 
     @PostMapping
     public User postUser(){
         User doc = new User();
-        users.save(doc);
-        return null;
+        return users.save(doc);
     }
 
-    @RequestMapping("{id}")
-    @PutMapping
+    @PutMapping("{id}")
     public User putUser(@PathVariable String id, @RequestBody User user){
         return null;
     }
 
-    @RequestMapping("{id}")
-    @GetMapping(produces="application/json")
+    @GetMapping(value = "{id}", produces = "application/json")
     public User getUser(@PathVariable String id) {
         return null;
     }
 
-    @RequestMapping("{id}")
-    @DeleteMapping
+    @DeleteMapping("{id}")
     public void deleteUser(@PathVariable String id){
         //
     }

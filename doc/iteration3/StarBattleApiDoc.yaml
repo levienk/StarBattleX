@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: StarBattle 
   description: Lorem ipsum
-  version: 1.0.11
+  version: "1.0"
 servers:
   - url: http://localhost:8888/starb
 paths:
@@ -178,6 +178,26 @@ paths:
                     - { "x": 3, "y": 3 }
                   solution: 
                     - { "x": 2, "y": 1 }
+    get:
+      tags:
+        - board
+      summary: Get all existing boards by IDs.
+      responses:
+        '200':
+          description: Successful response with content of updated object.
+          content:
+            application/json:
+              example:
+                value:
+                  ids: ["64272f3d16b2df1fa31321313",
+                          "ab3ca983aca248ab2dc3a3c32",
+                          "64272f3d16b2df1faf837ec92",
+                          "92218ad3a3c32fc3a3c32fc32",
+                          ]
+        '404':
+          description: No boards are found.
+
+
   /board/{id}:
     get:
       tags:
@@ -213,7 +233,7 @@ paths:
     delete: 
       tags: 
         - board
-      summary: update a field of a board item
+      summary: Removes the board by ID.
       parameters:
         - name: id
           in: path
