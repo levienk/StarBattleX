@@ -41,8 +41,8 @@ public class BoardTest {
 
         boolean[][] coordinatesCovered = new boolean[10][10];
 
-        for (HashMap<Point, Square> section : myBoard.getSections()) {
-            for (Point point : section.keySet()) {
+        for (List<Point> section : myBoard.getSections()) {
+            for (Point point : section) {
                 int x = (int) point.getX();
                 int y = (int) point.getY();
                 assertFalse(coordinatesCovered[x][y]);
@@ -61,7 +61,7 @@ public class BoardTest {
         Board board = initalizeBoard();
         Point point = new Point(0, 0);
         board.updateSquare(point, "star");
-        assertEquals("star", board.getSections().get(0).get(point).getState());
+        assertEquals("star", board.getSquares().get(point).getState());
     }
 
     @Test
@@ -145,159 +145,159 @@ public class BoardTest {
         assertNotNull(board.getSectionBoundaries());
     }
     private Board initalizeBoard() {
-        List<HashMap<Point, Square>> sections = new ArrayList();
+        List<List<Point>> sections = new ArrayList();
 
         //section 1
-        HashMap<Point, Square> section1 = new HashMap<>();
-        section1.put(new Point(0, 0), new Square());
-        section1.put(new Point(1, 0), new Square());
-        section1.put(new Point(2, 0), new Square());
-        section1.put(new Point(3, 0), new Square());
-        section1.put(new Point(4, 0), new Square());
-        section1.put(new Point(5, 0), new Square());
-        section1.put(new Point(6, 0), new Square());
-        section1.put(new Point(7, 0), new Square());
-        section1.put(new Point(0, 1), new Square());
-        section1.put(new Point(1, 1), new Square());
-        section1.put(new Point(2, 1), new Square());
-        section1.put(new Point(3, 1), new Square());
-        section1.put(new Point(4, 1), new Square());
-        section1.put(new Point(5, 1), new Square());
-        section1.put(new Point(7, 1), new Square());
-        section1.put(new Point(4, 2), new Square());
+        List<Point> section1 = new ArrayList<>();
+        section1.add(new Point(0, 0));
+        section1.add(new Point(1, 0));
+        section1.add(new Point(2, 0));
+        section1.add(new Point(3, 0));
+        section1.add(new Point(4, 0));
+        section1.add(new Point(5, 0));
+        section1.add(new Point(6, 0));
+        section1.add(new Point(7, 0));
+        section1.add(new Point(0, 1));
+        section1.add(new Point(1, 1));
+        section1.add(new Point(2, 1));
+        section1.add(new Point(3, 1));
+        section1.add(new Point(4, 1));
+        section1.add(new Point(5, 1));
+        section1.add(new Point(7, 1));
+        section1.add(new Point(4, 2));
         sections.add(section1);
 
         //section 2
-        HashMap<Point, Square> section2 = new HashMap<>();
-        section2.put(new Point(8, 0), new Square());
-        section2.put(new Point(8, 1), new Square());
-        section2.put(new Point(8, 2), new Square());
-        section2.put(new Point(8, 3), new Square());
-        section2.put(new Point(8, 4), new Square());
-        section2.put(new Point(8, 5), new Square());
-        section2.put(new Point(9, 0), new Square());
-        section2.put(new Point(9, 1), new Square());
-        section2.put(new Point(9, 2), new Square());
-        section2.put(new Point(9, 3), new Square());
-        section2.put(new Point(9, 4), new Square());
-        section2.put(new Point(9, 5), new Square());
-        section2.put(new Point(9, 6), new Square());
-        section2.put(new Point(9, 7), new Square());
+        List<Point> section2 = new ArrayList<>();
+        section2.add(new Point(8, 0));
+        section2.add(new Point(8, 1));
+        section2.add(new Point(8, 2));
+        section2.add(new Point(8, 3));
+        section2.add(new Point(8, 4));
+        section2.add(new Point(8, 5));
+        section2.add(new Point(9, 0));
+        section2.add(new Point(9, 1));
+        section2.add(new Point(9, 2));
+        section2.add(new Point(9, 3));
+        section2.add(new Point(9, 4));
+        section2.add(new Point(9, 5));
+        section2.add(new Point(9, 6));
+        section2.add(new Point(9, 7));
         sections.add(section2);
 
         //section 3
-        HashMap<Point, Square> section3 = new HashMap<>();
-        section3.put(new Point(0, 3), new Square());
-        section3.put(new Point(0, 4), new Square());
-        section3.put(new Point(0, 5), new Square());
-        section3.put(new Point(0, 6), new Square());
-        section3.put(new Point(0, 2), new Square());
-        section3.put(new Point(0, 7), new Square());
-        section3.put(new Point(0, 8), new Square());
+        List<Point> section3 = new ArrayList<>();
+        section3.add(new Point(0, 3));
+        section3.add(new Point(0, 4));
+        section3.add(new Point(0, 5));
+        section3.add(new Point(0, 6));
+        section3.add(new Point(0, 2));
+        section3.add(new Point(0, 7));
+        section3.add(new Point(0, 8));
 
-        section3.put(new Point(1, 3), new Square());
-        section3.put(new Point(1, 4), new Square());
-        section3.put(new Point(1, 5), new Square());
-        section3.put(new Point(1, 6), new Square());
-        section3.put(new Point(1, 7), new Square());
+        section3.add(new Point(1, 3));
+        section3.add(new Point(1, 4));
+        section3.add(new Point(1, 5));
+        section3.add(new Point(1, 6));
+        section3.add(new Point(1, 7));
 
-        section3.put(new Point(2, 3), new Square());
-        section3.put(new Point(3, 3), new Square());
-        section3.put(new Point(2, 4), new Square());
+        section3.add(new Point(2, 3));
+        section3.add(new Point(3, 3));
+        section3.add(new Point(2, 4));
 
-        section3.put(new Point(2, 7), new Square());
-        section3.put(new Point(3, 7), new Square());
-        section3.put(new Point(4, 7), new Square());
-        section3.put(new Point(5, 7), new Square());
+        section3.add(new Point(2, 7));
+        section3.add(new Point(3, 7));
+        section3.add(new Point(4, 7));
+        section3.add(new Point(5, 7));
         sections.add(section3);
 
         //section 4
-        HashMap<Point, Square> section4 = new HashMap<>();
-        section4.put(new Point(1, 2), new Square());
-        section4.put(new Point(2, 2), new Square());
-        section4.put(new Point(3, 2), new Square());
+        List<Point> section4 = new ArrayList<>();
+        section4.add(new Point(1, 2));
+        section4.add(new Point(2, 2));
+        section4.add(new Point(3, 2));
         sections.add(section4);
 
         //section 5
-        HashMap<Point, Square> section5 = new HashMap<>();
-        section5.put(new Point(5, 2), new Square());
-        section5.put(new Point(6, 2), new Square());
-        section5.put(new Point(7, 2), new Square());
+        List<Point> section5 = new ArrayList<>();
+        section5.add(new Point(5, 2));
+        section5.add(new Point(6, 2));
+        section5.add(new Point(7, 2));
 
-        section5.put(new Point(6, 1), new Square());
-        section5.put(new Point(7, 3), new Square());
+        section5.add(new Point(6, 1));
+        section5.add(new Point(7, 3));
         sections.add(section5);
 
         //section 6
-        HashMap<Point, Square> section6 = new HashMap<>();
-        section6.put(new Point(4, 3), new Square());
+        List<Point> section6 = new ArrayList<>();
+        section6.add(new Point(4, 3));
 
-        section6.put(new Point(3, 4), new Square());
-        section6.put(new Point(4, 4), new Square());
-        section6.put(new Point(5, 4), new Square());
+        section6.add(new Point(3, 4));
+        section6.add(new Point(4, 4));
+        section6.add(new Point(5, 4));
 
-        section6.put(new Point(3, 5), new Square());
-        section6.put(new Point(4, 5), new Square());
-        section6.put(new Point(5, 5), new Square());
+        section6.add(new Point(3, 5));
+        section6.add(new Point(4, 5));
+        section6.add(new Point(5, 5));
         sections.add(section6);
 
         //section 7
-        HashMap<Point, Square> section7 = new HashMap<>();
-        section7.put(new Point(5, 3), new Square());
-        section7.put(new Point(5, 6), new Square());
+        List<Point> section7 = new ArrayList<>();
+        section7.add(new Point(5, 3));
+        section7.add(new Point(5, 6));
 
-        section7.put(new Point(6, 3), new Square());
-        section7.put(new Point(6, 4), new Square());
-        section7.put(new Point(6, 5), new Square());
-        section7.put(new Point(6, 6), new Square());
-        section7.put(new Point(6, 7), new Square());
+        section7.add(new Point(6, 3));
+        section7.add(new Point(6, 4));
+        section7.add(new Point(6, 5));
+        section7.add(new Point(6, 6));
+        section7.add(new Point(6, 7));
 
-        section7.put(new Point(7, 4), new Square());
-        section7.put(new Point(7, 5), new Square());
-        section7.put(new Point(7, 6), new Square());
-        section7.put(new Point(7, 7), new Square());
+        section7.add(new Point(7, 4));
+        section7.add(new Point(7, 5));
+        section7.add(new Point(7, 6));
+        section7.add(new Point(7, 7));
         sections.add(section7);
 
         //section 8
-        HashMap<Point, Square> section8 = new HashMap<>();
-        section8.put(new Point(8, 6), new Square());
-        section8.put(new Point(8, 7), new Square());
-        section8.put(new Point(8, 8), new Square());
+        List<Point> section8 = new ArrayList<>();
+        section8.add(new Point(8, 6));
+        section8.add(new Point(8, 7));
+        section8.add(new Point(8, 8));
 
-        section8.put(new Point(9, 8), new Square());
-        section8.put(new Point(9, 9), new Square());
+        section8.add(new Point(9, 8));
+        section8.add(new Point(9, 9));
         sections.add(section8);
 
         //section 9
-        HashMap<Point, Square> section9 = new HashMap<>();
+        List<Point> section9 = new ArrayList<>();
 
-        section9.put(new Point(2, 5), new Square());
+        section9.add(new Point(2, 5));
 
-        section9.put(new Point(2, 6), new Square());
-        section9.put(new Point(3, 6), new Square());
-        section9.put(new Point(4, 6), new Square());
+        section9.add(new Point(2, 6));
+        section9.add(new Point(3, 6));
+        section9.add(new Point(4, 6));
         sections.add(section9);
 
         //section 10
-        HashMap<Point, Square> section10 = new HashMap<>();
+        List<Point> section10 = new ArrayList<>();
 
-        section10.put(new Point(1,8), new Square());
-        section10.put(new Point(2,8), new Square());
-        section10.put(new Point(3,8), new Square());
-        section10.put(new Point(4,8), new Square());
-        section10.put(new Point(5,8), new Square());
-        section10.put(new Point(6,8), new Square());
-        section10.put(new Point(7,8), new Square());
+        section10.add(new Point(1,8));
+        section10.add(new Point(2,8));
+        section10.add(new Point(3,8));
+        section10.add(new Point(4,8));
+        section10.add(new Point(5,8));
+        section10.add(new Point(6,8));
+        section10.add(new Point(7,8));
 
-        section10.put(new Point(0,9), new Square());
-        section10.put(new Point(1,9), new Square());
-        section10.put(new Point(2,9), new Square());
-        section10.put(new Point(3,9), new Square());
-        section10.put(new Point(4,9), new Square());
-        section10.put(new Point(5,9), new Square());
-        section10.put(new Point(6,9), new Square());
-        section10.put(new Point(7,9), new Square());
-        section10.put(new Point(8,9), new Square());
+        section10.add(new Point(0,9));
+        section10.add(new Point(1,9));
+        section10.add(new Point(2,9));
+        section10.add(new Point(3,9));
+        section10.add(new Point(4,9));
+        section10.add(new Point(5,9));
+        section10.add(new Point(6,9));
+        section10.add(new Point(7,9));
+        section10.add(new Point(8,9));
 
         sections.add(section10);
 

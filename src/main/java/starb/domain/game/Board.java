@@ -5,7 +5,6 @@ import java.awt.Point;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import javafx.scene.shape.Line;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -20,7 +19,7 @@ public class Board {
     //point is upper left corner of the square
     @JsonIgnore
     private HashMap<Point, Square> squares;
-    private List<HashMap<Point, Square>> sections;
+    private List<List<Point>> sections;
     private final int ROWS;
     private final int COLUMNS;
 
@@ -34,7 +33,7 @@ public class Board {
     @JsonCreator
     public Board(@JsonProperty("rows") int rows,
                  @JsonProperty("columns") int columns,
-                 @JsonProperty("sections") List<HashMap<Point, Square>> sections,
+                 @JsonProperty("sections") List<List<Point>> sections,
                  @JsonProperty("solution") HashSet<Point> solution,
                  @JsonProperty("id") int id) {
         this.id = id;
@@ -45,8 +44,10 @@ public class Board {
 
         // Initialize the squares HashMap
         this.squares = new HashMap<>();
-        for (HashMap<Point, Square> section : sections) {
-            squares.putAll(section);
+        for (List<Point> section : sections) {
+            for (Point point : section) {
+                squares.put(point, new Square());
+            }
         }
 
         // Initialize invalidStars list
@@ -158,10 +159,11 @@ public class Board {
         int starCount = 0;
         boolean starIsInvalid = false;
         List<Point> possibleInvalidStars = new ArrayList<>();
-        for (Map.Entry<Point, Square> entry: findSection(point).entrySet()) {
-            if (entry.getValue().getState().equals("star") || invalidStars.contains(entry.getKey())) {
+        for (Point pointInSection : findSection(point)) {
+            if (squares.get(pointInSection).getState().equals("star") ||
+                    invalidStars.contains(pointInSection)) {
                 starCount++;
-                possibleInvalidStars.add(entry.getKey());
+                possibleInvalidStars.add(pointInSection);
             }
             if(starCount == 2) {
                 for (Point Point : possibleInvalidStars) {
@@ -177,9 +179,9 @@ public class Board {
         return !starIsInvalid;
     }
 
-    private HashMap<Point, Square> findSection(Point point) {
-        for (HashMap<Point, Square> section : sections) {
-            if (section.containsKey(point)) {
+    private List<Point> findSection(Point point) {
+        for (List<Point> section : sections) {
+            if (section.contains(point)) {
                 return section;
             }
         }
@@ -237,40 +239,38 @@ public class Board {
     @JsonIgnore
     public List<Line> getSectionBoundaries() {
         ArrayList<Line> allSectionLines = new ArrayList<>();
-        for(HashMap<Point, Square> section : sections) {
+        for(List<Point> section : sections) {
             allSectionLines.addAll(getSectionBoundary(section));
         }
         return allSectionLines;
     }
 
-    private static List<Line> getSectionBoundary(HashMap<Point, Square> squaresInSection) {
+    private static List<Line> getSectionBoundary(List<Point> pointsInSection) {
         List<Line> boundaryLines = new ArrayList<>();
 
-        for(Map.Entry<Point, Square> entry : squaresInSection.entrySet()) {
-            Point point = entry.getKey();
-            Square square = entry.getValue();
+        for(Point point : pointsInSection) {
 
             double x = point.getX();
             double y = point.getY();
 
             // Check top side
             Point squareAbove = new Point((int) x, (int) y - 1);
-            if (!squaresInSection.containsKey(squareAbove)) {
+            if (!pointsInSection.contains(squareAbove)) {
                 boundaryLines.add(new Line(x, y, x + 1, y));
             }
             // Check right side
             Point squareRight = new Point((int) x + 1, (int) y);
-            if (!squaresInSection.containsKey(squareRight)) {
+            if (!pointsInSection.contains(squareRight)) {
                 boundaryLines.add(new Line(x + 1, y, x + 1, y + 1));
             }
             // Check bottom side
             Point squareBelow = new Point((int) x, (int) y + 1);
-            if (!squaresInSection.containsKey(squareBelow)) {
+            if (!pointsInSection.contains(squareBelow)) {
                 boundaryLines.add(new Line(x, y + 1, x + 1, y + 1));
             }
             // Check left side
             Point squareLeft = new Point((int) x - 1, (int) y);
-            if (!squaresInSection.containsKey(squareLeft)) {
+            if (!pointsInSection.contains(squareLeft)) {
                 boundaryLines.add(new Line(x, y, x, y + 1));
             }
         }
@@ -296,7 +296,7 @@ public class Board {
     public int getColumns() {
         return COLUMNS;
     }
-    public List<HashMap<Point, Square>> getSections() { return sections;}
+    public List<List<Point>> getSections() { return sections;}
     @JsonIgnore
     public HashSet<Point> getValidStars() { return validStars;}
     @JsonIgnore
