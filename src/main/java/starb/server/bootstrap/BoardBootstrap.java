@@ -5,12 +5,10 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 import starb.domain.game.Board;
+import starb.server.repo.BoardRepository;
 
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -21,11 +19,11 @@ import java.util.List;
 @Component
 public class BoardBootstrap {
 
-    private static final String PUZZLE_DATA_FILE = "Assets/Puzzles/puzzles.json";
-//    private PuzzleRepository repo;
-    // TODO - BoardRepository repo in parameters, this.repo = repo in body
-    public BoardBootstrap() {
+    private static final String BOARD_DATA_FILE = "Assets/Boards/boards.json";
+    private BoardRepository repo;
 
+    public BoardBootstrap(BoardRepository repo) {
+        this.repo = repo;
     }
 
     /**
@@ -37,43 +35,19 @@ public class BoardBootstrap {
      */
     @EventListener
     public void onApplicationStart(ApplicationReadyEvent event) {
-//        // If the database already has data, do nothing.
-//        if( repo.count() > 0 ) return;
-//
-//        // Load the JSON file, and insert each object into the database
+        // If the database already has data, do nothing.
+        if( repo.count() > 0 ) return;
+
+        // Load the JSON file, and insert each object into the database
         ObjectMapper mapper = new ObjectMapper();
-        File puzzFile = new File(PUZZLE_DATA_FILE);
-//        System.out.println("Loading puzzles into DB.");
+        File boardsFile = new File(BOARD_DATA_FILE);
+
+        System.out.println("Loading boards into DB.");
         try {
-            Puzzle[] puzz = mapper.readValue(puzzFile, Puzzle[].class);
-            Board[] boards = new Board[puzz.length];
-            for (int i = 0; i < puzz.length; i++) {
-                // Load the sections for each Board object
-                List<List<Point>> sections = new ArrayList<>();
-                for (List<Cell> region : puzz[i].getRegions()) {
-                    List<Point> section = new ArrayList<>();
-                    for (Cell cell : region) {
-                        section.add(new Point(cell.getCol() + 1, cell.getRow() + 1));
-                    }
-                    sections.add(section);
-                }
-
-                // Load the solution for each Board object
-                List<Point> solution = new ArrayList<>();
-                for (Cell cell : puzz[i].getSolution()) {
-                    solution.add(new Point(cell.getCol() + 1, cell.getRow() + 1));
-                }
-
-                boards[i] = new Board(puzz[i].getGridSize(),
-                        puzz[i].getGridSize(), sections, solution, puzz[i].getNumStars(),
-                        puzz[i].getLevel());
-            }
-            ObjectMapper boardMapper = new ObjectMapper();
-            boardMapper.writeValue(new File("Assets/Boards/boards.json"), boards);
-            System.out.println("File Created");
-//            repo.saveAll(List.of(puzz));
+            Board[] boards = mapper.readValue(boardsFile, Board[].class);
+            repo.saveAll(List.of(boards));
         } catch(IOException e) {
-            System.err.println("Unable to load puzzles: " + e.getMessage());
+            System.err.println("Unable to load boards: " + e.getMessage());
             e.printStackTrace();
         }
     }
