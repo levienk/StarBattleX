@@ -55,14 +55,14 @@ public class JSONReader {
 
     // The Board expects sections to cover the entire board
     // TODO - remove this after temporary file and this class is implemented
-    private List<HashMap<Point, Square>> getTemporarySections() {
-        List<HashMap<Point, Square>> tempSections = new ArrayList<>();
+    private List<List<Point>> getTemporarySections() {
+        List<List<Point>> tempSections = new ArrayList<>();
 
         // Adds 10 vertical sections to the board
         for (int i = 1; i <= 10; i++) {
-            HashMap<Point, Square> section = new HashMap<>();
+            List<Point> section = new ArrayList<>();
             for (int j = 1; j <= 10; j++) {
-                section.put(new Point(i, j), new Square());
+                section.add(new Point(i, j));
             }
             tempSections.add(section);
         }
