@@ -1,18 +1,15 @@
 package starb.server.bootstrap;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-// import example.server.repo.PuzzleRepository;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 import starb.domain.game.Board;
-import starb.domain.game.Square;
 
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
@@ -52,12 +49,11 @@ public class BoardBootstrap {
             Board[] boards = new Board[puzz.length];
             for (int i = 0; i < puzz.length; i++) {
                 // Load the sections for each Board object
-                List<HashMap<Point, Square>> sections = new ArrayList<>();
+                List<List<Point>> sections = new ArrayList<>();
                 for (List<Cell> region : puzz[i].getRegions()) {
-                    HashMap<Point, Square> section = new HashMap<>();
+                    List<Point> section = new ArrayList<>();
                     for (Cell cell : region) {
-                        section.put(new Point(cell.getCol() + 1, cell.getRow() + 1),
-                                new Square());
+                        section.add(new Point(cell.getCol() + 1, cell.getRow() + 1));
                     }
                     sections.add(section);
                 }
@@ -69,7 +65,8 @@ public class BoardBootstrap {
                 }
 
                 boards[i] = new Board(puzz[i].getGridSize(),
-                        puzz[i].getGridSize(), sections, solution, puzz[i].getLevel());
+                        puzz[i].getGridSize(), sections, solution, puzz[i].getNumStars(),
+                        puzz[i].getLevel());
             }
             ObjectMapper boardMapper = new ObjectMapper();
             boardMapper.writeValue(new File("Assets/Boards/boards.json"), boards);
