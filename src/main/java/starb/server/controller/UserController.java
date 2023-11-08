@@ -25,12 +25,12 @@ public class UserController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<User> putUser(@PathVariable String id, @RequestBody String newValue){
+    public ResponseEntity<User> putUser(@PathVariable String id, @RequestBody User userInput){
         try {
             // The user identified by the id
             User updatedUser;
             // Perform the update on a field in updatedUser
-            updatedUser = users.updateField(id, newValue);
+            updatedUser = users.updateField(id, userInput);
             if (updatedUser != null) {
                 // Return the updated User with a 200 OK response
                 return ResponseEntity.ok(updatedUser);

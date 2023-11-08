@@ -6,5 +6,5 @@ import starb.domain.json.User;
 
 public interface UserRepository extends MongoRepository<User, String> {
     @Query("{'_id' : ?0}")
-    User updateField(String id, String newValue);
+    User updateField(String id, User newValue);
 }
