@@ -83,6 +83,9 @@ public class User {
         else if (completed.size() < 20) {
             playerRank = "master";
         }
+        else {
+            playerRank = "professional";
+        }
         return playerRank;
     }
 }
