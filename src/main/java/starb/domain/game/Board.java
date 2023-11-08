@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import javafx.scene.shape.Line;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.*;
@@ -17,24 +18,30 @@ public class Board {
     private final int id;
 
     //point is upper left corner of the square
+    @Transient
     @JsonIgnore
     private HashMap<Point, Square> squares;
     private List<List<Point>> sections;
     private final int ROWS;
     private final int COLUMNS;
 
+    @Transient
     @JsonIgnore
     private HashSet<Point> invalidStars;
+    @Transient
     @JsonIgnore
     private HashSet<Point> validStars;
 
-    private HashSet<Point> solution;
+    private List<Point> solution;
+
+    private final int numStars;
 
     @JsonCreator
     public Board(@JsonProperty("rows") int rows,
                  @JsonProperty("columns") int columns,
                  @JsonProperty("sections") List<List<Point>> sections,
-                 @JsonProperty("solution") HashSet<Point> solution,
+                 @JsonProperty("solution") List<Point> solution,
+                 @JsonProperty("numStars") int numStars,
                  @JsonProperty("id") int id) {
         this.id = id;
 
@@ -42,13 +49,7 @@ public class Board {
         COLUMNS = columns;
         this.sections = sections;
 
-        // Initialize the squares HashMap
-        this.squares = new HashMap<>();
-        for (List<Point> section : sections) {
-            for (Point point : section) {
-                squares.put(point, new Square());
-            }
-        }
+        initializeSquares();
 
         // Initialize invalidStars list
         this.invalidStars = new HashSet<>();
@@ -59,6 +60,19 @@ public class Board {
         // Initialize solution list
         this.solution = solution;
 
+        // Number of stars per section, row, and column
+        this.numStars = numStars;
+
+    }
+
+    private void initializeSquares() {
+        // Initialize the squares HashMap
+        this.squares = new HashMap<>();
+        for (List<Point> section : sections) {
+            for (Point point : section) {
+                squares.put(point, new Square());
+            }
+        }
     }
 
     public void updateSquare(Point point, String state) {
@@ -222,6 +236,7 @@ public class Board {
         }
     }
 
+    @Transient
     @JsonIgnore
     public boolean isComplete() {
         if(validStars.size() != 20) {
@@ -236,6 +251,7 @@ public class Board {
         return true;
     }
 
+    @Transient
     @JsonIgnore
     public List<Line> getSectionBoundaries() {
         ArrayList<Line> allSectionLines = new ArrayList<>();
@@ -297,14 +313,18 @@ public class Board {
         return COLUMNS;
     }
     public List<List<Point>> getSections() { return sections;}
+    @Transient
     @JsonIgnore
     public HashSet<Point> getValidStars() { return validStars;}
+    @Transient
     @JsonIgnore
     public HashMap<Point, Square> getSquares() { return squares;}
+    @Transient
     @JsonIgnore
     public HashSet<Point> getInvalidStars() {
         return invalidStars;
     }
-    public HashSet<Point> getSolution() { return solution; }
+    public List<Point> getSolution() { return solution; }
+    public int getNumStars() { return numStars; }
 
 }

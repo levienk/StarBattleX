@@ -301,7 +301,7 @@ public class BoardTest {
 
         sections.add(section10);
 
-        return new Board(10, 10, sections, new HashSet<Point>(), 0);
+        return new Board(10, 10, sections, new ArrayList<Point>(), 2, 0);
     }
 
 
