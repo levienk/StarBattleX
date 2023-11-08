@@ -15,6 +15,8 @@ public class FilterBeanConfig {
             // ************************************************
             // Configure here which paths require authentication
             reg.addUrlPatterns("/example/one");
+            reg.addUrlPatterns("/users");
+            reg.addUrlPatterns("/users/{id}");
             // ************************************************
 
             reg.setOrder(1);   //defines filter execution order
