@@ -33,11 +33,6 @@ public class BoardController {
 
     }
 
-    @PostMapping("{id}")
-    public Board postBoard(Board board) {
-        return repo.save(board);
-    }
-
     // Obtain a specific board
     @GetMapping("{id}")
     public Board getBoard(@PathVariable int id) {
@@ -49,13 +44,6 @@ public class BoardController {
         }
 
         return board.get();
-    }
-
-    @RequestMapping("{id}")
-    @DeleteMapping
-    @ResponseStatus(HttpStatus.OK)
-    public void deleteBoard(@PathVariable String id) {
-        repo.deleteById(id);
     }
 
 
