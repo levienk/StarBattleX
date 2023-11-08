@@ -110,15 +110,13 @@ paths:
           description: Successful response with content of updated object.
           content:
             application/json:
-              examples:
-                updated:
-                  value:
-                    {
-                      "id": "64272f3d16b2df1fa31321313",
-                      "completed": [ "1", "2", "3", "4", "5", "6"],
-                      "nextPuzzle": "7",
-                      "notAccessible": [ "8", "9"]
-                    }
+              example:
+                {
+                  "id": "64272f3d16b2df1fa31321313",
+                  "completed": [ "1", "2", "3", "4", "5", "6"],
+                  "nextPuzzle": "7",
+                  "notAccessible": [ "8", "9"]
+                }
         '404':
           description: The ID is not found.
     delete:
@@ -150,34 +148,24 @@ paths:
             schema: 
               type: object
             example: 
-              id: "1"
-              squares: { "{x: 4, y: 4}": { "state": "none", "isStarValid": true } }
-              sections: [ [ "{x: 4, y: 4}": {"state": "none", "isStarValid": true } ] ]
-              ROWS: 10
-              COLUMNS: 10
-              invalidStars: [ { "x": 4, "y": 4 } ]
-              validStars: [ { "x": 3, "y": 3 } ]
-              solution: [ { "x": 2, "y": 1 } ]
+              "id": 1
+              "sections": [ [ {"x": 4, "y": 4} ] ]
+              "ROWS": 10
+              "COLUMNS": 10
+              "numStars": 2
+              "solution": [ { "x": 2, "y": 1 } ]
       responses: 
         '201':
           description: Successful response
           content: 
             application/json:
-              example: 
-                value:
-                  id: "1"
-                  squares:
-                    '{"x": 4, "y": 4}': { "state": "none", "isStarValid": true }
-                  sections:
-                    - - '{"x": 4, "y": 4}': {"state": "none", "isStarValid": true}
-                  ROWS: 10
-                  COLUMNS: 10
-                  invalidStars:
-                    - { "x": 4, "y": 4 }
-                  validStars:
-                    - { "x": 3, "y": 3 }
-                  solution: 
-                    - { "x": 2, "y": 1 }
+              example:
+                "id": 1
+                "sections": [ [ { "x": 4, "y": 4 } ] ]
+                "ROWS": 10
+                "COLUMNS": 10
+                "numStars": 2
+                "solution": [ { "x": 2, "y": 1 } ]
     get:
       tags:
         - board
@@ -188,12 +176,11 @@ paths:
           content:
             application/json:
               example:
-                value:
-                  ids: ["64272f3d16b2df1fa31321313",
-                          "ab3ca983aca248ab2dc3a3c32",
-                          "64272f3d16b2df1faf837ec92",
-                          "92218ad3a3c32fc3a3c32fc32",
-                          ]
+                "ids": ["1",
+                        "2",
+                        "3",
+                        "4",
+                        ]
         '404':
           description: No boards are found.
 
@@ -215,21 +202,13 @@ paths:
           description: Successful response with the contents of the new resource.
           content:
             application/json:
-              example: 
-                value:
-                  id: "1"
-                  squares:
-                    '{"x": 4, "y": 4}': { "state": "none", "isStarValid": true }
-                  sections:
-                    - - '{"x": 4, "y": 4}': {"state": "none", "isStarValid": true}
-                  ROWS: 10
-                  COLUMNS: 10
-                  invalidStars:
-                    - { "x": 4, "y": 4 }
-                  validStars:
-                    - { "x": 3, "y": 3 }
-                  solution: 
-                    - { "x": 2, "y": 1 }
+              example:
+                "id": 1
+                "sections": [ [ { "x": 4, "y": 4 } ] ]
+                "ROWS": 10
+                "COLUMNS": 10
+                "numStars": 2
+                "solution": [ { "x": 2, "y": 1 } ]
     delete: 
       tags: 
         - board
