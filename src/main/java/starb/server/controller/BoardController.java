@@ -40,7 +40,7 @@ public class BoardController {
 
     // Obtain a specific board
     @GetMapping("{id}")
-    public Board getBoard(@PathVariable String id) {
+    public Board getBoard(@PathVariable int id) {
 
         Optional<Board> board = repo.findById(id);
 
