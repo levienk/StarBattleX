@@ -65,6 +65,7 @@ public class User {
     public List<String> getCompleted(){return completed;}
 
     public String getNextPuzzle(){return this.nextPuzzle;}
+    public List<String> getInaccessible() {return inaccessible;}
 
     public String getPlayerRank() {
         String playerRank = "beginner";
