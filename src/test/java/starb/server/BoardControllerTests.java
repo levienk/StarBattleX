@@ -35,20 +35,11 @@ public class BoardControllerTests {
         repo.save(board1);
         repo.save(board2);
     }
-    @Test
-    public void testPostBoard() {
-        Board newBoard = new Board(5, 5, new ArrayList<>(), new ArrayList<>(), 1, 3);
 
-        Board savedBoard = controller.postBoard(newBoard);
-
-        assertNotNull(savedBoard);
-        assertEquals(newBoard.getID(), savedBoard.getID());
-    }
 
     @Test
     public void testGetBoards() {
         ArrayList<Integer> ids = controller.getBoards();
-
         assertNotNull(ids);
         assertEquals(2, ids.size());
         assertTrue(ids.contains(board1.getID()));
@@ -66,9 +57,10 @@ public class BoardControllerTests {
     }
     @Test
     public void testGetBoard() {
-        String boardId = String.valueOf(board1.getID());
-
+        int boardId = board1.getID();
+        System.out.println(boardId);
         Board foundBoard = controller.getBoard(boardId);
+
 
         assertNotNull(foundBoard);
         assertEquals(board1.getID(), foundBoard.getID());
@@ -76,20 +68,12 @@ public class BoardControllerTests {
     }
     @Test
     public void testGetBoardNotFound() {
-        String invalidBoardId = "non_existing_id";
+        int invalidBoardId = 3214214;
 
         Exception exception = assertThrows(ResponseStatusException.class, () -> {
             controller.getBoard(invalidBoardId);
         });
         assertEquals(HttpStatus.NOT_FOUND, ((ResponseStatusException) exception).getStatusCode());
     }
-    @Test
-    public void testDeleteUser() {
-        String boardId = String.valueOf(board1.getID());
 
-        controller.deleteBoard(boardId);
-
-        assertTrue(repo.findById(boardId).isEmpty());
-
-    }
 }

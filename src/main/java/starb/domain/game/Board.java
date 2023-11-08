@@ -22,8 +22,8 @@ public class Board {
     @JsonIgnore
     private HashMap<Point, Square> squares;
     private List<List<Point>> sections;
-    private final int ROWS;
-    private final int COLUMNS;
+    private int rows;
+    private int columns;
 
     @Transient
     @JsonIgnore
@@ -45,8 +45,8 @@ public class Board {
                  @JsonProperty("id") int id) {
         this.id = id;
 
-        ROWS = rows;
-        COLUMNS = columns;
+        rows = rows;
+        columns = columns;
         this.sections = sections;
 
         initializeSquares();
@@ -126,7 +126,7 @@ public class Board {
         int starCount = 0;
         boolean starIsInvalid = false;
         List<Point> possibleInvalidStars = new ArrayList<>();
-        for (int i = 1; i <= COLUMNS; i++ ) {
+        for (int i = 1; i <= columns; i++ ) {
             if(squares.get(new Point(i, row)).getState().equals("star") || invalidStars.contains(new Point(i, row))) {
                 starCount++;
                 possibleInvalidStars.add(new Point(i, row));
@@ -149,7 +149,7 @@ public class Board {
         int starCount = 0;
         boolean starIsInvalid = false;
         List<Point> possibleInvalidStars = new ArrayList<>();
-        for(int i = 1; i <= ROWS; i++) {
+        for(int i = 1; i <= rows; i++) {
             if(squares.get(new Point(column, i)).getState().equals("star") || invalidStars.contains(new Point(column, i))) {
                 starCount++;
                 possibleInvalidStars.add(new Point(column, i));
@@ -211,7 +211,7 @@ public class Board {
                 int newX = (int)point.getX() + i;
                 int newY = (int)point.getY() + j;
 
-                if(newX >= 1 && newX <= COLUMNS && newY >= 1 && newY <= ROWS) {
+                if(newX >= 1 && newX <= columns && newY >= 1 && newY <= rows) {
                     if (squares.get(new Point(newX, newY)).getState().equals("star") || invalidStars.contains(new Point(newX, newY))) {
                         if (!invalidStars.contains(new Point(newX, newY))) {
                             invalidStars.add(new Point(newX, newY));
@@ -294,8 +294,8 @@ public class Board {
     }
 
     public void clearBoard() {
-        for(int i = 1; i <= ROWS; i++) {
-            for(int j = 1; j <= COLUMNS; j++) {
+        for(int i = 1; i <= rows; i++) {
+            for(int j = 1; j <= columns; j++) {
                 squares.get(new Point(i, j)).setState("");
                 validStars.clear();
                 invalidStars.clear();
@@ -307,10 +307,10 @@ public class Board {
         return id;
     }
     public int getRows() {
-        return ROWS;
+        return rows;
     }
     public int getColumns() {
-        return COLUMNS;
+        return columns;
     }
     public List<List<Point>> getSections() { return sections;}
     @Transient
