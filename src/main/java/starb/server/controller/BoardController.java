@@ -33,14 +33,13 @@ public class BoardController {
 
     }
 
-    @PostMapping({"id"})
+    @PostMapping("{id}")
     public Board postBoard(Board board) {
         return repo.save(board);
     }
 
     // Obtain a specific board
-    @RequestMapping("{id}")
-    @GetMapping
+    @GetMapping("{id}")
     public Board getBoard(@PathVariable String id) {
 
         Optional<Board> board = repo.findById(id);
