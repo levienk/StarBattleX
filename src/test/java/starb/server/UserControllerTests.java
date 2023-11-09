@@ -48,7 +48,6 @@ public class UserControllerTests {
 
         assertTrue(repo.findById(newUser.getId()).isPresent());
     }
-    //TODO: fix testPutUser test
     @Test
     public void testPutUser() {
         User updatedUserData = new User();
