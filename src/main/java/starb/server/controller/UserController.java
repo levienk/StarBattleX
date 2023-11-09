@@ -1,7 +1,5 @@
 package starb.server.controller;
 
-import javafx.application.Application;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import starb.domain.json.User;
@@ -48,14 +46,9 @@ public class UserController {
     public ResponseEntity<User> getUser(@PathVariable String id) {
         Optional<User> target = users.findById(id);
 
-        if (target.isPresent()) {
-            // Return 200 OK with the User object
-            return ResponseEntity.ok(target.get());
-        }
-        else {
-            // Return 404 Not Found
-            return ResponseEntity.notFound().build();
-        }
+        // Return 200 OK with the User object
+        // Return 404 Not Found
+        return target.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("{id}")

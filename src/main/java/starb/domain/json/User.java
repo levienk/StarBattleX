@@ -6,7 +6,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
-import java.util.EventListener;
 import java.util.List;
 
 @Document("users")
@@ -19,10 +18,10 @@ public class User {
 
     /**
      * Constructor for building a user from the server's data
-     * @param id
-     * @param completed
-     * @param nextPuzzle
-     * @param inaccessible
+     * @param id The user's id
+     * @param completed The list of completed puzzles
+     * @param nextPuzzle The id of the next puzzle
+     * @param inaccessible The list of inaccessible puzzles
      */
     @JsonCreator
     public User(@JsonProperty("id") String id,
@@ -42,16 +41,16 @@ public class User {
     @JsonCreator
     public User(){
         this.id = null;
-        this.completed = new ArrayList<String>();
-        this.nextPuzzle = ""; // Id of the first puzzle
-        this.inaccessible = new ArrayList<String>(); // All other puzzles
+        this.completed = new ArrayList<>();
+        this.nextPuzzle = ""; // ID of the first puzzle
+        this.inaccessible = new ArrayList<>(); // All other puzzles
     }
 
     public void updateNextPuzzle(){
         // Register the previously incomplete next puzzle as complete
         this.completed.add(this.nextPuzzle);
 
-        if (inaccessible.size() > 0) { // If there are more puzzles
+        if (!inaccessible.isEmpty()) { // If there are more puzzles
             this.nextPuzzle = inaccessible.get(0); // set the next puzzle
             inaccessible.remove(0); // And remove it from inaccessible
         }
@@ -71,8 +70,8 @@ public class User {
     public List<String> getInaccessible() {return inaccessible;}
 
     public String getPlayerRank() {
-        String playerRank = "beginner";
-        if (this.completed.size() == 0) {
+        String playerRank;
+        if (this.completed.isEmpty()) {
             playerRank = "beginner";
         }
         else if (completed.size() < 5) {

@@ -19,5 +19,5 @@ public class Square {
 
     public boolean getStarValidity() {
         return isStarValid;
-    };
+    }
 }

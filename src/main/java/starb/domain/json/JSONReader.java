@@ -15,7 +15,7 @@ public class JSONReader {
     // The JSON file with the puzzle data
     private File file;
     // Scanner to read from the file
-    private Scanner scnr;
+    private Scanner scanner;
     // Identifier for which puzzle is loaded
     private String puzzleName;
 
@@ -28,14 +28,14 @@ public class JSONReader {
         // JSON file with a puzzle
         //this.file = new File(fileName);
         // Reads from file
-        //this.scnr = new Scanner(this.file);
+        //this.scanner = new Scanner(this.file);
         // Create a board Object based on the JSON
-        /**
-         *  Read from a JSON to turn several HashMap<Point, Square> objects
-         *  into a List
-         *  Each line of the JSON will be a Point, Square pair.
+        /*
+           Read from a JSON to turn several HashMap<Point, Square> objects
+           into a List
+           Each line of the JSON will be a Point, Square pair.
          */
-        //String puzzleName = scnr.nextLine();
+        //String puzzleName = scanner.nextLine();
         // Assign the Board with a puzzleName in its constructor
     }
 

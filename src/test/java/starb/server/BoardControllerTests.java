@@ -70,10 +70,10 @@ public class BoardControllerTests {
     public void testGetBoardNotFound() {
         int invalidBoardId = 3214214;
 
-        Exception exception = assertThrows(ResponseStatusException.class, () -> {
+        ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> {
             controller.getBoard(invalidBoardId);
         });
-        assertEquals(HttpStatus.NOT_FOUND, ((ResponseStatusException) exception).getStatusCode());
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatusCode());
     }
 
 }

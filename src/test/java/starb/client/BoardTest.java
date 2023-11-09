@@ -2,17 +2,12 @@ package starb.client;
 
 import org.junit.jupiter.api.Test;
 import starb.domain.game.Board;
-import starb.domain.game.Square;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class BoardTest {
     //Todo: update tests to fit new row and column starting indexes
@@ -145,7 +140,7 @@ public class BoardTest {
         assertNotNull(board.getSectionBoundaries());
     }
     private Board initalizeBoard() {
-        List<List<Point>> sections = new ArrayList();
+        List<List<Point>> sections = new ArrayList<>();
 
         //section 1
         List<Point> section1 = new ArrayList<>();
@@ -301,7 +296,7 @@ public class BoardTest {
 
         sections.add(section10);
 
-        return new Board(10, 10, sections, new ArrayList<Point>(), 2, 0);
+        return new Board(10, 10, sections, new ArrayList<>(), 2, 0);
     }
 
 
