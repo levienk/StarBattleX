@@ -140,38 +140,6 @@ paths:
         '404':
           description: The ID is not found.
   /board:
-    post:
-      tags:
-        - board
-      summary: Create a board item
-      description: Creates a new game board
-      operationId: createBoard
-      requestBody:
-        required: true
-        description: The board item content
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              "id": 1
-              "sections": [ [ {"x": 4, "y": 4} ] ]
-              "ROWS": 10
-              "COLUMNS": 10
-              "numStars": 2
-              "solution": [ { "x": 2, "y": 1 } ]
-      responses:
-        '201':
-          description: Successful response
-          content:
-            application/json:
-              example:
-                "id": 1
-                "sections": [ [ { "x": 4, "y": 4 } ] ]
-                "ROWS": 10
-                "COLUMNS": 10
-                "numStars": 2
-                "solution": [ { "x": 2, "y": 1 } ]
     get:
       tags:
         - board
@@ -191,8 +159,6 @@ paths:
                 ]
         '404':
           description: No boards are found.
-
-
   /board/{id}:
     get:
       tags:
@@ -215,35 +181,7 @@ paths:
               example:
                 "id": 1
                 "sections": [ [ { "x": 4, "y": 4 } ] ]
-                "ROWS": 10
-                "COLUMNS": 10
+                "rows": 10
+                "columns": 10
                 "numStars": 2
                 "solution": [ { "x": 2, "y": 1 } ]
-    delete:
-      tags:
-        - board
-      summary: Delete a board by ID
-      description: Deletes a board by its ID.
-      operationId: deleteBoardById
-      parameters:
-        - name: id
-          in: path
-          description: ID of the board item
-          required: true
-          schema:
-            type: string
-      responses:
-        "204":
-          description: Object was deleted.
-        "404":
-          description: The id is not found.
-        
-      
-      
-                
-                  
-          
-  
-        
-    
- 
