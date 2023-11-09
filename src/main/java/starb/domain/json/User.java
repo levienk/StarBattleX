@@ -61,6 +61,7 @@ public class User {
     }
 
     public String getId() {return this.id;}
+    public void setId(String id){this.id = id;}
 
     public List<String> getCompleted(){return completed;}
     public void setCompleted(List<String> completed){this.completed = completed;}

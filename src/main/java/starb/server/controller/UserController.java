@@ -29,15 +29,15 @@ public class UserController {
         try {
             // The user identified by the id
             User updatedUser;
-            // Perform the update on a field in updatedUser
-            updatedUser = users.updateField(id, userInput);
-            if (updatedUser != null) {
+            if (users.existsById(id)){
+                userInput.setId(id);
+                // Perform the update on a field in updatedUser
+                updatedUser = users.save(userInput);
                 // Return the updated User with a 200 OK response
                 return ResponseEntity.ok(updatedUser);
-            } else {
-                // Return a 404 Not Found response if the user with the specified ID was not found
-                return ResponseEntity.notFound().build();
             }
+            // Return a 404 Not Found response if the user with the specified ID was not found
+            return ResponseEntity.notFound().build();
         } catch (Exception e) {
             // Handle exceptions or validation errors
             return ResponseEntity.badRequest().build(); // Return a 400 Bad Request response for errors
