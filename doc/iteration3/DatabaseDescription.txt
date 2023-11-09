@@ -1,0 +1,23 @@
+Our database is called "starbattle"
+
+We have the "users" and "boards" collections
+
+In users, we have documents of User objects.
+An example of a User object is:
+{
+    "id": "64272f3d16b2df1faf837ec9",
+    "completed": [ "1", "2" ],
+    "nextPuzzle": "3",
+    "notAccessible": [ "4", "5"]
+}
+
+In boards, we have documents of Board objects.
+An example of a Board object is:
+{
+    "id": 1,
+    "sections": [ [ {"x": 4, "y": 4}, ... ], ... ],
+    "rows": 10,
+    "columns": 10,
+    "numStars": 2,
+    "solution": [ { "x": 2, "y": 1 }, ... ]
+}
