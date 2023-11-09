@@ -63,8 +63,10 @@ public class User {
     public String getId() {return this.id;}
 
     public List<String> getCompleted(){return completed;}
+    public void setCompleted(List<String> completed){this.completed = completed;}
 
     public String getNextPuzzle(){return this.nextPuzzle;}
+    public void setNextPuzzle(String nextPuzzle){this.nextPuzzle = nextPuzzle;}
     public List<String> getInaccessible() {return inaccessible;}
 
     public String getPlayerRank() {
