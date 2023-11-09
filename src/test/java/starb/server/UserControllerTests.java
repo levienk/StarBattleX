@@ -48,8 +48,9 @@ public class UserControllerTests {
 
         assertTrue(repo.findById(newUser.getId()).isPresent());
     }
+    //TODO: fix testPutUser test
     @Test
-    public void testPutUserSuccess() {
+    public void testPutUser() {
         User updatedUserData = new User();
         updatedUserData.setNextPuzzle("Puzzle2");
         updatedUserData.setCompleted(List.of("Puzzle0", "Puzzle1"));
