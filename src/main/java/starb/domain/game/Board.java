@@ -229,9 +229,8 @@ public class Board {
         if(validStars.size() != 20) {
             return false;
         }
-        for (Point starPoint : validStars) {
-            Square square = squares.get(starPoint);
-            if (!square.getState().equals("star")) {
+        for (Point starPoint : solution) {
+            if (!validStars.contains(starPoint)) {
                 return false;
             }
         }
