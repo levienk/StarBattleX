@@ -119,8 +119,6 @@ public class Board {
     }
 
     private boolean checkSquare(Point point) {
-        System.out.println("Check Area: " + checkArea(point) + "Check section: " + checkSection(point) +
-                "CheckColumn: " + checkColumn((int) point.getX()) + "CHeckRow: " + checkRow((int) point.getY()));
         if (checkArea(point) && checkSection(point) && checkColumn((int) point.getX()) && checkRow((int) point.getY())) {
             return true;
         }
