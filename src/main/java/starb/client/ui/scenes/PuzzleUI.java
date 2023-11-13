@@ -133,12 +133,11 @@ public class PuzzleUI extends StackPane {
         // Draw based on selectionType
         switch (selectionType) {
             case "star" -> {
-                // TODO - Remove this after board.updateSquare() functioning
-//                g.drawImage(starImage,
-//                        gridUpperLeft.getX() + (col - 1) * cellSize + positioning,
-//                        gridUpperLeft.getY() + (row - 1) * cellSize + positioning,
-//                        starScale, starScale
-//                );
+                g.drawImage(starImage,
+                        gridUpperLeft.getX() + (col - 1) * cellSize + positioning,
+                        gridUpperLeft.getY() + (row - 1) * cellSize + positioning,
+                        starScale, starScale
+                );
 
                 // Draw the invalid stars to the board
                 for (Point point : board.getInvalidStars()) {
@@ -166,6 +165,23 @@ public class PuzzleUI extends StackPane {
                         gridUpperLeft.getY() + (row - 1) * cellSize + dotPositioning,
                         dotScale, dotScale
                 );
+            }
+            case "" -> {
+                for (Point point : board.getInvalidStars()) {
+                    g.drawImage(invalidStarImage,
+                            gridUpperLeft.getX() + (point.getX() - 1) * cellSize + positioning,
+                            gridUpperLeft.getY() + (point.getY() - 1) * cellSize + positioning,
+                            starScale, starScale
+                    );
+                }
+                // Draw the valid stars to the board
+                for (Point point : board.getValidStars()) {
+                    g.drawImage(starImage,
+                            gridUpperLeft.getX() + (point.getX() - 1) * cellSize + positioning,
+                            gridUpperLeft.getY() + (point.getY() - 1) * cellSize + positioning,
+                            starScale, starScale
+                    );
+                }
             }
         }
     }

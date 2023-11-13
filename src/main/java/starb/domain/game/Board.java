@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import javafx.scene.shape.Line;
+import org.apache.tomcat.util.net.TLSClientHelloExtractor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -45,8 +46,8 @@ public class Board {
                  @JsonProperty("id") int id) {
         this.id = id;
 
-        rows = rows;
-        columns = columns;
+        this.rows = rows;
+        this.columns = columns;
         this.sections = sections;
 
         initializeSquares();
@@ -62,7 +63,6 @@ public class Board {
 
         // Number of stars per section, row, and column
         this.numStars = numStars;
-
     }
 
     private void initializeSquares() {
@@ -76,121 +76,98 @@ public class Board {
     }
 
     public void updateSquare(Point point, String state) {
-        if(state.equals("star") && checkSquare(point) && !(squares.get(point).getState().equals("star"))) {
-            squares.get(point).setState("star");
-            if(invalidStars.contains(point)) {
-                invalidStars.remove(point);
-            }
-            validStars.add(point);
+        Square square = squares.get(point);
+        //update square object based on state
+        switch(state) {
+            case "star":
+                //if square is already a star do nothing
+               if(square.getState().equals("star")) {
+                   return;
+               }
+               //make the square a star
+               square.setState("star");
 
-        } else if ( state.equals("dot") ) {
-            squares.get(point).setState("dot");
-            //remove from both lists
-            if(validStars.contains(point)) {
-                validStars.remove(point);
-            }
-            if(invalidStars.contains(point)) {
-                invalidStars.remove(point);
-            }
-        } else if (state.equals("")) {
+               //if star is valid, set star validity to true
+                if(checkSquare(point)) {
+                    square.setStarValidity(true);
+                }
+                break;
+            case "dot":
+                //set square state to dot
+                square.setState("dot");
 
-            validStars.remove(point);
-            squares.get(point).setState("");
-            //remove from both lists
-            if(validStars.contains(point)) {
-                validStars.remove(point);
-            }
-            if(invalidStars.contains(point)) {
-                invalidStars.remove(point);
-            }
-            //todo: affected stars are not being updated properly after star is removed, once the method below works, uncomment
-            //checkInvalidStars();
+                //set square star validity to false
+                square.setStarValidity(false);
+                break;
+            case "":
+                //set square state to blank
+                square.setState("");
+
+                //set square star validity to false
+                square.setStarValidity(false);
+                break;
+            default:
+                return;
         }
+        //update lists
+        updateStarSets(point);
+
+        //recheck invalid and valid stars
+        checkValidStars();
+        checkInvalidStars();
+
     }
 
     private boolean checkSquare(Point point) {
+        System.out.println("Check Area: " + checkArea(point) + "Check section: " + checkSection(point) +
+                "CheckColumn: " + checkColumn((int) point.getX()) + "CHeckRow: " + checkRow((int) point.getY()));
         if (checkArea(point) && checkSection(point) && checkColumn((int) point.getX()) && checkRow((int) point.getY())) {
-            System.out.println("real!");
             return true;
         }
         else {
-            if(validStars.contains(point)) {
-                validStars.remove(point);
-            }
-            invalidStars.add(point);
             return false;
         }
     }
 
     private boolean checkRow(int row) {
         int starCount = 0;
-        boolean starIsInvalid = false;
-        List<Point> possibleInvalidStars = new ArrayList<>();
-        for (int i = 1; i <= columns; i++ ) {
-            if(squares.get(new Point(i, row)).getState().equals("star") || invalidStars.contains(new Point(i, row))) {
+        for (int i = 1; i <= columns; i++) {
+            if (squares.get(new Point(i, row)).getState().equals("star")) {
                 starCount++;
-                possibleInvalidStars.add(new Point(i, row));
             }
-            if (starCount == 2) {
-                for (Point point : possibleInvalidStars) {
-                    if (!invalidStars.contains(point)) {
-                        invalidStars.add(point);
-                        validStars.remove(point);
-                        squares.get(point).setState("");
-                    }
-                }
-                starIsInvalid = true;
+            if (starCount > 2) {
+                return false;
             }
         }
-        return !starIsInvalid;
+        return true;
     }
 
     private boolean checkColumn(int column) {
         int starCount = 0;
-        boolean starIsInvalid = false;
-        List<Point> possibleInvalidStars = new ArrayList<>();
+
         for(int i = 1; i <= rows; i++) {
-            if(squares.get(new Point(column, i)).getState().equals("star") || invalidStars.contains(new Point(column, i))) {
+            if(squares.get(new Point(column, i)).getState().equals("star")) {
                 starCount++;
-                possibleInvalidStars.add(new Point(column, i));
             }
-            if(starCount == 2) {
-                for (Point point : possibleInvalidStars) {
-                    if (!invalidStars.contains(point)) {
-                        invalidStars.add(point);
-                        validStars.remove(point);
-                        squares.get(point).setState("");
-                    }
-                }
-                starIsInvalid = true;
+            if(starCount > 2) {
+               return false;
             }
         }
-        return !starIsInvalid;
-
+        return true;
     }
 
     private boolean checkSection(Point point) {
         int starCount = 0;
-        boolean starIsInvalid = false;
-        List<Point> possibleInvalidStars = new ArrayList<>();
+
         for (Point pointInSection : findSection(point)) {
-            if (squares.get(pointInSection).getState().equals("star") ||
-                    invalidStars.contains(pointInSection)) {
+            if (squares.get(pointInSection).getState().equals("star")) {
                 starCount++;
-                possibleInvalidStars.add(pointInSection);
             }
-            if(starCount == 2) {
-                for (Point Point : possibleInvalidStars) {
-                    if (!invalidStars.contains(Point)) {
-                        invalidStars.add(Point);
-                        validStars.remove(Point);
-                        squares.get(Point).setState("");
-                    }
-                }
-                starIsInvalid = true;
+            if(starCount > 2) {
+               return false;
             }
         }
-        return !starIsInvalid;
+        return true;
     }
 
     private List<Point> findSection(Point point) {
@@ -203,7 +180,7 @@ public class Board {
     }
 
     private boolean checkArea(Point point) {
-        boolean starIsInvalid = false;
+
         for(int i = -1; i <= 1; i++) {
             for(int j = -1; j <= 1; j++) {
                 if(i == 0 && j == 0) continue;
@@ -212,29 +189,41 @@ public class Board {
                 int newY = (int)point.getY() + j;
 
                 if(newX >= 1 && newX <= columns && newY >= 1 && newY <= rows) {
-                    if (squares.get(new Point(newX, newY)).getState().equals("star") || invalidStars.contains(new Point(newX, newY))) {
-                        if (!invalidStars.contains(new Point(newX, newY))) {
-                            invalidStars.add(new Point(newX, newY));
-                            validStars.remove(new Point(newX, newY));
-                            squares.get(new Point(newX, newY)).setState("");
-                        }
-                        starIsInvalid = true;
+                    if (squares.get(new Point(newX, newY)).getState().equals("star")) {
+                        return false;
                     }
                 }
             }
         }
-        return !starIsInvalid;
+        return true;
     }
 
     private void checkInvalidStars() {
-        for(Point point : invalidStars) {
-            if(checkSquare(point)) {
-                invalidStars.remove(point);
+        Iterator<Point> iterator = invalidStars.iterator();
+        while(iterator.hasNext()) {
+            Point point = iterator.next();
+            if(checkSquare(point)){
                 validStars.add(point);
-                squares.get(point).setState("star");
+                iterator.remove(); // Safe removal
+
+                squares.get(point).setStarValidity(true);
             }
         }
     }
+    private void checkValidStars() {
+        Iterator<Point> iterator = validStars.iterator();
+        while (iterator.hasNext()) {
+            Point point = iterator.next();
+            if (!checkSquare(point)) {
+                invalidStars.add(point);
+                iterator.remove(); // Safe removal
+
+                squares.get(point).setStarValidity(false);
+            }
+        }
+    }
+
+
 
     @Transient
     @JsonIgnore
@@ -300,6 +289,27 @@ public class Board {
                 validStars.clear();
                 invalidStars.clear();
             }
+        }
+    }
+    public void updateStarSets(Point point) {
+        Square square = squares.get(point);
+        //if square state is star
+        if(square.getState().equals("star")) {
+            //if square is a valid star
+            if(square.getStarValidity()) {
+                validStars.add(point);
+                invalidStars.remove(point);
+            }
+            //if square is a invalid star
+            else {
+                invalidStars.add(point);
+                validStars.remove(point);
+            }
+        }
+        //if it is not a star
+        else {
+            validStars.remove(point);
+            invalidStars.remove(point);
         }
     }
 
