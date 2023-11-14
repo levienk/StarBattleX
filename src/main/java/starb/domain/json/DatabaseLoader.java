@@ -2,6 +2,7 @@ package starb.domain.json;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import starb.domain.game.Board;
 
 import java.io.File;
 import java.io.PrintWriter;
@@ -69,6 +70,17 @@ public class DatabaseLoader {
         if( resp.statusCode() != 200 ) {
             throw new RuntimeException("update user failed with response code: " + resp.statusCode());
         }
+    }
+
+    public static Board getBoard(String boardID) throws Exception{
+        HttpRequest request = HttpRequest.newBuilder()
+                .header("Content-Type", "application/json")
+                .uri(URI.create(URL + "board/" + boardID))
+                .GET()
+                .build();
+
+        HttpResponse<String> resp = client.send(request, HttpResponse.BodyHandlers.ofString());
+        return mapper.readValue(resp.body(), Board.class);  // Convert from JSON to object
     }
 
 }
