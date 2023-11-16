@@ -50,7 +50,7 @@ paths:
                   "id": "64272f3d16b2df1faf837ec9",
                   "completed": [ ],
                   "nextPuzzle": "1",
-                  "notAccessible": [ " 2" , "3", ...],
+                  "notAccessible": [ "2" , "3", ...],
                 }
   /user/{id}:
     get:

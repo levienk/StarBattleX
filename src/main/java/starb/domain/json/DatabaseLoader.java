@@ -35,7 +35,7 @@ public class DatabaseLoader {
 
             HttpRequest request = HttpRequest.newBuilder()
                     .header("Content-Type", "application/json")
-                    .uri(URI.create(URL + "users/" + userID))
+                    .uri(URI.create(URL + "user/" + userID))
                     .GET()
                     .build();
 
@@ -50,7 +50,7 @@ public class DatabaseLoader {
         HttpRequest request = HttpRequest.newBuilder()
                 .header("Content-Type", "application/json")
                 .header("Authorization", "a")
-                .uri(URI.create(URL + "users"))
+                .uri(URI.create(URL + "user"))
                 .POST(HttpRequest.BodyPublishers.ofString(json))
                 .build();
 
@@ -65,7 +65,7 @@ public class DatabaseLoader {
         String json = mapper.writeValueAsString(user);
         HttpRequest request = HttpRequest.newBuilder()
                 .header("Content-Type", "application/json")
-                .uri(URI.create(URL + "users/" + user.getId()))
+                .uri(URI.create(URL + "user/" + user.getId()))
                 .PUT(HttpRequest.BodyPublishers.ofString(json))
                 .build();
 
