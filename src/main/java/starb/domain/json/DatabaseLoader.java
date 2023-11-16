@@ -13,7 +13,7 @@ import java.net.http.HttpResponse;
 import java.util.Scanner;
 
 public class DatabaseLoader {
-    private static final String URL ="http://localhost:8888/";
+    private static final String URL ="http://localhost:3390/";
     private static final String USER_ID_PATH = "Assets/User/userID.txt";
     private static ObjectMapper mapper = new ObjectMapper();
     private static HttpClient client = HttpClient.newHttpClient();
@@ -25,11 +25,13 @@ public class DatabaseLoader {
             User user = createUser();
             PrintWriter printWriter = new PrintWriter(userFile);
             printWriter.print(user.getId());
+            printWriter.close();
             return user;
         } else {
             // Get the User based on userID.txt
             Scanner scanner = new Scanner(userFile);
             String userID = scanner.next();
+            scanner.close();
 
             HttpRequest request = HttpRequest.newBuilder()
                     .header("Content-Type", "application/json")
@@ -47,6 +49,7 @@ public class DatabaseLoader {
         String json = mapper.writeValueAsString(user);
         HttpRequest request = HttpRequest.newBuilder()
                 .header("Content-Type", "application/json")
+                .header("Authorization", "a")
                 .uri(URI.create(URL + "users"))
                 .POST(HttpRequest.BodyPublishers.ofString(json))
                 .build();

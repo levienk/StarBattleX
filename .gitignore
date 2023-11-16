@@ -28,3 +28,6 @@ a.out
 *.exe
 *.dll
 *~
+
+# Ignore the userID.txt file that contains the client ID
+/Assets/User/userID.txt

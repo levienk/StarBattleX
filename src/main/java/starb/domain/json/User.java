@@ -1,8 +1,10 @@
 package starb.domain.json;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
@@ -29,7 +31,7 @@ public class User {
                 @JsonProperty("nextPuzzle") String nextPuzzle,
                 @JsonProperty("inaccessible") List<String> inaccessible
                 ) {
-        this.id = null;
+        this.id = id;
         this.completed = completed;
         this.nextPuzzle = nextPuzzle;
         this.inaccessible = inaccessible;
@@ -69,6 +71,8 @@ public class User {
     public void setNextPuzzle(String nextPuzzle){this.nextPuzzle = nextPuzzle;}
     public List<String> getInaccessible() {return inaccessible;}
 
+    @JsonIgnore
+    @Transient
     public String getPlayerRank() {
         String playerRank;
         if (this.completed.isEmpty()) {

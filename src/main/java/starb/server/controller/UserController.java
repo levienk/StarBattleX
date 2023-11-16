@@ -1,5 +1,6 @@
 package starb.server.controller;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import starb.domain.json.User;
@@ -17,6 +18,7 @@ public class UserController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public User postUser(){
         User doc = new User();
         return users.save(doc);
