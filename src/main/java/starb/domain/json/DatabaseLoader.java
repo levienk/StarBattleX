@@ -75,7 +75,7 @@ public class DatabaseLoader {
         }
     }
 
-    public static Board getBoard(String boardID) throws Exception{
+    public static Board getBoard(int boardID) throws Exception{
         HttpRequest request = HttpRequest.newBuilder()
                 .header("Content-Type", "application/json")
                 .uri(URI.create(URL + "board/" + boardID))
