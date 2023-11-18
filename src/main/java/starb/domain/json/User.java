@@ -14,9 +14,9 @@ import java.util.List;
 public class User {
     @Id
     private String id;
-    private List<String> completed;
-    private String nextPuzzle;
-    private List<String> inaccessible;
+    private List<Integer> completed;
+    private int nextPuzzle;
+    private List<Integer> inaccessible;
 
     /**
      * Constructor for building a user from the server's data
@@ -27,9 +27,9 @@ public class User {
      */
     @JsonCreator
     public User(@JsonProperty("id") String id,
-                @JsonProperty("completed") List<String> completed,
-                @JsonProperty("nextPuzzle") String nextPuzzle,
-                @JsonProperty("inaccessible") List<String> inaccessible
+                @JsonProperty("completed") List<Integer> completed,
+                @JsonProperty("nextPuzzle") int nextPuzzle,
+                @JsonProperty("inaccessible") List<Integer> inaccessible
                 ) {
         this.id = id;
         this.completed = completed;
@@ -44,32 +44,36 @@ public class User {
     public User(){
         this.id = null;
         this.completed = new ArrayList<>();
-        this.nextPuzzle = ""; // ID of the first puzzle
+        this.nextPuzzle = -1; // ID of the first puzzle
         this.inaccessible = new ArrayList<>(); // All other puzzles
     }
 
     public void updateNextPuzzle(){
-        // Register the previously incomplete next puzzle as complete
-        this.completed.add(this.nextPuzzle);
-
+        if (this.nextPuzzle >= 0) { // If there is a listed next puzzle
+            // Register the previously incomplete next puzzle as complete
+            this.completed.add(this.nextPuzzle);
+        }
         if (!inaccessible.isEmpty()) { // If there are more puzzles
             this.nextPuzzle = inaccessible.get(0); // set the next puzzle
             inaccessible.remove(0); // And remove it from inaccessible
         }
         else { // If this was the last puzzle
-            this.nextPuzzle = ""; // Update the next puzzle String to show that no more files exist
+            this.nextPuzzle = -1; // Update the next puzzle String to show that no more files exist
         }
     }
 
     public String getId() {return this.id;}
     public void setId(String id){this.id = id;}
 
-    public List<String> getCompleted(){return completed;}
-    public void setCompleted(List<String> completed){this.completed = completed;}
+    public List<Integer> getCompleted(){return completed;}
+    public void setCompleted(List<Integer> completed){this.completed = completed;}
 
-    public String getNextPuzzle(){return this.nextPuzzle;}
-    public void setNextPuzzle(String nextPuzzle){this.nextPuzzle = nextPuzzle;}
-    public List<String> getInaccessible() {return inaccessible;}
+    public int getNextPuzzle(){return this.nextPuzzle;}
+    public void setNextPuzzle(int nextPuzzle){this.nextPuzzle = nextPuzzle;}
+    public List<Integer> getInaccessible() {return inaccessible;}
+    public void setInaccessible(List<Integer> ids) {
+        this.inaccessible = ids;
+    }
 
     @JsonIgnore
     @Transient
