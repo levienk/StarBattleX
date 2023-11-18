@@ -40,22 +40,17 @@ public class UserController {
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.OK)
     public User putUser(@PathVariable String id, @RequestBody User userInput){
-        try {
-            // The user identified by the id
-            User updatedUser;
-            if (users.existsById(id)){
-                userInput.setId(id);
-                // Perform the update on a field in updatedUser
-                updatedUser = users.save(userInput);
-                // Return the updated User with a 200 OK response
-                return updatedUser;
-            }
-            // Return a 404 Not Found response if the user with the specified ID was not found
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No User with matching ID");
-        } catch (Exception e) {
-            // Handle exceptions or validation errors
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST); // Return a 400 Bad Request response for errors
+        // The user identified by the id
+        User updatedUser;
+        if (users.existsById(id)){
+            userInput.setId(id);
+            // Perform the update on a field in updatedUser
+            updatedUser = users.save(userInput);
+            // Return the updated User with a 200 OK response
+            return updatedUser;
         }
+        // Return a 404 Not Found response if the user with the specified ID was not found
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No User with matching ID");
     }
 
     @GetMapping(value = "{id}", produces = "application/json")
