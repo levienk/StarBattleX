@@ -35,6 +35,7 @@ public class BoardController {
 
     // Obtain a specific board
     @GetMapping("{id}")
+    @ResponseStatus(HttpStatus.OK)
     public Board getBoard(@PathVariable int id) {
 
         Optional<Board> board = repo.findById(id);

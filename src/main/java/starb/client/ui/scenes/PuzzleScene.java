@@ -4,6 +4,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import starb.domain.game.Board;
 import starb.client.ui.components.ExpandingPaneGenerator;
+import starb.domain.json.DatabaseLoader;
+import starb.domain.json.User;
 
 public class PuzzleScene extends VBox {
 
@@ -25,9 +27,7 @@ public class PuzzleScene extends VBox {
         bottomBar = new PuzzleBottomBar(puzzle, playerRank);
 
         this.getChildren().addAll(topBar, puzzle, fillerPane, bottomBar);
-
-
-
+        User user = DatabaseLoader.getUser();
     }
 
 

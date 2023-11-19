@@ -32,8 +32,8 @@ public class UserController {
         List<Integer> boardIds = boards.findAll()
                 .stream().map(Board::getID)
                 .toList();
-        doc.setInaccessible(boardIds); // Populate the inaccessible list
-        System.out.println(doc.getInaccessible());
+        doc.setInaccessible(boardIds); // Populate the inaccessible list in ascending order
+        doc.updateNextPuzzle();
         return users.save(doc);
     }
 
