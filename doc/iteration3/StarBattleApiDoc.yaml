@@ -157,8 +157,6 @@ paths:
                         "3",
                         "4",
                 ]
-        '404':
-          description: No boards are found.
   /board/{id}:
     get:
       tags:
@@ -185,3 +183,5 @@ paths:
                 "columns": 10
                 "numStars": 2
                 "solution": [ { "x": 2, "y": 1 } ]
+        '400':
+          description: The ID is not found
