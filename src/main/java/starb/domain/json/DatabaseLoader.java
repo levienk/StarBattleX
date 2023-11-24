@@ -20,6 +20,12 @@ public class DatabaseLoader {
 
     public static User getUser() throws Exception {
         File userFile = new File(USER_ID_PATH);
+        // Check if the file exists and is empty
+        // Check how many bytes a blank.txt is equal to
+        if (userFile.exists() && userFile.length() == 0) {
+            // Delete the file
+            userFile.delete();
+        }
         // Add a new User to the database if one doesn't exist for this client
         if (!userFile.exists()) {
             User user = createUser();
