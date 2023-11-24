@@ -54,7 +54,7 @@ public class UserControllerTests {
 
         assertNotNull(newUser.getId());
 
-        assertEquals(-1, newUser.getNextPuzzle());
+        assertEquals(1, newUser.getNextPuzzle());
 
         assertTrue(newUser.getCompleted().isEmpty());
         assertFalse(newUser.getInaccessible().isEmpty());

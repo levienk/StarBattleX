@@ -9,6 +9,7 @@ import starb.domain.json.User;
 import starb.server.repo.BoardRepository;
 import starb.server.repo.UserRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -27,11 +28,14 @@ public class UserController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public User postUser(){
+        System.out.println("hello");
         User doc = new User();
         // Grab the board ids
-        List<Integer> boardIds = boards.findAll()
-                .stream().map(Board::getID)
-                .toList();
+        List<Integer> boardIds = new ArrayList<>();
+        for (Board element:boards.findAll()) {
+            //
+            boardIds.add(element.getID());
+        }
         doc.setInaccessible(boardIds); // Populate the inaccessible list in ascending order
         doc.updateNextPuzzle();
         return users.save(doc);

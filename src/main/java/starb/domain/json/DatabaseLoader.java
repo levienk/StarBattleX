@@ -61,6 +61,7 @@ public class DatabaseLoader {
                 .build();
 
         HttpResponse<String> resp = client.send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println(resp);
         if( resp.statusCode() == 201 ) {
             return mapper.readValue(resp.body(), User.class);  // Convert from JSON to object
         }
