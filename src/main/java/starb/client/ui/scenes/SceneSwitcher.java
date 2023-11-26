@@ -130,13 +130,8 @@ public class SceneSwitcher {
             scenes = new HashMap<>();
         }
 
-        if (!scenes.containsKey(scene)) {
-            setScene(scene, params);
-        } else {
-            scenes.remove(scene);
-            setScene(scene, params);
-        }
-
+        scenes.remove(scene);
+        setScene(scene, params);
     }
 
     public static void setStage(Stage stage) {

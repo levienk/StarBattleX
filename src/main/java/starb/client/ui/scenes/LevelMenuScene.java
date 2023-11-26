@@ -6,16 +6,19 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import starb.client.ui.components.GameEventListener;
+import starb.domain.json.DatabaseLoader;
 import starb.domain.json.JSONReader;
 import starb.client.ui.components.UIBar;
 
 import java.io.File;
+import java.io.IOException;
 
 import static starb.client.ui.scenes.SceneSwitcher.setNewScene;
 import static starb.client.ui.scenes.SceneSwitcher.setScene;
 import static starb.client.ui.components.ExpandingPaneGenerator.newXPPane;
 
-public class LevelMenuScene extends VBox {
+public class LevelMenuScene extends VBox implements GameEventListener {
 
     private static final File SETTINGS_ICON_FILE = new File("Assets/Images/settingsGearIcon.png");
 
@@ -35,6 +38,8 @@ public class LevelMenuScene extends VBox {
 
         levelSelector = new LevelSelector();
         levelPageNumberContainer = new LevelPageNumberContainer();
+
+        //getValuesFromDatabase();
 
         // Set the Style
         this.getStylesheets().add(StarbClient.COMMON_STYLESHEET.
@@ -80,10 +85,23 @@ public class LevelMenuScene extends VBox {
             levelPageNumberContainer.updateLabel(levelPage);
     }
 
+    public void getValuesFromDatabase() throws Exception {
+        levelsUnlocked = DatabaseLoader.getUser().getCompleted().size();
+
+        levelSelector.setLevelsUnlocked(levelsUnlocked, getPageNumber());
+    }
+
     private int getPageNumber() {
 
         return levelPage;
 
+    }
+
+    @Override
+    public void onEvent(EVENT_TYPE eventType, Object... params) throws Exception {
+        if (eventType == EVENT_TYPE.PUZZLE_SOLVED) {
+
+        }
     }
 
     private class LevelPageNumberContainer extends HBox {
@@ -139,7 +157,7 @@ public class LevelMenuScene extends VBox {
             GridPane.setColumnSpan(levelSelectionArea, 5);
             levelSelectionArea.setHgap(10);
             levelSelectionArea.setVgap(10);
-            setLevelsUnlocked(getPageNumber(), 1);
+            setLevelsUnlocked(1, 1);
 
             levelSelectionArea.setAlignment(Pos.CENTER);
 
