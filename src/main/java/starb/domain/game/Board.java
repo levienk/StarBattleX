@@ -133,7 +133,7 @@ public class Board {
             if (squares.get(new Point(i, row)).getState().equals("star")) {
                 starCount++;
             }
-            if (starCount > 2) {
+            if (starCount > numStars) {
                 return false;
             }
         }
@@ -147,7 +147,7 @@ public class Board {
             if(squares.get(new Point(column, i)).getState().equals("star")) {
                 starCount++;
             }
-            if(starCount > 2) {
+            if(starCount > numStars) {
                return false;
             }
         }
@@ -161,7 +161,7 @@ public class Board {
             if (squares.get(pointInSection).getState().equals("star")) {
                 starCount++;
             }
-            if(starCount > 2) {
+            if(starCount > numStars) {
                return false;
             }
         }
@@ -226,7 +226,8 @@ public class Board {
     @Transient
     @JsonIgnore
     public boolean isComplete() {
-        if(validStars.size() != 20) {
+        int totalStars = numStars * rows;
+        if(validStars.size() != totalStars) {
             return false;
         }
         for (Point starPoint : solution) {
