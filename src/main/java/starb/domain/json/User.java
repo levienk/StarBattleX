@@ -18,6 +18,12 @@ public class User {
     private int nextPuzzle;
     private List<Integer> inaccessible;
 
+    private String timestamp;
+    private String status;
+
+    private String error;
+    private String path;
+
     /**
      * Constructor for building a user from the server's data
      * @param id The user's id
@@ -29,8 +35,11 @@ public class User {
     public User(@JsonProperty("id") String id,
                 @JsonProperty("completed") List<Integer> completed,
                 @JsonProperty("nextPuzzle") int nextPuzzle,
-                @JsonProperty("inaccessible") List<Integer> inaccessible
-                ) {
+                @JsonProperty("inaccessible") List<Integer> inaccessible,
+                @JsonProperty("timestamp") String timestamp,
+                @JsonProperty("status") String status,
+                @JsonProperty("error") String error,
+                @JsonProperty("path") String path) {
         this.id = id;
         this.completed = completed;
         this.nextPuzzle = nextPuzzle;
