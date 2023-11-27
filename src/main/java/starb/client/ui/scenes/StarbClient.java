@@ -8,7 +8,8 @@ import starb.domain.json.JSONReader;
 
 import java.io.File;
 
-import static starb.client.ui.scenes.SceneSwitcher.*;
+import static starb.client.ui.scenes.SceneSwitcher.setScene;
+import static starb.client.ui.scenes.SceneSwitcher.setStage;
 
 /**
  * Creates a single window as an example of a Java GUI with a component
@@ -77,7 +78,7 @@ public class StarbClient extends Application {
 
         // TODO - Open PuzzleScene by default
         //setScene(LevelMenuScene.class);
-        setNewScene(PuzzleScene.class, new JSONReader(
+        setScene(PuzzleScene.class, new JSONReader(
                 "temp.txt").getBoard(), "Temporary Rank");
 
         primaryStage.setWidth(WINDOW_WIDTH);
