@@ -4,7 +4,9 @@ import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import starb.domain.json.DatabaseLoader;
 import starb.domain.json.JSONReader;
+import starb.domain.json.User;
 
 import java.io.File;
 
@@ -76,10 +78,15 @@ public class StarbClient extends Application {
 
         setStage(primaryStage);
 
+        // Load the initial user
+        User user = DatabaseLoader.getUser();
+
         // TODO - Open PuzzleScene by default
         //setScene(LevelMenuScene.class);
-        setScene(PuzzleScene.class, new JSONReader(
-                "temp.txt").getBoard(), "Temporary Rank");
+        // Load the next puzzle
+        int nextLevel = user.getNextPuzzle();
+        if (nextLevel == -1) nextLevel = 1; // Wrap to board 1 if all boards are complete
+        setScene(PuzzleScene.class, DatabaseLoader.getBoard(nextLevel), "Temporary Rank");
 
         primaryStage.setWidth(WINDOW_WIDTH);
         primaryStage.setHeight(WINDOW_HEIGHT);

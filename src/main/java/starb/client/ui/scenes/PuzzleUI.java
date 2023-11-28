@@ -10,6 +10,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import starb.domain.game.Board;
 import starb.client.ui.components.CustomAlert;
+import starb.domain.json.DatabaseLoader;
+import starb.domain.json.User;
 
 import java.io.File;
 
@@ -70,7 +72,14 @@ public class PuzzleUI extends StackPane {
         }
 
         this.getChildren().add(canvas);
-        canvas.setOnMouseClicked( e -> selectSquare(e));
+        canvas.setOnMouseClicked( e -> {
+            try {
+                selectSquare(e);
+            } catch (Exception ex) {
+                System.out.println("Error loading/updating the user in DatabaseLoader.java");
+                throw new RuntimeException(ex);
+            }
+        });
         drawBoard();
     }
 
@@ -112,7 +121,7 @@ public class PuzzleUI extends StackPane {
         }
     }
 
-    private void draw(int col, int row) {
+    private void draw(int col, int row) throws Exception {
         // Update the board square
         if (selectionType.equals("") || selectionType.equals("star") ||
                 selectionType.equals("dot")) {
@@ -156,7 +165,7 @@ public class PuzzleUI extends StackPane {
                     );
                 }
                 if (board.isComplete()) {
-                    completionWindow();
+                    onCompletion();
                 }
             }
             case "dot" -> {
@@ -186,7 +195,7 @@ public class PuzzleUI extends StackPane {
         }
     }
 
-    private void selectSquare(MouseEvent e) {
+    private void selectSquare(MouseEvent e) throws Exception {
         int posX = (int) e.getX();
         int posY = (int) e.getY();
 
@@ -225,12 +234,38 @@ public class PuzzleUI extends StackPane {
         this.selectionType = selectionType;
     }
 
-    private void completionWindow() {
+    private void onCompletion() throws Exception {
+        // Update the user
+        User user = DatabaseLoader.getUser();
+        if (board.getID() == user.getNextPuzzle()) {
+            user.updateNextPuzzle();
+            // TODO - Update User using event listener here
+            DatabaseLoader.updateUser(user);
+        }
+
+        // Create the completion window
         CustomAlert alert = new CustomAlert("Congratulations!", "You have completed the level!");
         alert.initOwner(this.getScene().getWindow()); // Set the owner of the alert
         alert.getOkButton().setText("Next Level");
         alert.getOkButton().setOnAction(e -> {
             //next Level Logic
+            int nextLevel = board.getID() + 1;
+
+            // If the user has completed all boards and this is the last board, wrap to level 1
+            if (user.getNextPuzzle() == -1 &&
+                    nextLevel == user.getCompleted().get(user.getCompleted().size())) {
+                nextLevel = 1;
+            }
+
+            // Open the next level
+            try {
+                SceneSwitcher.setNewScene(PuzzleScene.class, DatabaseLoader.getBoard(nextLevel),
+                                        user.getPlayerRank());
+            } catch (Exception ex) {
+                System.out.println("Error loading new scene after completion");
+                throw new RuntimeException(ex);
+            }
+
             alert.close();
         });
         alert.showAndWait();
