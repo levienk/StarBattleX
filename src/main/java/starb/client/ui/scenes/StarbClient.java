@@ -83,7 +83,7 @@ public class StarbClient extends Application {
         // Load the next puzzle
         int nextLevel = user.getNextPuzzle();
         if (nextLevel == -1) nextLevel = 1; // Wrap to board 1 if all boards are complete
-        setScene(PuzzleScene.class, DatabaseLoader.getBoard(nextLevel), "Temporary Rank");
+        setScene(PuzzleScene.class, DatabaseLoader.getBoard(nextLevel), user.getPlayerRank());
 
         primaryStage.setWidth(WINDOW_WIDTH);
         primaryStage.setHeight(WINDOW_HEIGHT);
