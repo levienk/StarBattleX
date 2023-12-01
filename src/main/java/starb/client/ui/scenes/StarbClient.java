@@ -5,7 +5,6 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import starb.domain.json.DatabaseLoader;
-import starb.domain.json.JSONReader;
 import starb.domain.json.User;
 
 import java.io.File;
@@ -81,8 +80,6 @@ public class StarbClient extends Application {
         // Load the initial user
         User user = DatabaseLoader.getUser();
 
-        // TODO - Open PuzzleScene by default
-        //setScene(LevelMenuScene.class);
         // Load the next puzzle
         int nextLevel = user.getNextPuzzle();
         if (nextLevel == -1) nextLevel = 1; // Wrap to board 1 if all boards are complete

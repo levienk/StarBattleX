@@ -1,6 +1,5 @@
 package starb.client.ui.scenes;
 
-import java.awt.Point;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -8,12 +7,15 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
-import starb.domain.game.Board;
 import starb.client.ui.components.CustomAlert;
+import starb.client.ui.components.GameEventListener;
+import starb.domain.game.Board;
 import starb.domain.json.DatabaseLoader;
 import starb.domain.json.User;
 
+import java.awt.*;
 import java.io.File;
+import java.util.ArrayList;
 
 /**
  * A GUI component demonstrating how to use JavaFX GraphicsContext to draw shapes and
@@ -46,6 +48,8 @@ public class PuzzleUI extends StackPane {
     private GraphicsContext g;
     private String selectionType;
     private Board board;
+
+    private static ArrayList<GameEventListener> listeners = new ArrayList<>();
 
     public PuzzleUI(Board newBoard) {
         canvas = new Canvas(WIDTH, HEIGHT);
@@ -80,6 +84,7 @@ public class PuzzleUI extends StackPane {
                 throw new RuntimeException(ex);
             }
         });
+
         drawBoard();
     }
 
@@ -237,6 +242,10 @@ public class PuzzleUI extends StackPane {
     private void onCompletion() throws Exception {
         // Update the user
         User user = DatabaseLoader.getUser();
+
+        // Fire all listeners listening to this event.
+        puzzleCompleteEvent();
+
         if (board.getID() == user.getNextPuzzle()) {
             user.updateNextPuzzle();
             // TODO - Update User using event listener here
@@ -284,5 +293,18 @@ public class PuzzleUI extends StackPane {
             }
         }
         board.clearBoard();
+    }
+
+    public static void addGameEventListener(GameEventListener listener) {
+
+        listeners.add(listener);
+    }
+
+    private void puzzleCompleteEvent() throws Exception {
+
+        for (GameEventListener listener : listeners) {
+
+            listener.onEvent(GameEventListener.EVENT_TYPE.PUZZLE_SOLVED);
+        }
     }
 }

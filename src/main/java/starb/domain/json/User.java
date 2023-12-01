@@ -35,12 +35,7 @@ public class User {
     public User(@JsonProperty("id") String id,
                 @JsonProperty("completed") List<Integer> completed,
                 @JsonProperty("nextPuzzle") int nextPuzzle,
-                @JsonProperty("inaccessible") List<Integer> inaccessible,
-                @JsonProperty("timestamp") String timestamp, /* There has to be a better way to
-                fix this problem than this scuffed method of chucking everything in. -Randy */
-                @JsonProperty("status") String status,
-                @JsonProperty("error") String error,
-                @JsonProperty("path") String path) {
+                @JsonProperty("inaccessible") List<Integer> inaccessible) {
         this.id = id;
         this.completed = completed;
         this.nextPuzzle = nextPuzzle;

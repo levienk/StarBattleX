@@ -7,16 +7,14 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import starb.client.ui.components.GameEventListener;
-import starb.domain.json.DatabaseLoader;
-import starb.domain.json.JSONReader;
 import starb.client.ui.components.UIBar;
+import starb.domain.json.DatabaseLoader;
 
 import java.io.File;
-import java.io.IOException;
 
+import static starb.client.ui.components.ExpandingPaneGenerator.newXPPane;
 import static starb.client.ui.scenes.SceneSwitcher.setNewScene;
 import static starb.client.ui.scenes.SceneSwitcher.setScene;
-import static starb.client.ui.components.ExpandingPaneGenerator.newXPPane;
 
 public class LevelMenuScene extends VBox implements GameEventListener {
 
@@ -26,7 +24,8 @@ public class LevelMenuScene extends VBox implements GameEventListener {
 
     private final LevelPageNumberContainer levelPageNumberContainer;
 
-    private final int MAX_PAGES = 4;
+    private final int maxPages;
+    private final int maxLevels;
 
     private int levelPage;
 
@@ -37,7 +36,20 @@ public class LevelMenuScene extends VBox implements GameEventListener {
     public LevelMenuScene() throws Exception {
 
         levelSelector = new LevelSelector();
+
+        // Sets the maximum number of pages based on number of levels in the
+        // database.
+        maxLevels = getTotalLevels();
+        maxPages = (int) Math.ceil(maxLevels / 25.0);
+
+        System.out.println("Max levels: " + maxLevels);
+        System.out.println(DatabaseLoader.getUser().getCompleted().size());
+
         levelPageNumberContainer = new LevelPageNumberContainer();
+
+        // Add this scene to the event listener.
+        PuzzleUI.addGameEventListener(this);
+        updateValuesFromDatabase();
 
         //getValuesFromDatabase();
 
@@ -76,7 +88,7 @@ public class LevelMenuScene extends VBox implements GameEventListener {
 
     private void changePageNumber(int pg) {
 
-            if (!(pg >= 1 && pg <= MAX_PAGES)) {
+            if (!(pg >= 1 && pg <= maxPages)) {
                 return;
             }
 
@@ -85,7 +97,7 @@ public class LevelMenuScene extends VBox implements GameEventListener {
             levelPageNumberContainer.updateLabel(levelPage);
     }
 
-    public void getValuesFromDatabase() throws Exception {
+    public void updateValuesFromDatabase() throws Exception {
         levelsUnlocked = DatabaseLoader.getUser().getCompleted().size();
 
         levelSelector.setLevelsUnlocked(levelsUnlocked, getPageNumber());
@@ -97,10 +109,20 @@ public class LevelMenuScene extends VBox implements GameEventListener {
 
     }
 
+    private int getTotalLevels() {
+
+        try {
+            return DatabaseLoader.getUser().getCompleted().size() +
+                    DatabaseLoader.getUser().getInaccessible().size();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     @Override
     public void onEvent(EVENT_TYPE eventType, Object... params) throws Exception {
         if (eventType == EVENT_TYPE.PUZZLE_SOLVED) {
-
+            updateValuesFromDatabase();
         }
     }
 
@@ -127,7 +149,7 @@ public class LevelMenuScene extends VBox implements GameEventListener {
 
         public void updateLabel(int pg) {
 
-            levelPageNumberLabel.setText(pg + " | " + MAX_PAGES);
+            levelPageNumberLabel.setText(pg + " | " + maxPages);
 
         }
 
@@ -185,17 +207,21 @@ public class LevelMenuScene extends VBox implements GameEventListener {
             levelsUnlocked = newLevelsUnlocked;
 
             int levelCounter;
+
             for (int i = 0; i < 25; i++) {
                 levelCounter = (levelPage - 1) * 25 + i;
+                if (levelCounter > maxLevels) {
+                    break;
+                }
 
                 Button levelButton = new Button((levelCounter+1) + "");
-                int finalLevelCounter = levelCounter;
+                int finalLevelCounter = levelCounter + 1;
                 levelButton.setOnAction(e -> {
                    try {
                        setNewScene(PuzzleScene.class,
                        // TODO: Replace this with something more useful.
-                   new JSONReader(
-                       "temp.txt").getBoard(), "cutesy level " + (finalLevelCounter + 1));
+                   DatabaseLoader.getBoard(finalLevelCounter),
+                               "cutesy level " + (finalLevelCounter));
                    } catch (Exception ex) {
                        throw new RuntimeException(ex);
                    }
