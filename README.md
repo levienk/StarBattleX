@@ -8,7 +8,7 @@ Project includes both client and server code.
 
 To start the Java client: `./gradlew run` or use Tasks -> Application -> Run in the IntelliJ Gradle window
 
-Code located in: `src/main/java/starb/client`
+Code located in: `src/main/java/starbattle/client`
 
 ### HTML/CSS/Javascript client.  
 
