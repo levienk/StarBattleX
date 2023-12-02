@@ -179,6 +179,9 @@ public class PuzzleUI extends StackPane {
                         gridUpperLeft.getY() + (row - 1) * cellSize + dotPositioning,
                         dotScale, dotScale
                 );
+                if (board.isComplete()) {
+                    onCompletion();
+                }
             }
             case "" -> {
                 for (Point point : board.getInvalidStars()) {
@@ -195,6 +198,9 @@ public class PuzzleUI extends StackPane {
                             gridUpperLeft.getY() + (point.getY() - 1) * cellSize + positioning,
                             starScale, starScale
                     );
+                }
+                if (board.isComplete()) {
+                    onCompletion();
                 }
             }
         }
