@@ -10,7 +10,7 @@ import starbattle.client.ui.components.UIBar;
 import java.io.File;
 import java.net.MalformedURLException;
 
-import static starbattle.client.ui.scenes.SceneSwitcher.setScene;
+import static starbattle.client.ui.scenes.SceneSwitcher.setNewScene;
 
 public class PuzzleTopBar extends UIBar {
 
@@ -34,7 +34,7 @@ public class PuzzleTopBar extends UIBar {
         Button levelMenuButton = new Button("Level Menu");
         levelMenuButton.setOnAction(e -> {
             try {
-                setScene(LevelMenuScene.class);
+                setNewScene(LevelMenuScene.class);
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }

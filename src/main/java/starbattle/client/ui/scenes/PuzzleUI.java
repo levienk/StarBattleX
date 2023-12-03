@@ -284,7 +284,6 @@ public class PuzzleUI extends StackPane {
             alert.close();
         });
         alert.showAndWait();
-        System.out.println("You win!");
     }
     protected void clear() {
         // Get the positioning

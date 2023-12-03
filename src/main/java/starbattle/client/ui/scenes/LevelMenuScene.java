@@ -6,7 +6,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import starbattle.client.ui.components.GameEventListener;
 import starbattle.client.ui.components.UIBar;
 import starbattle.domain.DatabaseLoader;
 
@@ -16,7 +15,7 @@ import static starbattle.client.ui.components.ExpandingPaneGenerator.newXPPane;
 import static starbattle.client.ui.scenes.SceneSwitcher.setNewScene;
 import static starbattle.client.ui.scenes.SceneSwitcher.setScene;
 
-public class LevelMenuScene extends VBox implements GameEventListener {
+public class LevelMenuScene extends VBox {
 
     private static final File SETTINGS_ICON_FILE = new File("Assets/Images/settingsGearIcon.png");
 
@@ -42,13 +41,11 @@ public class LevelMenuScene extends VBox implements GameEventListener {
         maxLevels = getTotalLevels();
         maxPages = (int) Math.ceil(maxLevels / 25.0);
 
-        System.out.println("Max levels: " + maxLevels);
         System.out.println(DatabaseLoader.getUser().getCompleted().size());
 
         levelPageNumberContainer = new LevelPageNumberContainer();
 
         // Add this scene to the event listener.
-        PuzzleUI.addGameEventListener(this);
         updateValuesFromDatabase();
 
         //getValuesFromDatabase();
@@ -116,13 +113,6 @@ public class LevelMenuScene extends VBox implements GameEventListener {
                     DatabaseLoader.getUser().getInaccessible().size();
         } catch (Exception e) {
             throw new RuntimeException(e);
-        }
-    }
-
-    @Override
-    public void onEvent(EVENT_TYPE eventType, Object... params) throws Exception {
-        if (eventType == EVENT_TYPE.PUZZLE_SOLVED) {
-            updateValuesFromDatabase();
         }
     }
 
@@ -219,9 +209,9 @@ public class LevelMenuScene extends VBox implements GameEventListener {
                 levelButton.setOnAction(e -> {
                    try {
                        setNewScene(PuzzleScene.class,
-                       // TODO: Replace this with something more useful.
+
                    DatabaseLoader.getBoard(finalLevelCounter),
-                               "cutesy level " + (finalLevelCounter));
+                               DatabaseLoader.getUser().getPlayerRank());
                    } catch (Exception ex) {
                        throw new RuntimeException(ex);
                    }
