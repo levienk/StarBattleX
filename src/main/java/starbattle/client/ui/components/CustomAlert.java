@@ -1,14 +1,24 @@
 package starbattle.client.ui.components;
-import javafx.stage.*;
-import javafx.scene.*;
+
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.*;
-import javafx.scene.control.*;
-import javafx.geometry.*;
+import javafx.scene.text.TextAlignment;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import starbattle.client.ui.scenes.StarBattleClient;
 
 import java.net.MalformedURLException;
 
-public class CustomAlert extends Stage{
+public class CustomAlert extends Stage {
+
+    private HBox topBar;
+
+    private HBox bottomBar;
     private Label messageLabel;
     private Button okButton;
     private Button cancelButton;
@@ -16,20 +26,40 @@ public class CustomAlert extends Stage{
     public CustomAlert(String title, String message) {
         this.setTitle(title);
         this.initModality(Modality.APPLICATION_MODAL);
+        this.initStyle(StageStyle.UNDECORATED);
 
+        topBar = new UIBar();
         messageLabel = new Label(message);
         okButton = new Button("Ok");
         cancelButton = new Button("Cancel");
+        bottomBar = new UIBar();
+
+        messageLabel.setPrefHeight(180);
+        messageLabel.setAlignment(Pos.CENTER);
+        messageLabel.setWrapText(true);
+        messageLabel.setTextAlignment(TextAlignment.CENTER);
+        messageLabel.setBackground(new Background(new BackgroundFill(
+                javafx.scene.paint.Color.rgb(0,0,0,0.1),
+                CornerRadii.EMPTY, Insets.EMPTY)));
+
+        Label topBarTitle = new Label(title);
+
+        topBar.getChildren().add(topBarTitle);
 
         okButton.setOnAction(e -> this.close());
         cancelButton.setOnAction(e -> this.close());
 
-        this.setMinWidth(300);
-        this.setMinHeight(200);
+        this.setWidth(300);
+        this.setHeight(250);
+
+        this.setResizable(false);
 
         VBox layout = new VBox(10);
-        layout.getChildren().addAll(messageLabel, okButton, cancelButton);
-        layout.setAlignment(Pos.CENTER);
+        bottomBar.setAlignment(Pos.TOP_CENTER);
+
+        bottomBar.getChildren().addAll(okButton, cancelButton);
+        layout.getChildren().addAll(topBar, messageLabel, bottomBar);
+        layout.setAlignment(Pos.TOP_CENTER);
 
         Scene scene = new Scene(layout, 300, 150);
 

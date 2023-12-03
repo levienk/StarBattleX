@@ -40,7 +40,7 @@ public class StarBattleClient extends Application {
             ("./Assets/Stylesheets/commonStyle.css");
 
     @SuppressWarnings("FieldCanBeLocal")
-    private final int WINDOW_WIDTH = 1200;
+    private final int WINDOW_WIDTH = 650;
 
     @SuppressWarnings("FieldCanBeLocal")
 

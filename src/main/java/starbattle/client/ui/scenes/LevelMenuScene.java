@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import starbattle.client.ui.components.CustomAlert;
 import starbattle.client.ui.components.UIBar;
 import starbattle.domain.DatabaseLoader;
 
@@ -73,6 +74,8 @@ public class LevelMenuScene extends VBox {
         settingsIcon.setFitWidth(30);
         settingsButton.setGraphic(settingsIcon);
 
+        settingsButton.setOnAction(e -> openSettings());
+
 
         topBar.getChildren().addAll(newXPPane('h'), backButton);
         bottomBar.getChildren().addAll(newXPPane('h'),
@@ -80,6 +83,12 @@ public class LevelMenuScene extends VBox {
 
 
         this.getChildren().addAll(topBar, levelSelector, levelPageNumberContainer, bottomBar);
+
+    }
+
+    private void openSettings() {
+        CustomAlert popup = new CustomAlert("Settings", "Settings are not yet implemented.");
+        popup.show();
 
     }
 
