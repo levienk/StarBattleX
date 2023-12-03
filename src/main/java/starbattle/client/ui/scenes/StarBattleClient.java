@@ -95,11 +95,6 @@ public class StarBattleClient extends Application {
 
         primaryStage.getIcons().add(new Image(APPLICATION_ICON.toURI().toURL().toString()));
         primaryStage.show();
-
-        // TODO: Temporary code for generating JSON-formmated
-        // Puzzles, IT IS SCUFFED, DO NOT USE
-        //new JSONPuzzleGenerator(62, new int[]{10, 10});
-
     }
 
 }
