@@ -29,8 +29,8 @@ public class BoardControllerTests {
     @BeforeEach
     void setUp() {
         repo.deleteAll();
-        board1 = new Board(5, 5, new ArrayList<>(), new ArrayList<>(), 1, 1);
-        board2 = new Board(5, 5, new ArrayList<>(), new ArrayList<>(), 1, 2);
+        board1 = new Board(5, 5, new ArrayList<>(), 1, 1);
+        board2 = new Board(5, 5, new ArrayList<>(), 1, 2);
 
         repo.save(board1);
         repo.save(board2);
