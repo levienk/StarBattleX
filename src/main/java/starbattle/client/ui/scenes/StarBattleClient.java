@@ -40,14 +40,14 @@ public class StarBattleClient extends Application {
             ("./Assets/Stylesheets/commonStyle.css");
 
     @SuppressWarnings("FieldCanBeLocal")
-    private final int WINDOW_WIDTH = 1200;
+    private final int WINDOW_WIDTH = 650;
 
     @SuppressWarnings("FieldCanBeLocal")
 
     private final int WINDOW_HEIGHT = 650;
 
     @SuppressWarnings("FieldCanBeLocal")
-    private final String WINDOW_TITLE = "Star Game X";
+    private final String WINDOW_TITLE = "StarBattle X";
 
     public static final Color TEMPLATE_BAR_COLOR = Color.web("#707070");
 
@@ -95,11 +95,6 @@ public class StarBattleClient extends Application {
 
         primaryStage.getIcons().add(new Image(APPLICATION_ICON.toURI().toURL().toString()));
         primaryStage.show();
-
-        // TODO: Temporary code for generating JSON-formmated
-        // Puzzles, IT IS SCUFFED, DO NOT USE
-        //new JSONPuzzleGenerator(62, new int[]{10, 10});
-
     }
 
 }

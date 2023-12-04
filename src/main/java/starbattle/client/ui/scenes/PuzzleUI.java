@@ -9,8 +9,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import starbattle.client.ui.components.CustomAlert;
 import starbattle.client.ui.components.GameEventListener;
-import starbattle.domain.game.Board;
 import starbattle.domain.DatabaseLoader;
+import starbattle.domain.game.Board;
 import starbattle.domain.user.User;
 
 import java.awt.*;
@@ -284,7 +284,6 @@ public class PuzzleUI extends StackPane {
             alert.close();
         });
         alert.showAndWait();
-        System.out.println("You win!");
     }
     protected void clear() {
         // Get the positioning
