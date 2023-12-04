@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.text.TextAlignment;
 import starbattle.client.ui.components.CustomAlert;
 import starbattle.client.ui.components.UIBar;
 import starbattle.domain.DatabaseLoader;
@@ -20,6 +21,8 @@ public class LevelMenuScene extends VBox {
 
     private static final File SETTINGS_ICON_FILE = new File("Assets/Images/settingsGearIcon.png");
 
+    private final int LEVEL_GRID_SIZE = 5;
+
     private final LevelSelector levelSelector;
 
     private final LevelPageNumberContainer levelPageNumberContainer;
@@ -31,8 +34,6 @@ public class LevelMenuScene extends VBox {
 
     private int levelsUnlocked;
 
-
-
     public LevelMenuScene() throws Exception {
 
         levelSelector = new LevelSelector();
@@ -40,9 +41,7 @@ public class LevelMenuScene extends VBox {
         // Sets the maximum number of pages based on number of levels in the
         // database.
         maxLevels = getTotalLevels();
-        maxPages = (int) Math.ceil(maxLevels / 25.0);
-
-        System.out.println(DatabaseLoader.getUser().getCompleted().size());
+        maxPages = (int) Math.ceil(maxLevels / Math.pow(LEVEL_GRID_SIZE, 2));
 
         levelPageNumberContainer = new LevelPageNumberContainer();
 
@@ -135,13 +134,13 @@ public class LevelMenuScene extends VBox {
             levelPageNumberLabel = new Label();
             updateLabel(levelPage);
 
-            levelPageNumberLabel.setPadding(new Insets(10,10,10,10));
+            levelPageNumberLabel.setPadding(new Insets(10));
             levelPageNumberLabel.setMinWidth(100);
             levelPageNumberLabel.getStyleClass().add("general-label");
             levelPageNumberLabel.setAlignment(Pos.CENTER);
 
             this.setAlignment(Pos.CENTER);
-            this.setPadding(new Insets(0,10,10,10));
+            this.setPadding(new Insets(0, 0, 10, 0));
             this.getChildren().add(levelPageNumberLabel);
 
         }
@@ -154,28 +153,33 @@ public class LevelMenuScene extends VBox {
 
     }
 
-    private class LevelSelector extends StackPane {
+    private class LevelSelector extends HBox {
 
         GridPane levelSelectionArea;
 
         public LevelSelector() {
 
-            this.setPadding(new Insets(10,10,10,10));
+            this.setAlignment(Pos.CENTER);
 
-            Button prevPageButton = new Button("<");
+            Button prevPageButton = new Button("◀");
+            prevPageButton.setMinSize(50, 50);
+            prevPageButton.setTextAlignment(TextAlignment.CENTER);
+
             StackPane.setAlignment(prevPageButton, Pos.CENTER_LEFT);
             prevPageButton.setOnAction(e -> changePageNumber(levelPage - 1));
 
-            Button nextPageButton = new Button(">");
+            Button nextPageButton = new Button("▶");
+            nextPageButton.setMinSize(50, 50);
+            nextPageButton.setTextAlignment(TextAlignment.CENTER);
+
             StackPane.setAlignment(nextPageButton, Pos.CENTER_RIGHT);
             nextPageButton.setOnAction(e -> changePageNumber(levelPage + 1));
 
             levelSelectionArea = new GridPane();
 
             levelSelectionArea.setPrefWidth(400);
+            levelSelectionArea.setPrefHeight(400);
 
-            GridPane.setRowSpan(levelSelectionArea, 5);
-            GridPane.setColumnSpan(levelSelectionArea, 5);
             levelSelectionArea.setHgap(10);
             levelSelectionArea.setVgap(10);
             setLevelsUnlocked(1, 1);
@@ -183,13 +187,13 @@ public class LevelMenuScene extends VBox {
             levelSelectionArea.setAlignment(Pos.CENTER);
 
             // Transparent dark background
-            levelSelectionArea.setBackground(new Background(new BackgroundFill(
+            this.setBackground(new Background(new BackgroundFill(
                     javafx.scene.paint.Color.rgb(0,0,0,0.1),
-                    CornerRadii.EMPTY, Insets.EMPTY)));
+                    CornerRadii.EMPTY, new Insets(10))));
 
             VBox.setVgrow(this, Priority.ALWAYS);
 
-            this.getChildren().addAll(levelSelectionArea,prevPageButton,nextPageButton);
+            this.getChildren().addAll(prevPageButton,levelSelectionArea,nextPageButton);
 
         }
 
@@ -204,11 +208,13 @@ public class LevelMenuScene extends VBox {
             }
 
             levelsUnlocked = newLevelsUnlocked;
+            levelSelectionArea.getChildren().removeAll(
+                    levelSelectionArea.getChildren());
 
             int levelCounter;
 
-            for (int i = 0; i < 25; i++) {
-                levelCounter = (levelPage - 1) * 25 + i;
+            for (int i = 0; i < Math.pow(LEVEL_GRID_SIZE, 2); i++) {
+                levelCounter = (levelPage - 1) * (int) Math.pow(LEVEL_GRID_SIZE, 2) + i;
                 if (levelCounter > maxLevels) {
                     break;
                 }
@@ -235,10 +241,10 @@ public class LevelMenuScene extends VBox {
                     levelButton.getStyleClass().add("level-button-locked");
                 }
 
-                levelButton.setPrefHeight(70);
-                levelButton.setPrefWidth(70);
+                levelButton.setPrefHeight(65);
+                levelButton.setPrefWidth(65);
 
-                levelSelectionArea.add(levelButton, (i % 5), (i / 5));
+                levelSelectionArea.add(levelButton, (i % LEVEL_GRID_SIZE), (i / LEVEL_GRID_SIZE));
 
             }
         }

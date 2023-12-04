@@ -7,7 +7,6 @@ import starbattle.client.ui.components.ExpandingPaneGenerator;
 import starbattle.client.ui.components.Title;
 import starbattle.client.ui.components.UIBar;
 
-import java.io.File;
 import java.net.MalformedURLException;
 
 import static starbattle.client.ui.scenes.SceneSwitcher.setNewScene;
@@ -24,8 +23,7 @@ public class PuzzleTopBar extends UIBar {
 
         // Clear Board button
         Button clearBoardButton = new Button("Clear Board");
-        clearBoardButton.getStylesheets().add(new File("Assets/Stylesheets/clearBoardButtonStyle.css").
-                toURI().toURL().toString());
+        clearBoardButton.getStyleClass().add("clear-button");
         clearBoardButton.setOnAction(e -> {
             ui.clear();
         });
