@@ -3,19 +3,18 @@ package starbattle.client.ui.scenes;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import starbattle.client.ui.components.CustomAlert;
-import starbattle.client.ui.components.GameEventListener;
 import starbattle.domain.DatabaseLoader;
 import starbattle.domain.game.Board;
 import starbattle.domain.user.User;
 
 import java.awt.*;
 import java.io.File;
-import java.util.ArrayList;
 
 /**
  * A GUI component demonstrating how to use JavaFX GraphicsContext to draw shapes and
@@ -27,29 +26,27 @@ public class PuzzleUI extends StackPane {
     private static final int HEIGHT = 430;
 
     private static final File STAR_IMAGE_FILE = new File("Assets/Images/star_black.png");
-    private Image starImage;
+    private final Image starImage;
     private static final File INVALID_STAR_IMAGE_FILE = new File("Assets/Images/star_red.png");
-    private Image invalidStarImage;
+    private final Image invalidStarImage;
     private static final File DOT_IMAGE_FILE = new File("Assets/Images/dot_black.png");
-    private Image dotImage;
+    private final Image dotImage;
 
-    private Canvas canvas;
+    private final Canvas canvas;
 
     // Grid dimensions and location
     // Must pass in an int only
-    private double cellSize = 40;
-    private int rows;
-    private int cols;
+    private final double cellSize = 40;
+    private final int rows;
+    private final int cols;
     // Must pass in an int only
-    private Point gridUpperLeft = new Point(15,15);
-    private double starScale;
-    private double dotScale;
+    private final Point gridUpperLeft = new Point(15,15);
+    private final double starScale;
+    private final double dotScale;
 
     private GraphicsContext g;
     private String selectionType;
-    private Board board;
-
-    private static ArrayList<GameEventListener> listeners = new ArrayList<>();
+    private final Board board;
 
     public PuzzleUI(Board newBoard) {
         canvas = new Canvas(WIDTH, HEIGHT);
@@ -120,17 +117,15 @@ public class PuzzleUI extends StackPane {
                     ( (int) line.getStartY() - 1 ) * cellSize + gridUpperLeft.getY(),
                     ( (int) line.getEndX() - 1 ) * cellSize + gridUpperLeft.getX(),
                     ( (int) line.getEndY() - 1 ) * cellSize + gridUpperLeft.getY());
-            // Test
-//            System.out.printf("Start: (%d, %d)%n", (int) line.getStartX(), (int) line.getStartY());
-//            System.out.printf("Start: (%d, %d)%n%n", (int) line.getEndX(), (int) line.getEndY());
+
         }
     }
 
     private void draw(int col, int row) throws Exception {
         // Update the board square
-        if (selectionType.equals("") || selectionType.equals("star") ||
+        if (selectionType.isEmpty() || selectionType.equals("star") ||
                 selectionType.equals("dot")) {
-            // TODO - Uncomment when board.updateSquare() is functioning
+
             board.updateSquare(new Point(col, row), selectionType);
         }
 
@@ -212,9 +207,20 @@ public class PuzzleUI extends StackPane {
 
         Point location = pixelsToBoardGrid(posX, posY);
 
-        if (location != null) {
-            draw((int) location.getX(), (int) location.getY());
+        if (location == null) {
+            return;
         }
+
+        // Right click remove shortcut.
+        if (e.getButton().equals(MouseButton.SECONDARY)) {
+            String tempSelectionType = selectionType;
+            selectionType = "";
+            draw((int) location.getX(), (int) location.getY());
+            selectionType = tempSelectionType;
+            return;
+        }
+
+        draw((int) location.getX(), (int) location.getY());
 
     }
 
@@ -248,9 +254,6 @@ public class PuzzleUI extends StackPane {
     private void onCompletion() throws Exception {
         // Update the user
         User user = DatabaseLoader.getUser();
-
-        // Fire all listeners listening to this event.
-        puzzleCompleteEvent();
 
         if (board.getID() == user.getNextPuzzle()) {
             user.updateNextPuzzle();
@@ -300,16 +303,4 @@ public class PuzzleUI extends StackPane {
         board.clearBoard();
     }
 
-    public static void addGameEventListener(GameEventListener listener) {
-
-        listeners.add(listener);
-    }
-
-    private void puzzleCompleteEvent() throws Exception {
-
-        for (GameEventListener listener : listeners) {
-
-            listener.onEvent(GameEventListener.EVENT_TYPE.PUZZLE_SOLVED);
-        }
-    }
 }
