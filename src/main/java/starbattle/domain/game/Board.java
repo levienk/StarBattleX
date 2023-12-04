@@ -226,15 +226,10 @@ public class Board {
     @JsonIgnore
     public boolean isComplete() {
         int totalStars = numStars * rows;
-        if(validStars.size() != totalStars) {
-            return false;
+        if(validStars.size() == totalStars && invalidStars.size() == 0) {
+            return true;
         }
-        for (Point starPoint : solution) {
-            if (!validStars.contains(starPoint)) {
-                return false;
-            }
-        }
-        return true;
+        return false;
     }
 
     @Transient
