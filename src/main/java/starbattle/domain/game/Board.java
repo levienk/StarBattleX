@@ -161,10 +161,10 @@ public class Board {
         return true;
     }
 
-    private List<Point> findSection(Point point) {
+    private Set<Point> findSection(Point point) {
         for (List<Point> section : sections) {
             if (section.contains(point)) {
-                return section;
+                return new HashSet<Point>(section);
             }
         }
         return null;
@@ -286,7 +286,7 @@ public class Board {
                 validStars.add(point);
                 invalidStars.remove(point);
             }
-            //if square is a invalid star
+            //if square is an invalid star
             else {
                 invalidStars.add(point);
                 validStars.remove(point);
