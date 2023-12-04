@@ -16,17 +16,18 @@ import java.net.MalformedURLException;
 
 public class CustomAlert extends Stage {
 
-    private HBox topBar;
+    private final HBox topBar;
 
-    private HBox bottomBar;
-    private Label messageLabel;
-    private Button okButton;
-    private Button cancelButton;
+    private final HBox bottomBar;
+    private final Label messageLabel;
+    private final Button okButton;
+    private final Button cancelButton;
 
     public CustomAlert(String title, String message) {
-        this.setTitle(title);
+        this.setTitle("");
         this.initModality(Modality.APPLICATION_MODAL);
-        this.initStyle(StageStyle.UNDECORATED);
+        this.initStyle(StageStyle.DECORATED);
+        this.getIcons().add(StarBattleClient.getGameIcon());
 
         topBar = new UIBar();
         messageLabel = new Label(message);

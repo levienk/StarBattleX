@@ -33,7 +33,7 @@ public class StarBattleClient extends Application {
      * <p>
      *  This can be changed should there need to be.
      */
-    private final static File APPLICATION_ICON = new File
+    public final static File APPLICATION_ICON = new File
             ("./Assets/Images/StarIcon.png");
 
     public final static File COMMON_STYLESHEET = new File
@@ -94,7 +94,17 @@ public class StarBattleClient extends Application {
         primaryStage.setMinWidth(650);
 
         primaryStage.getIcons().add(new Image(APPLICATION_ICON.toURI().toURL().toString()));
+
+
         primaryStage.show();
+    }
+
+    public static Image getGameIcon() {
+        try {
+            return new Image(APPLICATION_ICON.toURI().toURL().toString());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }
