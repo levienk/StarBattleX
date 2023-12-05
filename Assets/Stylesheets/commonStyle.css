@@ -107,18 +107,20 @@
 .level-button-locked, .level-button-locked:hover, .level-button-locked:pressed {
     -fx-background-color: linear-gradient(to bottom right, #101010, #000000);
     -fx-text-fill: #404040;
+    -fx-translate-x: -2;
+    -fx-translate-y: -2;
 }
 
-.clear-button {
-    -fx-background-color: linear-gradient(to bottom right, #FF0000FF, #9B0000FF);
+.dangerous-button {
+    -fx-background-color: linear-gradient(to bottom right, #ff4040, #a00000);
 }
 
-.clear-button:hover {
-    -fx-background-color: linear-gradient(to bottom right, #FF40A6FF, #A02095FF);
+.dangerous-button:hover {
+    -fx-background-color: linear-gradient(to bottom right, #ffa0a0, #a00000);
 }
 
-.clear-button:pressed {
-    -fx-background-color: linear-gradient(to bottom right, #A04A30FF, #603110FF);
+.dangerous-button:pressed {
+    -fx-background-color: linear-gradient(to bottom right, #a00000, #800000);
 }
 
 /* White border, dark blue gradient, white text */

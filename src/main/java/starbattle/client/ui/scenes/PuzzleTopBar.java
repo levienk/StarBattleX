@@ -7,13 +7,11 @@ import starbattle.client.ui.components.ExpandingPaneGenerator;
 import starbattle.client.ui.components.Title;
 import starbattle.client.ui.components.UIBar;
 
-import java.net.MalformedURLException;
-
 import static starbattle.client.ui.scenes.SceneSwitcher.setNewScene;
 
 public class PuzzleTopBar extends UIBar {
 
-    public PuzzleTopBar(PuzzleUI ui, int levelNumber) throws MalformedURLException {
+    public PuzzleTopBar(PuzzleUI ui, int levelNumber) {
         super();
 
         // Label for the current level the user is on.
@@ -23,10 +21,8 @@ public class PuzzleTopBar extends UIBar {
 
         // Clear Board button
         Button clearBoardButton = new Button("Clear Board");
-        clearBoardButton.getStyleClass().add("clear-button");
-        clearBoardButton.setOnAction(e -> {
-            ui.clear();
-        });
+        clearBoardButton.getStyleClass().add("dangerous-button");
+        clearBoardButton.setOnAction(e -> ui.clear());
 
         // Level Menu button
         Button levelMenuButton = new Button("Level Menu");
