@@ -7,7 +7,7 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 
-import static starbattle.client.ui.scenes.StarBattleClient.TEMPLATE_BAR_COLOR;
+import static starbattle.client.StarBattleClient.TEMPLATE_BAR_COLOR;
 
 /**
  *  UI Bar template generator for easy use.

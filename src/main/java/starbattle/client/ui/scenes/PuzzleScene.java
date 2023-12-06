@@ -2,6 +2,7 @@ package starbattle.client.ui.scenes;
 
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import starbattle.client.StarBattleClient;
 import starbattle.domain.game.Board;
 import starbattle.client.ui.components.ExpandingPaneGenerator;
 import starbattle.domain.DatabaseLoader;
