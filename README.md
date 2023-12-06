@@ -15,7 +15,7 @@ Before you begin, make sure you have installed:
     - Ensure the Docker service is active on your machine.
 2. **Launch Services**:
     - Open a terminal and navigate to the project's root directory.
-    - Run `docker compose up` to start all services, including MongoDB.
+    - Run `docker compose up -d` to start all services, including MongoDB.
     - Wait for confirmation that all services are up and running.
 
 ### Step 2: Build and Run the Server

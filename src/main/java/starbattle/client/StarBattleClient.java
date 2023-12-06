@@ -90,7 +90,22 @@ public class StarBattleClient extends Application {
         setStage(primaryStage);
 
         // Load the initial user
-        User user = DatabaseLoader.getUser();
+        // The Application should not start if the user cannot be loaded.
+        // for whatever reason.
+
+        User user = null;
+        try {
+            user = DatabaseLoader.getUser();
+        } catch (Exception e) {
+
+
+            primaryStage = new CustomAlert("Server Connection Error",
+                    "Database not connected.\nIs it running?");
+
+            primaryStage.showAndWait();
+
+            System.exit(-1);
+        }
 
         // Load the next puzzle
         int nextLevel = user.getNextPuzzle();
@@ -133,10 +148,10 @@ public class StarBattleClient extends Application {
     public static class GameStatistics implements Runnable {
 
         @Transient
-        static ObjectMapper mapper = new ObjectMapper();
+        private static ObjectMapper mapper = new ObjectMapper();
 
-        int timePlayed; // 1 = 0.1 seconds
-        int timesOpened;
+        private int timePlayed; // 1 = 0.1 seconds
+        private int timesOpened;
 
         private GameStatistics() {
             timePlayed = 0;

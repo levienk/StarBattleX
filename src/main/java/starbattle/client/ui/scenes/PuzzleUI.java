@@ -174,6 +174,14 @@ public class PuzzleUI extends StackPane {
                         gridUpperLeft.getY() + (row - 1) * cellSize + dotPositioning,
                         dotScale, dotScale
                 );
+                // Draw the valid stars to the board
+                for (Point point : board.getValidStars()) {
+                    g.drawImage(starImage,
+                            gridUpperLeft.getX() + (point.getX() - 1) * cellSize + positioning,
+                            gridUpperLeft.getY() + (point.getY() - 1) * cellSize + positioning,
+                            starScale, starScale
+                    );
+                }
                 if (board.isComplete()) {
                     onCompletion();
                 }
