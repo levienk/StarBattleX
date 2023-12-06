@@ -1,13 +1,19 @@
 package starbattle.client.ui.scenes;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import org.springframework.data.annotation.Transient;
 import starbattle.domain.DatabaseLoader;
 import starbattle.domain.user.User;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.time.Duration;
 
 import static starbattle.client.ui.scenes.SceneSwitcher.setScene;
 import static starbattle.client.ui.scenes.SceneSwitcher.setStage;
@@ -39,6 +45,8 @@ public class StarBattleClient extends Application {
     public final static File COMMON_STYLESHEET = new File
             ("./Assets/Stylesheets/commonStyle.css");
 
+    private static final String STATS_FILE_PATH = "Assets/User/stats.json";
+
     @SuppressWarnings("FieldCanBeLocal")
     private final int WINDOW_WIDTH = 650;
 
@@ -50,6 +58,9 @@ public class StarBattleClient extends Application {
     private final String WINDOW_TITLE = "StarBattle X";
 
     public static final Color TEMPLATE_BAR_COLOR = Color.web("#707070");
+
+    public static GameStatistics gameStatistics;
+    private static Thread gameStatisticsThread;
 
     /**
      *
@@ -95,8 +106,19 @@ public class StarBattleClient extends Application {
 
         primaryStage.getIcons().add(new Image(APPLICATION_ICON.toURI().toURL().toString()));
 
+        gameStatistics = GameStatistics.load();
+        gameStatisticsThread = new Thread(gameStatistics);
+
+        gameStatisticsThread.start();
 
         primaryStage.show();
+    }
+
+    @Override
+    public void stop() throws IOException {
+
+        gameStatisticsThread.interrupt();
+        gameStatistics.save();
     }
 
     public static Image getGameIcon() {
@@ -104,6 +126,92 @@ public class StarBattleClient extends Application {
             return new Image(APPLICATION_ICON.toURI().toURL().toString());
         } catch (Exception e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public static class GameStatistics implements Runnable {
+
+        @Transient
+        static ObjectMapper mapper = new ObjectMapper();
+
+        int timePlayed; // 1 = 0.1 seconds
+        int timesOpened;
+
+        private GameStatistics() {
+            timePlayed = 0;
+            timesOpened = 0;
+        }
+
+        public static GameStatistics load() throws Exception {
+
+            File file = new File(STATS_FILE_PATH);
+
+            if (file.exists() && file.length() == 0) {
+                // Delete the file
+                file.delete();
+            }
+
+            if (!file.exists()) {
+                GameStatistics stats = new GameStatistics();
+                PrintWriter writer = new PrintWriter(file);
+                writer.print(mapper.writeValueAsString(stats));
+                writer.close();
+                return stats;
+            }
+
+            return mapper.readValue(file, GameStatistics.class);
+        }
+
+        public void save() throws IOException {
+
+            try (PrintWriter writer = new PrintWriter(STATS_FILE_PATH)) {
+
+                writer.print(mapper.writeValueAsString(this));
+            }
+
+        }
+
+        public int getTimePlayed() {
+            return timePlayed;
+        }
+
+
+        @JsonIgnore
+        public Duration getTimePlayedDuration() {
+            return Duration.ofMillis(timePlayed * 100L);
+        }
+
+        @JsonIgnore
+        public int getPuzzlesCompleted() throws Exception {
+            return DatabaseLoader.getUser().getCompleted().size();
+        }
+
+        @JsonIgnore
+        public String getUserID() {
+            try {
+                return DatabaseLoader.getUser().getId();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        public int getTimesOpened() {
+            return timesOpened;
+        }
+
+        @Override
+        public void run() {
+
+            timesOpened++;
+
+            while(true) {
+                try {
+                    Thread.sleep(100);
+                    timePlayed++;
+                } catch (InterruptedException e) {
+                    break;
+                }
+            }
         }
     }
 

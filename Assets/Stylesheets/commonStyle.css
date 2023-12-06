@@ -2,7 +2,9 @@
     Button uses a gradient that goes from top left to bottom. Should look somewhat decent.
 */
 
-.button {
+
+
+.button, .toggle-button {
     -fx-background-color: linear-gradient(to bottom right, #404040, #000000);
     -fx-effect: dropshadow(three-pass-box , rgba(0, 0, 0, 1), 10, 0, 2, 2);
 
@@ -10,6 +12,7 @@
     -fx-text-fill: #ffffff;
     -fx-font-size: 20px;
     -fx-font-family: "Comic Sans MS";
+
     -fx-font-weight: bold;
     -fx-background-radius: 0;
     -fx-border-radius: 0;
@@ -29,6 +32,12 @@
 
 }
 
+.credits-text {
+    -fx-fill: #ffffff;
+    -fx-font-size: 12px;
+    -fx-font-family: "sans-serif";
+    -fx-font-weight: bold;
+}
 
 .button:hover {
     -fx-background-color: linear-gradient(to bottom right, #40a0ff, #2080a0);
@@ -47,33 +56,19 @@
 }
 
 /* Toggle button stylesheet used in PuzzleBottomBar */
-.toggle-button {
-    -fx-background-color: linear-gradient(to bottom right, #404040, #000000);
-
-
-    -fx-text-fill: #ffffff;
-    -fx-font-size: 20px;
-    -fx-font-family: "Comic Sans MS";
-    -fx-font-weight: bold;
-    -fx-background-radius: 0;
-    -fx-border-radius: 0;
-    -fx-border-color: #ffffff;
-    -fx-border-width: 2px;
-    /*-fx-padding: 10px;*/
-
-}
-
 .toggle-button:hover {
     -fx-background-color: linear-gradient(to bottom right, #40a0ff, #2080a0);
 }
 
 .toggle-button:pressed {
     -fx-background-color: linear-gradient(to bottom right, #3090a0, #104060);
+
+    -fx-translate-x: 0;
+    -fx-translate-y: 0;
 }
 
 .toggle-button:selected {
     -fx-background-color: linear-gradient(to bottom right, #20C759FF, #0A8831FF);
-    /* -fx-background-color: linear-gradient(to bottom right, #ff4040, #a00000); */
 }
 
 .level-button {
@@ -127,22 +122,15 @@
 .general-label {
 
     -fx-background-color: linear-gradient(to bottom right, #000040, #000000);
-    -fx-effect: dropshadow(three-pass-box , rgba(255,255,255,1), 8, 0, 0, 0);
+    -fx-effect: dropshadow(three-pass-box , rgba(255,255,255,1), 4, 0, 0, 0);
 
     -fx-text-fill: linear-gradient(to bottom right, #eaeaea, #a0a0a0);
     -fx-font-size: 20px;
     -fx-font-family: "Comic Sans MS";
     -fx-font-weight: bold;
-    -fx-background-radius: 12;
-    -fx-border-radius: 8;
     -fx-border-color: #ffffff;
-    -fx-border-width: 4px;
+    -fx-border-width: 2px;
 }
-
-
-
-
-
 
 .root {
     -fx-background-color: linear-gradient(to bottom right, #d0d0d0, #909090);

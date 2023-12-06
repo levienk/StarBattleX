@@ -74,7 +74,7 @@ public class LevelMenuScene extends VBox {
 
         settingsButton.setOnAction(e -> {
             try {
-                setScene(SettingsMenu.class);
+                setNewScene(SettingsMenu.class);
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }
@@ -137,6 +137,7 @@ public class LevelMenuScene extends VBox {
             levelPageNumberLabel.setMinWidth(100);
             levelPageNumberLabel.getStyleClass().add("general-label");
             levelPageNumberLabel.setAlignment(Pos.CENTER);
+            levelPageNumberLabel.setMinWidth(120);
 
             this.setAlignment(Pos.CENTER);
             this.setPadding(new Insets(0, 0, 10, 0));

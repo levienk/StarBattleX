@@ -57,8 +57,8 @@ public class PuzzleUI extends StackPane {
         rows = board.getRows();
         cols = board.getColumns();
 
-        starScale = 0.85 * cellSize;
-        dotScale = 0.55 * cellSize;
+        starScale = 0.8 * cellSize;
+        dotScale = 0.5 * cellSize;
 
         // Load the image files
         try {

@@ -1,18 +1,24 @@
 package starbattle.client.ui.scenes;
 
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
+import javafx.scene.text.Text;
 import starbattle.client.ui.components.CustomAlert;
 import starbattle.client.ui.components.UIBar;
 
 import java.awt.*;
 import java.io.File;
+import java.net.MalformedURLException;
 import java.net.URI;
 
 import static starbattle.client.ui.components.ExpandingPaneGenerator.newXPPane;
 import static starbattle.client.ui.scenes.SceneSwitcher.setScene;
+import static starbattle.client.ui.scenes.StarBattleClient.gameStatistics;
 
 public class SettingsMenu extends VBox {
 
@@ -59,10 +65,18 @@ public class SettingsMenu extends VBox {
 
         bottomBar.getChildren().addAll(eraseAllProgressButton,newXPPane('h'),premiumButton);
 
-        Pane fillerPane = newXPPane('v');
+        VBox mainPane = new VBox();
+        VBox.setVgrow(mainPane, Priority.ALWAYS);
 
+        HBox dualSection = new HBox();
 
-        this.getChildren().addAll(topBar, fillerPane, bottomBar);
+        GridPane developerCredits = new DeveloperCredits();
+        VBox metaInfo = new MetaCredits();
+
+        dualSection.getChildren().addAll(developerCredits,metaInfo);
+        mainPane.getChildren().add(dualSection);
+
+        this.getChildren().addAll(topBar, mainPane, bottomBar);
     }
 
     private void eraseProgressAction() {
@@ -81,6 +95,7 @@ public class SettingsMenu extends VBox {
                 if (new File("Assets/User/userID.txt").delete()) {
                     CustomAlert popup = new CustomAlert("User Data Deleted",
                             "The application will now close.");
+                    new File("Assets/User/stats.json").delete();
                     popup.getCancelButton().setVisible(false);
                     popup.showAndWait();
                     System.exit(0);
@@ -103,4 +118,138 @@ public class SettingsMenu extends VBox {
 
         eraseBlockTimer.start();
     }
+
+    private static class DeveloperCredits extends GridPane {
+
+        private DeveloperCredits() {
+
+            this.add(new Profile(
+                    "Daniel Ma", """
+                    MongoDB and
+                    REST API Architect
+                    """,
+                    "Assets/Images/Credits/Daniel Ma.png"), 0, 0);
+            this.add(new Profile(
+                    "Kade Levin",
+                    """
+                            Puzzle Game
+                            Logic Architect
+                            """,
+                    "Assets/Images/Credits/Kade Levin.png"), 1, 0);
+            this.add(new Profile(
+                    "Max Lopez",
+                    """
+                            Quality Tester and
+                            Project Architect
+                            """,
+                    "Assets/Images/Credits/Max Lopez.png"), 0, 1);
+            this.add(new Profile(
+                    "Randy Nguyen",
+                    """
+                            Client-side Engineer
+                            and UI Designer
+                            """,
+                    "Assets/Images/Credits/Randy Nguyen.jpg"), 1, 1);
+
+            this.setPadding(new Insets(10));
+            this.setHgap(-10);
+            this.setVgap(-10);
+
+            this.setBackground(new Background(new BackgroundFill(
+                    javafx.scene.paint.Color.rgb(0,0,0,0.1),
+                    CornerRadii.EMPTY, new Insets(10))));
+
+        }
+
+        private static class Profile extends VBox {
+
+            Profile(String personName, String description, String iconDir) {
+                Image icon;
+                try {
+                    icon = new Image(new File(iconDir).toURI().toURL().toString());
+                } catch (MalformedURLException e) {
+                    throw new RuntimeException(e);
+                }
+                ImageView iconView = new ImageView(icon);
+                iconView.setFitWidth(112);
+                iconView.setFitHeight(112);
+
+                Label nameLabel = new Label(personName);
+                nameLabel.setPadding(new Insets(0, 10, 0, 10));
+
+                Text descriptionText = new Text(description);
+                VBox descriptionTextContainer = new VBox();
+                descriptionTextContainer.getChildren().add(descriptionText);
+                descriptionTextContainer.setPadding(new Insets(0, 10, 10, 10));
+                descriptionText.getStyleClass().add("credits-text");
+
+                this.setBackground(new Background(new BackgroundFill(
+                        javafx.scene.paint.Color.rgb(0,0,0,0.1),
+                        CornerRadii.EMPTY, new Insets(10))));
+                this.setPadding(new Insets(20, 10, 0, 10));
+                this.setSpacing(10);
+                this.setAlignment(Pos.TOP_CENTER);
+                this.getChildren().addAll(iconView, nameLabel, descriptionTextContainer);
+
+
+            }
+
+        }
+
+    }
+
+    private static class GameStatisticsPanel extends VBox {
+
+        private GameStatisticsPanel() throws Exception {
+
+            Label timePlayedLabel = new Label("Time Played: " +
+                    gameStatistics.getTimePlayedDuration()
+                            .toString().substring(2)
+                            .replaceAll("(\\d[HMS])(?!$)", "$1 ")
+                            .toLowerCase());
+
+
+            Label timesOpenedLabel =
+                    new Label("You opened the Game:\n" +
+                            gameStatistics.getTimesOpened() + " times.");
+
+            Label numOfPuzzlesCompletedLabel = new Label("Puzzles Completed: " +
+                    gameStatistics.getPuzzlesCompleted());
+
+            Label userIDLabel = new Label("User ID:\n" + gameStatistics.getUserID());
+            userIDLabel.setWrapText(true);
+
+
+            this.setBackground(new Background(new BackgroundFill(
+                    javafx.scene.paint.Color.rgb(0,0,0,0.1),
+                    CornerRadii.EMPTY, new Insets(10))));
+            this.setPadding(new Insets(10));
+            this.setSpacing(-10);
+
+            this.getChildren().addAll(
+                    timePlayedLabel, timesOpenedLabel, numOfPuzzlesCompletedLabel, userIDLabel);
+
+            this.getChildren().forEach(node -> {
+                ((Label) node).setBackground(new Background(new BackgroundFill(
+                        javafx.scene.paint.Color.rgb(0,0,0,0.1),
+                        CornerRadii.EMPTY, new Insets(10))));
+                ((Label) node).setPadding(new Insets(20));
+            });
+
+
+        }
+    }
+
+    private static class MetaCredits extends VBox {
+
+        private MetaCredits() throws Exception {
+
+            VBox gameStats = new GameStatisticsPanel();
+
+            this.getChildren().add(gameStats);
+        }
+
+
+    }
+
 }
