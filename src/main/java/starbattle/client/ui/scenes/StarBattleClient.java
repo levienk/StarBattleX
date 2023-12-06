@@ -148,10 +148,10 @@ public class StarBattleClient extends Application {
     public static class GameStatistics implements Runnable {
 
         @Transient
-        static ObjectMapper mapper = new ObjectMapper();
+        private static ObjectMapper mapper = new ObjectMapper();
 
-        int timePlayed; // 1 = 0.1 seconds
-        int timesOpened;
+        private int timePlayed; // 1 = 0.1 seconds
+        private int timesOpened;
 
         private GameStatistics() {
             timePlayed = 0;
