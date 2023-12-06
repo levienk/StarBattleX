@@ -7,6 +7,7 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.springframework.data.annotation.Transient;
+import starbattle.client.ui.components.CustomAlert;
 import starbattle.client.ui.scenes.PuzzleScene;
 import starbattle.domain.DatabaseLoader;
 import starbattle.domain.user.User;
