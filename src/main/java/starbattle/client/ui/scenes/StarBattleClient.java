@@ -7,6 +7,7 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.springframework.data.annotation.Transient;
+import starbattle.client.ui.components.CustomAlert;
 import starbattle.domain.DatabaseLoader;
 import starbattle.domain.user.User;
 
@@ -89,7 +90,22 @@ public class StarBattleClient extends Application {
         setStage(primaryStage);
 
         // Load the initial user
-        User user = DatabaseLoader.getUser();
+        // The Application should not start if the user cannot be loaded.
+        // for whatever reason.
+
+        User user = null;
+        try {
+            user = DatabaseLoader.getUser();
+        } catch (Exception e) {
+
+
+            primaryStage = new CustomAlert("Server Connection Error",
+                    "Database not connected.\nIs it running?");
+
+            primaryStage.showAndWait();
+
+            System.exit(-1);
+        }
 
         // Load the next puzzle
         int nextLevel = user.getNextPuzzle();
