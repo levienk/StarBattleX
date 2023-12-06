@@ -131,12 +131,12 @@ public class SettingsMenu extends VBox {
                     """,
                     "Assets/Images/Credits/Daniel Ma.png"), 0, 0);
             this.add(new Profile(
-                    "Kade Levin",
+                    "Kade Levien",
                     """
                             Puzzle Game
                             Logic Architect
                             """,
-                    "Assets/Images/Credits/Kade Levin.png"), 1, 0);
+                    "Assets/Images/Credits/Kade Levien.jpeg"), 1, 0);
             this.add(new Profile(
                     "Max Lopez",
                     """
