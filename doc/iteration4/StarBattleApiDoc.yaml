@@ -1,0 +1,187 @@
+openapi: 3.0.0
+info:
+  title: StarBattle API
+  description: API for managing users and boards in the StarBattle game.
+  version: "1.0"
+servers:
+  - url: http://localhost:8888/starb
+paths:
+  /user:
+    get:
+      tags:
+        - user
+      summary: Retrieve all users
+      description: Returns a list of all users with their game progress.
+      operationId: getAllUsers
+      responses:
+        '200':
+          description: A list of users.
+          content:
+            application/json:
+              example:
+                [
+                  {
+                    "id": "64272f3d16b2df1faf837ec9",
+                    "completed": [ "1", "2" ],
+                    "nextPuzzle": "3",
+                    "notAccessible": [ "4", "5"]
+                  },
+                  {
+                    "id": "64272f3d16b2df1fa31321313",
+                    "completed": [ "1", "2", "3", "4", "5", "6"],
+                    "nextPuzzle": "7",
+                    "notAccessible": [ "8", "9"]
+                  },
+                  ...
+                ]
+    post:
+      tags:
+        - user
+      summary: Create a new user
+      description: Creates a new user with initial game state.
+      operationId: createUser
+      responses:
+        '201':
+          description: User created successfully.
+          content:
+            application/json:
+              example:
+                {
+                  "id": "64272f3d16b2df1faf837ec9",
+                  "completed": [ ],
+                  "nextPuzzle": "1",
+                  "notAccessible": [ "2" , "3", ...],
+                }
+  /user/{id}:
+    get:
+      tags:
+        - user
+      summary: Retrieve a user by ID
+      description: Returns a user object by their ID.
+      operationId: getUserById
+      parameters:
+        - name: id
+          in: path
+          description: Unique identifier of the user
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response with the contents of the new resource.
+          content:
+            application/json:
+              example:
+                {
+                  "id": "64272f3d16b2df1fa31321313",
+                  "completed": [ "1", "2", "3", "4", "5", "6"],
+                  "nextPuzzle": "7",
+                  "notAccessible": [ "8", "9"]
+                }
+        '404':
+          description: The ID is not found.
+    put:
+      tags:
+        - user
+      summary: Update a user by ID
+      description: Updates a user object.
+      operationId: updateUserById
+      parameters:
+        - name: id
+          in: path
+          description: ID of the user item to replace
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        description: The user item content.
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              {
+                "id": "64272f3d16b2df1fa31321313",
+                "completed": [ "1", "2", "3", "4", "5", "6"],
+                "nextPuzzle": "7",
+                "notAccessible": [ "8", "9"]
+              }
+      responses:
+        '200':
+          description: Successful response with content of updated object.
+          content:
+            application/json:
+              example:
+                {
+                  "id": "64272f3d16b2df1fa31321313",
+                  "completed": [ "1", "2", "3", "4", "5", "6"],
+                  "nextPuzzle": "7",
+                  "notAccessible": [ "8", "9"]
+                }
+        '404':
+          description: The ID is not found.
+    delete:
+      tags:
+        - user
+      summary: Delete a user item
+      description: Deletes a user by their ID.
+      operationId: deleteUserById
+      parameters:
+        - name: id
+          in: path
+          description: ID of the user item to delete
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Object was deleted.
+        '404':
+          description: The ID is not found.
+  /board:
+    get:
+      tags:
+        - board
+      summary: Get all existing boards by IDs.
+      description: Returns a list of all board IDs.
+      operationId: getAllBoards
+      responses:
+        '200':
+          description: List of board IDs.
+          content:
+            application/json:
+              example:
+                "ids": ["1",
+                        "2",
+                        "3",
+                        "4",
+                ]
+  /board/{id}:
+    get:
+      tags:
+        - board
+      summary: Retrieve a board by ID
+      description: Returns a board object by its ID.
+      operationId: getBoardById
+      parameters:
+        - name: id
+          in: path
+          description: ID of the board item
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response with the contents of the new resource.
+          content:
+            application/json:
+              example:
+                "id": 1
+                "sections": [ [ { "x": 4, "y": 4 } ] ]
+                "rows": 10
+                "columns": 10
+                "numStars": 2
+                "solution": [ { "x": 2, "y": 1 } ]
+        '400':
+          description: The ID is not found
