@@ -1,4 +1,4 @@
-package starbattle.client.ui.scenes;
+package starbattle.client;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -8,6 +8,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.springframework.data.annotation.Transient;
 import starbattle.client.ui.components.CustomAlert;
+import starbattle.client.ui.scenes.PuzzleScene;
 import starbattle.domain.DatabaseLoader;
 import starbattle.domain.user.User;
 
@@ -148,10 +149,10 @@ public class StarBattleClient extends Application {
     public static class GameStatistics implements Runnable {
 
         @Transient
-        static ObjectMapper mapper = new ObjectMapper();
+        private static ObjectMapper mapper = new ObjectMapper();
 
-        int timePlayed; // 1 = 0.1 seconds
-        int timesOpened;
+        private int timePlayed; // 1 = 0.1 seconds
+        private int timesOpened;
 
         private GameStatistics() {
             timePlayed = 0;

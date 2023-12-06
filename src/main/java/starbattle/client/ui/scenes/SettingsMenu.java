@@ -8,6 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
+import starbattle.client.StarBattleClient;
 import starbattle.client.ui.components.CustomAlert;
 import starbattle.client.ui.components.UIBar;
 
@@ -18,7 +19,7 @@ import java.net.URI;
 
 import static starbattle.client.ui.components.ExpandingPaneGenerator.newXPPane;
 import static starbattle.client.ui.scenes.SceneSwitcher.setScene;
-import static starbattle.client.ui.scenes.StarBattleClient.gameStatistics;
+import static starbattle.client.StarBattleClient.gameStatistics;
 
 public class SettingsMenu extends VBox {
 

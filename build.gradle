@@ -29,7 +29,7 @@ javafx {
 }
 
 tasks.named('run') {
-	mainClassName = 'starbattle.client.ui.scenes.StarBattleClient'
+	mainClassName = 'starbattle.client.StarBattleClient'
 }
 
 springBoot {

@@ -31,7 +31,6 @@ public class UserController {
         // Grab the board ids
         List<Integer> boardIds = new ArrayList<>();
         for (Board element:boards.findAll()) {
-            //
             boardIds.add(element.getID());
         }
         doc.setInaccessible(boardIds); // Populate the inaccessible list in ascending order

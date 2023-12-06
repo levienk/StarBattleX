@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.text.TextAlignment;
+import starbattle.client.StarBattleClient;
 import starbattle.client.ui.components.UIBar;
 import starbattle.domain.DatabaseLoader;
 
