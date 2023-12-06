@@ -43,7 +43,7 @@ public class SettingsMenu extends VBox {
                 throw new RuntimeException(ex);
             }
         });
-        topBar.getChildren().addAll(newXPPane('h'),backButton);
+        topBar.getChildren().addAll(new Label("Settings"), newXPPane('h'),backButton);
         Button premiumButton = new Button("✨ Purchase Premium ✨");
         premiumButton.getStyleClass().add("level-button-new");
         premiumButton.setOnAction(e -> {
@@ -144,7 +144,7 @@ public class SettingsMenu extends VBox {
                             """,
                     "Assets/Images/Credits/Max Lopez.png"), 0, 1);
             this.add(new Profile(
-                    "Randy Nguyen",
+                    "Randy N.",
                     """
                             Client-side Engineer
                             and UI Designer
@@ -210,14 +210,13 @@ public class SettingsMenu extends VBox {
 
 
             Label timesOpenedLabel =
-                    new Label("You opened the Game:\n" +
+                    new Label("You opened the Game: " +
                             gameStatistics.getTimesOpened() + " times.");
 
             Label numOfPuzzlesCompletedLabel = new Label("Puzzles Completed: " +
                     gameStatistics.getPuzzlesCompleted());
 
             Label userIDLabel = new Label("User ID:\n" + gameStatistics.getUserID());
-            userIDLabel.setWrapText(true);
 
 
             this.setBackground(new Background(new BackgroundFill(
@@ -230,6 +229,7 @@ public class SettingsMenu extends VBox {
                     timePlayedLabel, timesOpenedLabel, numOfPuzzlesCompletedLabel, userIDLabel);
 
             this.getChildren().forEach(node -> {
+                node.getStyleClass().add("label-mini");
                 ((Label) node).setBackground(new Background(new BackgroundFill(
                         javafx.scene.paint.Color.rgb(0,0,0,0.1),
                         CornerRadii.EMPTY, new Insets(10))));
@@ -246,7 +246,28 @@ public class SettingsMenu extends VBox {
 
             VBox gameStats = new GameStatisticsPanel();
 
-            this.getChildren().add(gameStats);
+            Label thanks = new Label("This game is made as part of our class project. This " +
+                    "project is made through the\ncollaboration of all four members of the team. " +
+                    "We also thank Dr. Wolff for his guidance and for the opportunity for us to work together." +
+                    "\n\nThank you for playing!");
+
+            thanks.getStyleClass().add("label-mini");
+
+            thanks.setWrapText(true);
+
+            thanks.setPadding(new Insets(10));
+
+            this.setPadding(new Insets(10));
+
+            this.setBackground(new Background(new BackgroundFill(
+                    javafx.scene.paint.Color.rgb(0,0,0,0.1),
+                    CornerRadii.EMPTY, new Insets(10))));
+
+            this.getChildren().addAll(gameStats,thanks);
+
+
+
+
         }
 
 

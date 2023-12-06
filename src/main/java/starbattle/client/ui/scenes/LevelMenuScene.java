@@ -81,7 +81,7 @@ public class LevelMenuScene extends VBox {
         });
 
 
-        topBar.getChildren().addAll(newXPPane('h'), backButton);
+        topBar.getChildren().addAll(new Label("Main Menu"),newXPPane('h'), backButton);
         bottomBar.getChildren().addAll(newXPPane('h'),
                 settingsButton);
 

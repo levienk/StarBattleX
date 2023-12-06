@@ -30,4 +30,6 @@ a.out
 *~
 
 # Ignore the userID.txt file that contains the client ID
+# Also ignore stats.json that contains the user's stats
 /Assets/User/userID.txt
+/Assets/User/stats.json
