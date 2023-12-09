@@ -1,12 +1,11 @@
 # Star Battle
 
-This project includes both client and server code for the Star Battle game.
+This project includes both client and server code for StarBattle X.
 
 ## Prerequisites
 Before you begin, make sure you have installed:
 - Docker
 - Java Development Kit (JDK) 17
-- Gradle
 
 ## Getting Started with Star Battle
 
@@ -15,7 +14,7 @@ Before you begin, make sure you have installed:
     - Ensure the Docker service is active on your machine.
 2. **Launch Services**:
     - Open a terminal and navigate to the project's root directory.
-    - Run `docker compose up -d` to start all services, including MongoDB.
+    - Run `docker compose up -d` to start all services, including MongoDB. (Use `docker compose down` to stop)
     - Wait for confirmation that all services are up and running.
 
 ### Step 2: Build and Run the Server
