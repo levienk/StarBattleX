@@ -46,3 +46,12 @@ Before you begin, make sure you have installed:
 - To run tests in IntelliJ, use the green arrow next to the test files.
 - To execute tests using Gradle, run `./gradlew test` in the terminal.
 
+## Screenshots
+
+(Also under /Assets/Screenshots)
+
+![Puzzle Menu](/Assets/Screenshots/PuzzleMenu.png "Puzzle Menu")
+
+![Level Menu](/Assets/Screenshots/LevelMenu.png "Level Menu")
+
+![Settings Menu](/Assets/Screenshots/SettingsMenu.png "Settings Menu")
